@@ -1,0 +1,13 @@
+.header {
+	&-login {
+		.logo {
+            max-width: 167px;
+			img {
+				width: 100%;
+				height: auto;
+                display: block;
+			}
+		}
+	}
+}
+
