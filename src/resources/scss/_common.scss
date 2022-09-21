@@ -1,7 +1,17 @@
-// .btn {
-// 	cursor: pointer;
-// 	color: inherit;
-// 	font-weight: 400;
-// 	font-size: 16px;
-// 	padding: 6px 22px;
-// }
+.btn {
+	cursor: pointer;
+	color: #fff;
+	font-weight: 400;
+	font-size: 14px;
+	padding: 5.5px 15px;
+	border-radius: 4px;
+	line-height: 1.5;
+	transition: all 0.2s ease;
+}
+
+.box {
+	padding: 10px;
+	background-color: #ffffffb3;
+	box-shadow: 0 1px 1px 0 #0000001a;
+    border-radius: 4px;
+}
