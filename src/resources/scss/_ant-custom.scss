@@ -1,0 +1,24 @@
+.ant-btn-primary {
+	color: #fff;
+	border-color: #1890ff !important;
+	background: #1890ff !important;
+	&:focus {
+		border-color: #40a9ff !important;
+		background: #40a9ff !important;
+	}
+	&:hover {
+		border-color: #40a9ff !important;
+		background: #40a9ff !important;
+	}
+	&:active {
+		border-color: #096dd9 !important;
+		background: #096dd9 !important;
+	}
+}
+.anticon {
+	&-custom {
+		& svg {
+			margin-bottom: 5px;
+		}
+	}
+}

@@ -1,7 +1,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
+@import "antd/dist/antd.css";
+@import "resources/scss/ant-custom";
 @import "resources/scss/main.scss";
 @import "resources/scss/_common";
 @import "resources/scss/_layout";

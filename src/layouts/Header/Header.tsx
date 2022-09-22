@@ -1,10 +1,41 @@
-import React from "react";
+import React, { useState } from "react";
 import { Layout } from "antd";
+import Login from "../../pages/Login";
+import Register from "../../pages/Register";
 
 interface IHeaderProps {}
 const { Header: HeaderAntd } = Layout;
 
 const Header: React.FC<IHeaderProps> = (props) => {
+	const [visibleLogin, setVisibleLogin] = useState(false);
+	const [visibleRegister, setVisibleRegister] = useState(false);
+
+	const handleHideLogin = () => {
+		setVisibleLogin(false);
+	};
+
+	const handleShowLogin = () => {
+		setVisibleLogin(true);
+	};
+
+	const handleHideRegister = () => {
+		setVisibleRegister(false);
+	};
+
+	const handleShowRegister = () => {
+		setVisibleRegister(true);
+	};
+
+	const handleChangeToLogin = () => {
+		handleHideRegister();
+		handleShowLogin();
+	};
+
+	const handleChangeToRegister = () => {
+		handleHideLogin();
+		handleShowRegister();
+	};
+
 	return (
 		<HeaderAntd className="header sticky top-0 mb-5">
 			<div className=" flex items-center justify-between px-9">
@@ -22,12 +53,18 @@ const Header: React.FC<IHeaderProps> = (props) => {
 				</div>
 
 				<div className="header-right flex items-center">
-					<div className="px-4 mr-2 py-1 border border-gray-200 rounded-3xl cursor-pointer text-sm hover:border-blue-100 hover:text-blue-100 transition-all duration-200">
-						Đăng nhập
-					</div>
-					<div className="px-4 py-1 border border-gray-200 rounded-3xl cursor-pointer text-sm hover:border-blue-100 hover:text-blue-100 transition-all duration-200">
-						Đăng ký
-					</div>
+					<Login
+						visibleLogin={visibleLogin}
+						handleHideLogin={handleHideLogin}
+						handleShowLogin={handleShowLogin}
+						handleChangeToRegister={handleChangeToRegister}
+					/>
+					<Register
+						visibleRegister={visibleRegister}
+						handleHideRegister={handleHideRegister}
+						handleShowRegister={handleShowRegister}
+						handleChangeToLogin={handleChangeToLogin}
+					/>
 				</div>
 			</div>
 		</HeaderAntd>
