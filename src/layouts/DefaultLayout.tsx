@@ -9,7 +9,7 @@ const DefaultLayout: React.FC<IDefaultLayoutProps> = ({ children }) => {
 	return (
 		<>
 			<Header />
-			<main className="bg-gray-100">{children}</main>
+			<main>{children}</main>
 		</>
 	);
 };
