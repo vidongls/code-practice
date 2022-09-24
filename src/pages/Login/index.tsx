@@ -1,15 +1,11 @@
 import { Button, Form, Input, Modal } from "antd";
 import React, { useState } from "react";
 import { LockOutlined, MailOutlined } from "@ant-design/icons";
+import imgLogin from "../../resources/img/login.png";
 
-interface ILoginProps {
-	visibleLogin: boolean;
-	handleHideLogin: () => void;
-	handleShowLogin: () => void;
-	handleChangeToRegister: () => void;
-}
+interface ILoginProps {}
 
-const Login: React.FC<ILoginProps> = ({ visibleLogin, handleHideLogin, handleShowLogin, handleChangeToRegister }) => {
+const Login: React.FC<ILoginProps> = () => {
 	const [form] = Form.useForm();
 
 	const handleOk = (data: any) => {
@@ -17,15 +13,18 @@ const Login: React.FC<ILoginProps> = ({ visibleLogin, handleHideLogin, handleSho
 	};
 
 	return (
-		<>
-			<Button
-				className="px-4 mr-2 py-1 border border-gray-200 rounded-3xl cursor-pointer text-sm hover:border-blue-100 hover:text-blue-100 transition-all duration-200"
-				onClick={handleShowLogin}
-			>
-				Đăng nhập
-			</Button>
+		<div className="grid lg:grid-cols-3 h-screen">
+			<div className="lg:col-span-2 flex items-center justify-center">
+				<div>dfds</div>
+			</div>
+			<div className="lg:col-span-1 bg-sand-50 flex flex-col items-center justify-end p-12 pb-0">
+				<div className="mb-28 text-4xl font-bold p-5">Everything you are. In one simple link.</div>
+				<div className="">
+					<img src={imgLogin} alt="" />
+				</div>
+			</div>
 
-			{visibleLogin && (
+			{/* {visibleLogin && (
 				<Modal title="Đăng nhập" open={true} onOk={handleOk} onCancel={handleHideLogin} footer={<></>}>
 					<Form name="basic" autoComplete="off" layout="vertical" onFinish={handleOk}>
 						<Form.Item
@@ -55,8 +54,8 @@ const Login: React.FC<ILoginProps> = ({ visibleLogin, handleHideLogin, handleSho
                         <p className="text-blue-50 mt-2" onClick={handleChangeToRegister}>Chưa có tài khoản? Đăng ký</p>
 					</Form>
 				</Modal>
-			)}
-		</>
+			)} */}
+		</div>
 	);
 };
 

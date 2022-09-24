@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Layout } from "antd";
+import { Button, Layout } from "antd";
 import Login from "../../pages/Login";
 import Register from "../../pages/Register";
 import Navbar from "./Navbar";
@@ -43,18 +43,30 @@ const Header: React.FC<IHeaderProps> = (props) => {
 				<Navbar />
 
 				<div className="header-right flex items-center">
-					<Login
+					{/* <Login
 						visibleLogin={visibleLogin}
 						handleHideLogin={handleHideLogin}
 						handleShowLogin={handleShowLogin}
 						handleChangeToRegister={handleChangeToRegister}
-					/>
-					<Register
+					/> */}
+					<Button
+						className="px-4 mr-2 py-1 border border-gray-200 rounded-3xl cursor-pointer text-sm hover:border-blue-100 hover:text-blue-100 transition-all duration-200"
+						onClick={handleShowLogin}
+					>
+						Đăng nhập
+					</Button>
+					<Button
+						onClick={handleShowRegister}
+						className="px-4 py-1 border border-gray-200 rounded-3xl cursor-pointer text-sm hover:border-blue-100 hover:text-blue-100 transition-all duration-200"
+					>
+						Đăng ký
+					</Button>
+					{/* <Register
 						visibleRegister={visibleRegister}
 						handleHideRegister={handleHideRegister}
 						handleShowRegister={handleShowRegister}
 						handleChangeToLogin={handleChangeToLogin}
-					/>
+					/> */}
 				</div>
 			</div>
 		</HeaderAntd>

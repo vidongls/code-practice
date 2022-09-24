@@ -2,18 +2,10 @@ import { Button, Form, Input, Modal } from "antd";
 import React, { useState } from "react";
 import { LockOutlined, UserOutlined, MailOutlined } from "@ant-design/icons";
 interface IRegisterProps {
-	visibleRegister: boolean;
-	handleHideRegister: () => void;
-	handleShowRegister: () => void;
-	handleChangeToLogin: () => void;
+	
 }
 
-const Register: React.FC<IRegisterProps> = ({
-	visibleRegister,
-	handleHideRegister,
-	handleShowRegister,
-	handleChangeToLogin,
-}) => {
+const Register: React.FC<IRegisterProps> = () => {
 	const [form] = Form.useForm();
 
 
@@ -27,13 +19,8 @@ const Register: React.FC<IRegisterProps> = ({
 
 	return (
 		<>
-			<Button
-				onClick={handleShowRegister}
-				className="px-4 py-1 border border-gray-200 rounded-3xl cursor-pointer text-sm hover:border-blue-100 hover:text-blue-100 transition-all duration-200"
-			>
-				Đăng ký
-			</Button>
-			{visibleRegister && (
+			
+			{/* {visibleRegister && (
 				<Modal title="Đăng ký" open={true} onOk={handleOk} onCancel={handleHideRegister} footer={<></>}>
 					<Form name="basic" autoComplete="off" layout="vertical" onFinish={handleOk}>
 						<Form.Item
@@ -84,7 +71,7 @@ const Register: React.FC<IRegisterProps> = ({
 						<p className="text-blue-50 mt-2" onClick={handleChangeToLogin}>Đã có tài khoản? Đăng nhập</p>
 					</Form>
 				</Modal>
-			)}
+			)} */}
 		</>
 	);
 };
