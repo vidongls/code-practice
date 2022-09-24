@@ -1,9 +1,10 @@
-import { Button, } from "antd";
-import React from "react";
-import { ClockCircleOutlined } from "@ant-design/icons";
-import DefaultLayout from "../../layouts/DefaultLayout";
-import Notification from "./components/Notification";
-import Box from "./components/Box";
+import { ClockCircleOutlined } from '@ant-design/icons';
+import { Button } from 'antd';
+import React from 'react';
+
+import CodeEditor from '../../components/CodeEditor';
+import Box from './components/Box';
+import Notification from './components/Notification';
 
 interface IHomeProps {}
 
@@ -40,7 +41,7 @@ const Home: React.FC<IHomeProps> = (props) => {
 					{/* <button className="btn  w-full"></button> */}
 					{/* </div> */}
 
-					{/* <CodeEditor /> */}
+					<CodeEditor />
 				</div>
 			</div>
 

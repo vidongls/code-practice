@@ -1,22 +1,19 @@
-import { Button, Form, Input, Modal } from "antd";
-import React, { useState } from "react";
-import { LockOutlined, UserOutlined, MailOutlined } from "@ant-design/icons";
-import imgRegister from "../../resources/img/register.png";
-interface IRegisterProps {}
+import { Form, Input } from 'antd';
+import React from 'react';
 
-const Register: React.FC<IRegisterProps> = () => {
-	const [form] = Form.useForm();
+import imgRegister from '../../resources/img/register.png';
 
+const Register: React.FC = () => {
 	const handleOk = (data: any) => {
 		console.log("🚀 ~ data", data);
 		// setVisible(false);
 	};
 
 	return (
-		<div className="grid lg:grid-cols-3 h-screen login">
+		<div className="grid lg:grid-cols-3 h-screen login bg-white">
 			<div className="lg:col-span-2 flex items-center justify-center">
 				<div className="w-full p-14 lg:w-fit lg:p-0">
-					<h1 className="text-4xl font-bold mb-10">Sign Up</h1>
+					<h1 className="text-4xl font-bold mb-10">Đăng ký</h1>
 					<Form name="basic" autoComplete="off" layout="vertical" onFinish={handleOk}>
 						<Form.Item
 							name="userName"
@@ -73,11 +70,11 @@ const Register: React.FC<IRegisterProps> = () => {
 						</button>
 					</Form>
 					<span className="font-semibold mt-10 block text-center">
-						Already have an account?<span className="text-[#FF8A2D] cursor-pointer">Sign In</span>
+						Already have an account?<span className="text-[#FF8A2D] cursor-pointer"> Sign In</span>
 					</span>
 				</div>
 			</div>
-			<div className="lg:col-span-1 bg-[#FFFAE7] flex flex-col items-center justify-end p-12 pb-0">
+			<div className="lg:col-span-1 bg-[#FFFAE7] flex-col items-center justify-end p-12 pb-0 hidden lg:flex">
 				<div className="mb-28 text-4xl font-bold p-5">
 					Welcome to <span className="text-[#FF8A2D]">DongViProCode.</span>
 				</div>
