@@ -1,46 +1,92 @@
-# Getting Started with Create React App
+*** Web code....
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+- Đăng ký, đăng nhập
+- Thực hành lập trình trực tuyến
+- Cho upload file
+- Tham gia các thử thách tích điểm
+- Tính điểm, rank
+- Gửi mail thông báo có challenge mới hoặc có đề thi mới
 
-## Available Scripts
+Dành cho lớp học
+. Học sinh: Học sinh: Tham gia kiểm tra, thi, giải các challenge trên website
+. Giáo viên: Giao bài cho học sinh, thiết kế bài thi, tự động chấm điểm theo test case.
+. Gvien
+  - quản lý sv trong lớp
+  - Xem Thống kê của các bài thi
+  - Thêm các challenge
 
-In the project directory, you can run:
+- Xem Thống kê chi tiết của từng User
+- Xem thống kê chi tiết của từng User trên các bài thi
+- Live code
 
-### `npm start`
+. Deploy lên domain chạy thật.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Model :
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+User {
+    userName: String,
+    email: String,  
+    password: String,
+    phone: String,
+    avatar: String,
+    role: String,
+    challengeResolved: Array[ObjectId],
+    isDisable: boolean,
+    authorId: ObjectId
+}
 
-### `npm test`
+Class: {
+    authorId: ObjectId,
+    name: String,
+    students: [ObjectId]
+}
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Topic: {
+    challenges: [ObjectId],
+    title: String,
+    description: String,
+    time: Number,
+    authorId: ObjectId,
+    isUsed :boolean,
+    isDisable: boolean,
+    students: [ObjectId],
+    point: number
+}
 
-### `npm run build`
+Challenge: {
+    name:String,
+    level: number,
+    content: String,
+    testCase: Array: {
+        input: String,
+        output: String,
+    },
+    star: number,
+    comment: ObjectId,
+    author: ObjectId,
+    isDisable: boolean,
+    usersId: [ObjectId]
+}
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Comment: {
+    content: String,
+    challenge :ObjectId,
+    author: ObjectId,
+}
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+UserDoChallenge: {
+    userId: ObjectId,
+    challengeId: ObjectId
+    startTime: Date,
+    endTime: Date,
+    isResolved: boolean,
+}
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+UserDoTopic: {
+    userId: ObjectId,
+    topicId: ObjectId
+    startTime: Date,
+    endTime: Date,
+    countChallengeResolve: number,
+    point: number
+}
