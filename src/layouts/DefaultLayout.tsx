@@ -1,15 +1,16 @@
 import React from "react";
+import { Outlet } from "react-router-dom";
 import Header from "./Header/Header";
 
-interface IDefaultLayoutProps {
-	children: React.ReactNode;
-}
+interface IDefaultLayoutProps {}
 
-const DefaultLayout: React.FC<IDefaultLayoutProps> = ({ children }) => {
+const DefaultLayout: React.FC<IDefaultLayoutProps> = () => {
 	return (
 		<>
 			<Header />
-			<main>{children}</main>
+			<main>
+				<Outlet />
+			</main>
 		</>
 	);
 };

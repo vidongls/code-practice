@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Layout } from "antd";
 import Login from "../../pages/Login";
 import Register from "../../pages/Register";
+import Navbar from "./Navbar";
 
 interface IHeaderProps {}
 const { Header: HeaderAntd } = Layout;
@@ -39,18 +40,7 @@ const Header: React.FC<IHeaderProps> = (props) => {
 	return (
 		<HeaderAntd className="header sticky top-0 mb-5">
 			<div className=" flex items-center justify-between px-9">
-				<div className="header-left flex items-center">
-					<div className="logo">
-						<img src="https://www.hackerrank.com/wp-content/uploads/2018/08/hackerrank_logo.png" alt="logo" />
-					</div>
-					<ul className="navigation flex items-center ml-3">
-						<li>Bài tập</li>
-						<li>Kỳ thi</li>
-						<li>Bài nộp</li>
-						<li>Xếp hạng</li>
-						<li>Live IDE</li>
-					</ul>
-				</div>
+				<Navbar />
 
 				<div className="header-right flex items-center">
 					<Login

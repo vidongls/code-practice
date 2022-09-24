@@ -17,6 +17,7 @@ const Notification: React.FC<INotificationProps> = (props) => {
 						<div className="bg-blue-50 btn hover:bg-blue-100 ">Tải lại</div>
 					</>
 				}
+                className={"p-3"}
 			>
 				<ul className="pr-4">
 					<li className="flex items-center justify-between py-4 border-b border-gray-200 ml-5">

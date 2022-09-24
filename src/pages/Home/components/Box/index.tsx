@@ -11,7 +11,7 @@ const Box: React.FC<IBoxProps> = ({ headerContent, children, className }) => {
 	return (
 		<div
 			className={classNames("box", {
-				[className ? className : ""]: className,
+				[className || ""]: className,
 			})}
 		>
 			<div
