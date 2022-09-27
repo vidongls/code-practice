@@ -6,11 +6,9 @@ module.exports = {
 		extend: {
 			colors: {
 				...baseColor,
-				blue: {
-					50: "#2db7f5",
-					100: "#57a3f3",
-					200: "#2d8cf0",
-				},
+				primary: "#2d8cf0",
+				secondary: "#2db7f5",
+				tertiary: "#57a3f3",
 			},
 		},
 		backgroundImage: {

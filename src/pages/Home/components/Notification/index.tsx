@@ -14,7 +14,7 @@ const Notification: React.FC<INotificationProps> = (props) => {
 						<div className="text-lg font-medium flex items-center">
 							<BellFilled /> Thông báo
 						</div>
-						<div className="bg-blue-50 btn hover:bg-blue-100 ">Tải lại</div>
+						<div className="bg-primary btn hover:bg-tertiary ">Tải lại</div>
 					</>
 				}
                 className={"p-3"}
