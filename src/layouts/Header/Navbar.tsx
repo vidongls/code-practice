@@ -29,9 +29,9 @@ const navList = [
 const Navbar: React.FC<INavbarProps> = (props) => {
 	return (
 		<div className="header-left flex items-center">
-			<div className="logo">
-				<Link to="/">
-					<img src="https://www.hackerrank.com/wp-content/uploads/2018/08/hackerrank_logo.png" alt="logo" />
+			<div className="logo flex items-center justify-center">
+				<Link to="/" className="text-4xl font-extrabold text-green-900">
+					Non
 				</Link>
 			</div>
 			<ul className="navigation flex items-center ml-3">

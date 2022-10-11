@@ -18,7 +18,7 @@ const Header: React.FC = (props) => {
 	};
 
 	return (
-		<HeaderAntd className="header sticky top-0 mb-5">
+		<HeaderAntd className="header sticky top-0 mb-5 bg-white">
 			<div className=" flex items-center justify-between px-9">
 				<Navbar />
 

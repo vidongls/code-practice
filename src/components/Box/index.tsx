@@ -1,5 +1,6 @@
 import React from "react";
-import { classNames } from "../../../../helper/helper";
+import { classNames } from "../../helper/helper";
+
 
 interface IBoxProps {
 	headerContent?: React.ReactNode;

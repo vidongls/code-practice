@@ -1,24 +1,36 @@
-import React from "react";
-import Box from "../Box";
-import { TagsFilled } from "@ant-design/icons";
+import { TagsFilled } from '@ant-design/icons'
+import { Button } from 'antd'
+import React from 'react'
 
-interface IClassifyProps {}
+import Box from '../../../../components/Box'
 
-const Classify: React.FC<IClassifyProps> = (props) => {
-	return (
-		<Box
-			className="col-span-1 p-3"
-			headerContent={
-				<div className="text-lg font-medium flex items-center">
-					<TagsFilled className="mr-2" /> Phân loại bài tập
-				</div>
-			}
-		>
-			<ul>
-                <li></li>
-            </ul>
-		</Box>
-	);
-};
+interface IClassifyProps {
+    children?: React.ReactNode
+}
 
-export default Classify;
+const Classify: React.FC<IClassifyProps> = ({ children }) => {
+    return (
+        <Box
+            className="col-span-1 p-3"
+            headerContent={
+                <div className="flex items-center text-lg font-medium">
+                    <TagsFilled className="mr-2" /> Phân loại bài tập
+                </div>
+            }>
+            <div>
+                {children}
+                <div>
+                    {Array.from('A23423BCDEFG').map(x => (
+                        <Button
+                            shape="round"
+                            className="mr-2 mt-2">
+                            {x}
+                        </Button>
+                    ))}
+                </div>
+            </div>
+        </Box>
+    )
+}
+
+export default Classify

@@ -1,7 +1,7 @@
 import { Pagination } from "antd";
 import { BellFilled, BookFilled } from "@ant-design/icons";
 import React from "react";
-import Box from "../Box";
+import Box from "../../../../components/Box";
 
 interface INotificationProps {}
 

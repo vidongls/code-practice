@@ -1,22 +1,45 @@
-import React from "react";
-import { Routes, Route } from "react-router-dom";
-import DefaultLayout from "../layouts/DefaultLayout";
-import Home from "../pages/Home";
-import Register from "../pages/Register";
-import Login from "../pages/Login";
+import React from 'react'
+import { Routes, Route } from 'react-router-dom'
+import DefaultLayout from '../layouts/DefaultLayout'
+import Home from '../pages/Home'
+import Register from '../pages/Register'
+import Login from '../pages/Login'
+import Exercise from '../pages/Exercise'
+import Challenge from '../pages/Challenge'
 
 const Router = () => {
-	return (
-		<Routes>
-			<Route path="login" element={<Login />} />
-			<Route path="register" element={<Register />} />
-			<Route path="/" element={<DefaultLayout />}>
-				<Route index element={<Home />} />
-				<Route path="exercise" element={<div>asdasd</div>} />
-				<Route path="exam" element={<div>thiii</div>} />
-			</Route>
-		</Routes>
-	);
-};
+    return (
+        <Routes>
+            <Route
+                path="login"
+                element={<Login />}
+            />
+            <Route
+                path="register"
+                element={<Register />}
+            />
+            <Route
+                path="/"
+                element={<DefaultLayout />}>
+                <Route
+                    index
+                    element={<Home />}
+                />
+                <Route
+                    path="exercise"
+                    element={<Exercise />}
+                />
+                <Route
+                    path="exam"
+                    element={<div>thiii</div>}
+                />
+            </Route>
+            <Route
+                path="challenge"
+                element={<Challenge />}
+            />
+        </Routes>
+    )
+}
 
-export default Router;
+export default Router

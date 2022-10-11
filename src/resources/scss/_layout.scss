@@ -1,55 +1,67 @@
 .header {
-	box-shadow: 0 1px 5px 0 #0000001a;
-	background: #fff;
-	.logo {
-		max-width: 167px;
-		img {
-			width: 100%;
-			height: auto;
-			display: block;
-		}
-	}
+    box-shadow: 0 1px 5px 0 #0000001a;
+    .logo {
+        max-width: 167px;
+        img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+    }
 
-	.navigation {
-		height: 60px;
-		li {
-			a {
+    .navigation {
+        height: 60px;
+        li {
+            a {
                 display: block;
-				color: #515a6e;
-				transition: all 0.2s ease-in-out;
-				font-size: 14px;
-				padding: 2px 20px;
-				cursor: pointer;
-				position: relative;
-				&::after {
-					content: "";
-					width: 100%;
-					position: absolute;
-					height: 2px;
-					background-color: #2d8cf0;
-					bottom: 0;
-					left: 0;
-					visibility: hidden;
-					opacity: 0;
-					transition: all 0.2s ease-in-out;
-				}
-				&:hover {
-					color: #2d8cf0;
-					&::after {
-						visibility: visible;
-						opacity: 1;
-					}
-					//
-					// border-bottom: 2px solid #2d8cf0;
-				}
-				&.active {
-					color: #2d8cf0;
-					&::after {
-						visibility: visible;
-						opacity: 1;
-					}
-				}
-			}
-		}
-	}
+                color: #515a6e;
+                transition: all 0.2s ease-in-out;
+                font-size: 14px;
+                padding: 2px 20px;
+                cursor: pointer;
+                position: relative;
+                &::after {
+                    content: '';
+                    width: 100%;
+                    position: absolute;
+                    height: 2px;
+                    background-color: #2d8cf0;
+                    bottom: 0;
+                    left: 0;
+                    visibility: hidden;
+                    opacity: 0;
+                    transition: all 0.2s ease-in-out;
+                }
+                &:hover {
+                    color: #2d8cf0;
+                    &::after {
+                        visibility: visible;
+                        opacity: 1;
+                    }
+                    //
+                    // border-bottom: 2px solid #2d8cf0;
+                }
+                &.active {
+                    color: #2d8cf0;
+                    &::after {
+                        visibility: visible;
+                        opacity: 1;
+                    }
+                }
+            }
+        }
+    }
+}
+.challenge-page-header {
+    .ant-breadcrumb {
+        li {
+            color: #2db7f5;
+        }
+        a {
+            color: #fff;
+        }
+    }
+    .ant-breadcrumb-separator {
+        color: #fff;
+    }
 }
