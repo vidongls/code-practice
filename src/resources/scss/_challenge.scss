@@ -1,4 +1,7 @@
-.challenge-tab {
-    .ant-tabs-tab {
+.challenge-tabs {
+    &__list {
+    }
+    &__item {
+        writing-mode: vertical-lr;
     }
 }
