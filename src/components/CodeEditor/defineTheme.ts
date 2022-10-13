@@ -21,6 +21,7 @@ export const monacoThemes = {
     'solarized-light': 'Solarized-light',
     idlefingers: 'idleFingers',
     monoindustrial: 'monoindustrial',
+    dracula: 'Dracula'
 }
 
 export type TThemes =

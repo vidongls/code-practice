@@ -10,6 +10,8 @@ interface ICodeEditorProps {}
 const { Option } = Select
 const options = {
     minimap: { enabled: false },
+    selectOnLineNumbers: true,
+    
 }
 const CodeEditor: React.FC<ICodeEditorProps> = props => {
     const [content, setContent] = useState<string | undefined>('')
@@ -73,7 +75,7 @@ const CodeEditor: React.FC<ICodeEditorProps> = props => {
             </div>
             <div className="bg-gray-50 shadow-lg">
                 <Editor
-                    className="h-[700px] w-full"
+                    className="h-[700px] w-full code-editor"
                     theme={theme}
                     language={language}
                     defaultValue={content}

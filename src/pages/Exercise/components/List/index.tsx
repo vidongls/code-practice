@@ -3,10 +3,11 @@ import React from 'react'
 import Box from '../../../../components/Box'
 import { DownOutlined, SearchOutlined, RedoOutlined } from '@ant-design/icons'
 import { ColumnsType } from 'antd/lib/table'
+import { Link } from 'react-router-dom'
 
 interface DataType {
     key: React.Key
-    name: string
+    title: string
     age: number
     address: string
 }
@@ -16,21 +17,19 @@ interface IExerciseListProps {}
 const ExerciseList: React.FC<IExerciseListProps> = props => {
     const columns: ColumnsType<DataType> = [
         {
-            title: <p className="font-semibold">ID</p>,
-            dataIndex: 'name',
-        },
-        {
             title: <p className="font-semibold">Tiêu đề</p>,
-            dataIndex: 'address',
+            dataIndex: 'title',
+            render(title, record, index) {
+                return <Link to="/challenge">{title}</Link>
+            },
         },
         {
-            title: <p className="font-semibold">Mức</p>,
+            title: <p className="font-semibold">Mức độ</p>,
             dataIndex: 'address',
         },
         {
             title: <p className="font-semibold">Đã nộp</p>,
-            dataIndex: 'age',
-            sorter: (a: any, b: any) => a.age - b.age,
+            dataIndex: 'address',
         },
         {
             title: <p className="font-semibold">Bài đạt</p>,
@@ -64,25 +63,25 @@ const ExerciseList: React.FC<IExerciseListProps> = props => {
     const data: DataType[] = [
         {
             key: '1',
-            name: 'John Brown',
+            title: 'John Brown',
             age: 32,
             address: 'New York No. 1 Lake Park',
         },
         {
             key: '2',
-            name: 'Jim Green',
+            title: 'Jim Green',
             age: 42,
             address: 'London No. 1 Lake Park',
         },
         {
             key: '3',
-            name: 'Joe Black',
+            title: 'Joe Black',
             age: 32,
             address: 'Sidney No. 1 Lake Park',
         },
         {
             key: '4',
-            name: 'Jim Red',
+            title: 'Jim Red',
             age: 32,
             address: 'London No. 2 Lake Park',
         },
@@ -106,7 +105,8 @@ const ExerciseList: React.FC<IExerciseListProps> = props => {
                     <Button
                         icon={<RedoOutlined />}
                         type="primary"
-                        className="flex items-center bg-primary ">
+                        className="flex items-center bg-primary "
+                    >
                         Làm mới
                     </Button>
                 </div>

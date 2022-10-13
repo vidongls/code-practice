@@ -1,6 +1,10 @@
-.challenge-tabs {
-    &__list {
+.code-editor {
+    span {
+        font-family: SF Mono, Consolas, 'Courier New', monospace;
     }
+}
+
+.challenge-tabs {
     &__item {
         writing-mode: vertical-lr;
     }

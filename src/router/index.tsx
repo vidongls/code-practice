@@ -6,6 +6,7 @@ import Register from '../pages/Register'
 import Login from '../pages/Login'
 import Exercise from '../pages/Exercise'
 import Challenge from '../pages/Challenge'
+import Exam from '../pages/Exam'
 
 const Router = () => {
     return (
@@ -20,7 +21,8 @@ const Router = () => {
             />
             <Route
                 path="/"
-                element={<DefaultLayout />}>
+                element={<DefaultLayout />}
+            >
                 <Route
                     index
                     element={<Home />}
@@ -31,7 +33,7 @@ const Router = () => {
                 />
                 <Route
                     path="exam"
-                    element={<div>thiii</div>}
+                    element={<Exam />}
                 />
             </Route>
             <Route

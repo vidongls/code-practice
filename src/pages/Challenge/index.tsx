@@ -18,7 +18,7 @@ const Challenge: React.FC<IChallengeProps> = props => {
         <div className="bg-white">
             <Header />
             <div className="grid h-[calc(100vh_-_50px)] grid-cols-2 bg-white ">
-                <div className="overflow-y-auto">
+                <div className="overflow-y-auto shadow-xl shadow-gray-200">
                     <Tabs items={items} />
                 </div>
 
