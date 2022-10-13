@@ -1,9 +1,6 @@
 import { loader } from '@monaco-editor/react'
-import { type } from 'os'
 
-const monacoThemes = {
-    light: 'Light',
-    'vs-dark': 'Dark',
+export const monacoThemes = {
     active4d: 'Active4D',
     'all-hallows-eve': 'All Hallows Eve',
     amy: 'Amy',
@@ -27,8 +24,6 @@ const monacoThemes = {
 }
 
 export type TThemes =
-    | 'light'
-    | 'vs-dark'
     | 'active4d'
     | 'all-hallows-eve'
     | 'amy'
@@ -50,6 +45,7 @@ export type TThemes =
     | 'monoindustrial'
 
 const defineTheme = (theme: TThemes) => {
+
     return new Promise((res: any) => {
         Promise.all([loader.init(), import(`monaco-themes/themes/${monacoThemes[theme]}.json`)]).then(
             ([monaco, themeData]) => {

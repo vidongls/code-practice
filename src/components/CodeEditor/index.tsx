@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react'
 import Editor, { Monaco } from '@monaco-editor/react'
 import { Button, Select } from 'antd'
 import { RedoOutlined } from '@ant-design/icons'
-import monacoThemes from 'monaco-themes/themes/themelist.json'
-import { defineTheme, TThemes } from './defineTheme'
+
+import { defineTheme, monacoThemes, TThemes } from './defineTheme'
 
 interface ICodeEditorProps {}
 
@@ -13,7 +13,7 @@ const options = {
 }
 const CodeEditor: React.FC<ICodeEditorProps> = props => {
     const [content, setContent] = useState<string | undefined>('')
-    const [theme, setTheme] = useState<TThemes>('light')
+    const [theme, setTheme] = useState<any>('light')
     const [language, setLanguage] = useState('javascript')
 
     const handleChangeEditor = (value: string | undefined) => {
@@ -22,23 +22,18 @@ const CodeEditor: React.FC<ICodeEditorProps> = props => {
 
     const handleChangeTheme = (value: TThemes) => {
         if (['light', 'vs-dark'].includes(value)) {
-            setTheme(theme)
+            setTheme(value)
         } else {
-            defineTheme(value).then(_ => setTheme(theme))
+            defineTheme(value).then(_ => setTheme(value))
         }
-        setTheme(value)
     }
 
     const handleChangeLanguage = (value: string) => {
         setLanguage(value)
     }
 
-    useEffect(() => {
-        defineTheme('amy').then(_ => setTheme('amy'))
-    }, [])
-
     return (
-        <div>
+        <div className="p-2">
             <div className="flex items-center justify-between gap-3 bg-gray-50 p-5">
                 <div>
                     <span className="mr-2">Theme: </span>
@@ -76,7 +71,7 @@ const CodeEditor: React.FC<ICodeEditorProps> = props => {
                     </Select>
                 </div>
             </div>
-            <div className="bg-gray-50">
+            <div className="bg-gray-50 shadow-lg">
                 <Editor
                     className="h-[700px] w-full"
                     theme={theme}
@@ -86,6 +81,18 @@ const CodeEditor: React.FC<ICodeEditorProps> = props => {
                     options={options}
                     onChange={(value: string | undefined) => handleChangeEditor(value)}
                 />
+            </div>
+            <div className="mt-4 flex items-center justify-between">
+                <div>Upload</div>
+                <div>
+                    <Button className="mr-2 h-9 rounded-sm border-none shadow-lg shadow-gray-300">Run code</Button>
+                    <Button
+                        type="primary"
+                        className="h-9 rounded-sm bg-primary shadow-lg"
+                    >
+                        Submit code
+                    </Button>
+                </div>
             </div>
         </div>
     )
