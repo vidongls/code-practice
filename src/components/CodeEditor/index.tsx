@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react'
-import Editor, { Monaco } from '@monaco-editor/react'
-import { Button, Select } from 'antd'
-import { RedoOutlined } from '@ant-design/icons'
+import { RedoOutlined } from '@ant-design/icons';
+import Editor from '@monaco-editor/react';
+import { Button, Select } from 'antd';
+import React, { useState } from 'react';
 
-import { defineTheme, monacoThemes, TThemes } from './defineTheme'
+import { defineTheme, monacoThemes, TThemes } from './defineTheme';
 
 interface ICodeEditorProps {}
 

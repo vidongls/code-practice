@@ -1,4 +1,4 @@
-import { Button, Divider, Dropdown, Input, Menu, Table } from 'antd'
+import { Button, Dropdown, Input, Menu, Table } from 'antd'
 import React from 'react'
 import Box from '../../../../components/Box'
 import { DownOutlined, SearchOutlined, RedoOutlined } from '@ant-design/icons'

@@ -1,5 +1,5 @@
-import type { RadioChangeEvent } from 'antd'
-import React, { useState } from 'react'
+import React from 'react'
+
 import CodeEditor from '../../components/CodeEditor'
 import Tabs from '../../components/Tabs'
 import Description from './components/Description'

@@ -1,6 +1,5 @@
 import { Button } from 'antd'
 import React from 'react'
-import Box from '../../components/Box'
 import Classify from '../Home/components/Classify'
 import ExerciseList from './components/List'
 

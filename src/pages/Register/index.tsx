@@ -1,13 +1,21 @@
+/* eslint-disable no-useless-escape */
 import { Form, Input } from 'antd'
 import React from 'react'
 import { Link } from 'react-router-dom'
+import UserApi from '../../Api/User/UserApi'
 
 import imgRegister from '../../resources/img/register.png'
 
 const Register: React.FC = () => {
-    const handleOk = (data: any) => {
+    const handleRegister = async (data: any) => {
         console.log('🚀 ~ data', data)
         // setVisible(false);
+        try {
+            const res = await UserApi.register(data)
+            console.log('🚀 🐢 ~ res', res)
+        } catch (error) {
+            console.log('🚀 🐢 ~ error', error)
+        }
     }
 
     return (
@@ -19,7 +27,7 @@ const Register: React.FC = () => {
                         name="basic"
                         autoComplete="off"
                         layout="vertical"
-                        onFinish={handleOk}
+                        onFinish={handleRegister}
                     >
                         <Form.Item
                             name="userName"
@@ -101,7 +109,7 @@ const Register: React.FC = () => {
                                         if (!value || getFieldValue('password') === value) {
                                             return Promise.resolve()
                                         }
-                                        return Promise.reject("Mật khẩu không khớp!")
+                                        return Promise.reject('Mật khẩu không khớp!')
                                     },
                                 }),
                             ]}
