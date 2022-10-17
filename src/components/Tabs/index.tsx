@@ -12,7 +12,7 @@ interface ITabsProps {
 }
 
 const Tabs: React.FC<ITabsProps> = ({ items }) => {
-    const [key, setKey] = useState(items[0].key)
+    const [key, setKey] = useState<string>(items[0].key)
 
     return (
         <div className="challenge-tabs flex">

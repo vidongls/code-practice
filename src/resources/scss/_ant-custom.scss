@@ -1,24 +1,28 @@
 .ant-btn-primary-cus {
-	color: #fff;
-	border-color: #1890ff !important;
-	background-color: #1890ff !important;
-	&:focus {
-		border-color: #40a9ff !important;
-		background-color: #40a9ff !important;
-	}
-	&:hover {
-		border-color: #40a9ff !important;
-		background-color: #40a9ff !important;
-	}
-	&:active {
-		border-color: #096dd9 !important;
-		background-color: #096dd9 !important;
-	}
+    color: #fff;
+    border-color: #1890ff !important;
+    background-color: #1890ff !important;
+    &:focus {
+        border-color: #40a9ff !important;
+        background-color: #40a9ff !important;
+    }
+    &:hover {
+        border-color: #40a9ff !important;
+        background-color: #40a9ff !important;
+    }
+    &:active {
+        border-color: #096dd9 !important;
+        background-color: #096dd9 !important;
+    }
 }
 .anticon {
-	&-custom {
-		& svg {
-			margin-bottom: 5px;
-		}
-	}
+    &-custom {
+        & svg {
+            margin-bottom: 5px;
+        }
+    }
+}
+
+.ant-form-item-explain-error {
+    margin: 6px 0 8px 0;
 }
