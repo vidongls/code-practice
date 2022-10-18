@@ -7,6 +7,7 @@ import Login from '../pages/Login'
 import Exercise from '../pages/Exercise'
 import Challenge from '../pages/Challenge'
 import Exam from '../pages/Exam'
+import PrivateRoute from './PrivateRoute'
 
 const Router = () => {
     return (
@@ -21,20 +22,25 @@ const Router = () => {
             />
             <Route
                 path="/"
-                element={<DefaultLayout />}
+                element={<PrivateRoute />}
             >
                 <Route
-                    index
-                    element={<Home />}
-                />
-                <Route
-                    path="exercise"
-                    element={<Exercise />}
-                />
-                <Route
-                    path="exam"
-                    element={<Exam />}
-                />
+                    path="/"
+                    element={<DefaultLayout />}
+                >
+                    <Route
+                        index
+                        element={<Home />}
+                    />
+                    <Route
+                        path="exercise"
+                        element={<Exercise />}
+                    />
+                    <Route
+                        path="exam"
+                        element={<Exam />}
+                    />
+                </Route>
             </Route>
             <Route
                 path="challenge"

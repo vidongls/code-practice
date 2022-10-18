@@ -1,10 +1,26 @@
-import { Form, Input } from 'antd'
-import React from 'react'
-import { Link } from 'react-router-dom'
+import { Button, Form, Input, notification } from 'antd'
+import React, { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import UserApi from '../../Api/User/UserApi'
+import { useAuthStore } from '../../store/useAuthStore'
 
 const Login: React.FC = () => {
-    const handleOk = (data: any) => {
-        console.log('🚀 ~ data', data)
+    const { login } = useAuthStore()
+    const [loading, setLoading] = useState(false)
+    const navigate = useNavigate()
+
+    const handleLogin = async (data: any) => {
+        setLoading(true)
+        try {
+            const res = await UserApi.login(data)
+            login(res.data)
+            notification.success({ message: 'Đăng nhập thành công' })
+            navigate("/");
+        } catch (error) {
+            notification.error({ message: 'Đăng nhập thất bại' })
+        } finally {
+            setLoading(false)
+        }
     }
 
     return (
@@ -16,38 +32,47 @@ const Login: React.FC = () => {
                         name="basic"
                         autoComplete="off"
                         layout="vertical"
-                        onFinish={handleOk}>
+                        onFinish={handleLogin}
+                    >
                         <Form.Item
                             name="email"
                             label={<span className="font-medium">Email</span>}
                             rules={[{ required: true, message: 'Email không được để trống!' }]}
-                            className="mb-8">
+                            className="mb-8"
+                        >
                             <Input
                                 placeholder="Nhập email..."
-                                className="rounded-2xl border-[#F2F2F2] bg-[#F2F2F2] p-4 lg:w-[450px]"
+                                className="rounded-lg border-[#F2F2F2] bg-[#F2F2F2] p-4 lg:w-[450px]"
                             />
                         </Form.Item>
 
                         <Form.Item
                             name="password"
                             label={<span className="font-medium">Mật khẩu</span>}
-                            rules={[{ required: true, message: 'Mật khẩu không được để trống!' }]}>
+                            rules={[{ required: true, message: 'Mật khẩu không được để trống!' }]}
+                        >
                             <Input
                                 type="password"
                                 placeholder="Nhập mật khẩu..."
-                                className="rounded-2xl border-[#F2F2F2] bg-[#F2F2F2] p-4 lg:w-[450px]"
+                                className="rounded-lg border-[#F2F2F2] bg-[#F2F2F2] p-4 lg:w-[450px]"
                             />
                         </Form.Item>
 
-                        <button className="w-full rounded-2xl bg-primary p-4 font-semibold text-white  transition-all duration-200 hover:bg-tertiary">
+                        <Button
+                            className="h-full w-full rounded-lg bg-primary p-4 font-semibold text-white transition-all duration-200 hover:bg-tertiary hover:text-white focus:bg-primary"
+                            // onClick={handleLogin}
+                            htmlType="submit"
+                            loading={loading}
+                        >
                             Đăng nhập
-                        </button>
+                        </Button>
                     </Form>
                     <span className="mt-10 block text-center font-semibold">
                         Bạn chưa có tài khoản?
                         <Link
-                            className="cursor-pointer text-primary ml-1"
-                            to="/register">
+                            className="ml-1 cursor-pointer text-primary"
+                            to="/register"
+                        >
                             Đăng ký
                         </Link>
                     </span>

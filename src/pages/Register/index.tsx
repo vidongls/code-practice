@@ -1,20 +1,29 @@
 /* eslint-disable no-useless-escape */
-import { Form, Input } from 'antd'
-import React from 'react'
-import { Link } from 'react-router-dom'
+import { Button, Form, Input, notification } from 'antd'
+import React, { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import UserApi from '../../Api/User/UserApi'
+import { RegisterCommand } from '../../Command/RegisterCommand'
 
 import imgRegister from '../../resources/img/register.png'
 
 const Register: React.FC = () => {
-    const handleRegister = async (data: any) => {
-        console.log('🚀 ~ data', data)
-        // setVisible(false);
+    const [form] = Form.useForm()
+    const [loading, setLoading] = useState(false)
+    const navigate = useNavigate();
+
+    const handleRegister = async () => {
+        setLoading(true)
         try {
-            const res = await UserApi.register(data)
-            console.log('🚀 🐢 ~ res', res)
+            const data: RegisterCommand = { ...form.getFieldsValue() }
+
+            await UserApi.register(data)
+            notification.success({ message: 'Đăng ký thành công' })
+            navigate("/login");
         } catch (error) {
-            console.log('🚀 🐢 ~ error', error)
+            notification.error({ message: 'Đăng ký thất bại' })
+        } finally {
+            setLoading(false)
         }
     }
 
@@ -27,7 +36,7 @@ const Register: React.FC = () => {
                         name="basic"
                         autoComplete="off"
                         layout="vertical"
-                        onFinish={handleRegister}
+                        form={form}
                     >
                         <Form.Item
                             name="userName"
@@ -122,9 +131,13 @@ const Register: React.FC = () => {
                             />
                         </Form.Item>
 
-                        <button className="w-full rounded-lg bg-primary p-4 font-semibold text-white transition-all duration-200 hover:bg-tertiary">
+                        <Button
+                            className="h-full w-full rounded-lg bg-primary p-4 font-semibold text-white transition-all duration-200 hover:bg-tertiary hover:text-white focus:bg-primary"
+                            loading={loading}
+                            onClick={handleRegister}
+                        >
                             Đăng ký
-                        </button>
+                        </Button>
                     </Form>
                     <span className="mt-10 block text-center font-semibold">
                         Bạn đã có tài khoản?

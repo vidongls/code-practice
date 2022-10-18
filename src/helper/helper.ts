@@ -1,9 +1,9 @@
-export const classNames = (currentClass = "", restClass = {}) => {
-	if (!restClass) return currentClass;
+export const classNames = (currentClass = '', restClass = {}) => {
+    if (!restClass) return currentClass
 
-	let newClass = "";
+    let newClass = ''
 
-	Object.entries(restClass).map(([key, val]) => (newClass += val ? key : ""));
+    Object.entries(restClass).map(([key, val]) => (newClass += val ? key : ''))
 
-	return currentClass + " " + newClass;
-};
+    return currentClass + ' ' + newClass
+}
