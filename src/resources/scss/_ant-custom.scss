@@ -26,3 +26,26 @@
 .ant-form-item-explain-error {
     margin: 6px 0 8px 0;
 }
+
+.ant-form-item-label {
+    text-align: left;
+}
+.ant-btn.ant-btn-block {
+    width: unset !important;
+}
+
+.ant-btn {
+    & svg {
+        margin-bottom: 5px;
+    }
+}
+
+.ant-input-status-error:not(.ant-input-disabled):not(.ant-input-borderless).ant-input,
+.ant-input-status-error:not(.ant-input-disabled):not(.ant-input-borderless).ant-input:hover {
+    &::placeholder{
+        color: #ff4d4f;
+    }
+}
+.ant-form-item-label > label{
+    height: unset !important;
+}

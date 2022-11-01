@@ -1,16 +1,24 @@
 /* eslint-disable no-useless-escape */
 import { Button, Form, Input, notification } from 'antd'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import UserApi from '../../Api/User/UserApi'
 import { RegisterCommand } from '../../Command/RegisterCommand'
 
 import imgRegister from '../../resources/img/register.png'
+import { useAuthStore } from '../../store/useAuthStore'
 
 const Register: React.FC = () => {
+    const { isLogin } = useAuthStore()
     const [form] = Form.useForm()
     const [loading, setLoading] = useState(false)
-    const navigate = useNavigate();
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        if (isLogin()) {
+            navigate('/')
+        }
+    }, [])
 
     const handleRegister = async () => {
         setLoading(true)
@@ -19,7 +27,7 @@ const Register: React.FC = () => {
 
             await UserApi.register(data)
             notification.success({ message: 'Đăng ký thành công' })
-            navigate("/login");
+            navigate('/login')
         } catch (error) {
             notification.error({ message: 'Đăng ký thất bại' })
         } finally {

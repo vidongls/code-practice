@@ -8,6 +8,9 @@ import Exercise from '../pages/Exercise'
 import Challenge from '../pages/Challenge'
 import Exam from '../pages/Exam'
 import PrivateRoute from './PrivateRoute'
+import AdminDefaultLayout from '../Admin/layout/AdminDefaultLayout'
+import AdminChallenge from '../Admin/pages/Challange'
+import ChallengeCreate from '../Admin/pages/Challange/Create'
 
 const Router = () => {
     return (
@@ -22,30 +25,41 @@ const Router = () => {
             />
             <Route
                 path="/"
-                element={<PrivateRoute />}
+                element={<PrivateRoute Component={DefaultLayout} />}
             >
                 <Route
-                    path="/"
-                    element={<DefaultLayout />}
-                >
-                    <Route
-                        index
-                        element={<Home />}
-                    />
-                    <Route
-                        path="exercise"
-                        element={<Exercise />}
-                    />
-                    <Route
-                        path="exam"
-                        element={<Exam />}
-                    />
-                </Route>
+                    index
+                    element={<Home />}
+                />
+                <Route
+                    path="exercise"
+                    element={<Exercise />}
+                />
+                <Route
+                    path="exam"
+                    element={<Exam />}
+                />
             </Route>
+
             <Route
                 path="challenge"
-                element={<Challenge />}
+                element={<PrivateRoute Component={Challenge} />}
             />
+
+            <Route
+                path="admin"
+                element={<AdminDefaultLayout />}
+            >
+                <Route
+                    path="challenge"
+                    element={<AdminChallenge />}
+                />
+
+                <Route
+                    path="challenge/create"
+                    element={<ChallengeCreate />}
+                />
+            </Route>
         </Routes>
     )
 }

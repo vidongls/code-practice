@@ -16,14 +16,17 @@ const Classify: React.FC<IClassifyProps> = ({ children }) => {
                 <div className="flex items-center text-lg font-medium">
                     <TagsFilled className="mr-2" /> Phân loại bài tập
                 </div>
-            }>
+            }
+        >
             <div>
                 {children}
                 <div>
-                    {Array.from('A23423BCDEFG').map(x => (
+                    {Array.from('A234BCDEFG').map(x => (
                         <Button
                             shape="round"
-                            className="mr-2 mt-2">
+                            className="mr-2 mt-2"
+                            key={x}
+                        >
                             {x}
                         </Button>
                     ))}

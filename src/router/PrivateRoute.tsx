@@ -1,16 +1,17 @@
-import { Navigate, Outlet, useLocation } from 'react-router-dom'
-import DefaultLayout from '../layouts/DefaultLayout'
+import React from 'react'
+import { Navigate } from 'react-router-dom'
+
 import { useAuthStore } from '../store/useAuthStore'
 
-interface IPrivateRouteProps {}
+interface IPrivateRouteProps {
+    Component: any
+}
 
-const PrivateRoute: React.FC<IPrivateRouteProps> = () => {
+const PrivateRoute: React.FC<IPrivateRouteProps> = ({ Component }) => {
     const { isLogin } = useAuthStore()
-    const location = useLocation()
-
-    console.log('isLogin', isLogin())
-
-    return isLogin() ? <Outlet /> : <Navigate to={'/'} />
+    return isLogin() ? <Component /> : <Navigate to={'/login'} />
 }
 
 export default PrivateRoute
+// vidong12345@gmail.com
+// Vidong123@

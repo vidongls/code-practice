@@ -10,15 +10,10 @@ class UserApi {
         return Api.post('/user/login', data)
     }
 
-    // static logout = (data: any) => {
-    // 	let config = {
-    // 		headers: {
-    // 			Authorization: "Bearer " + localStore.getItem("loginSession"),
-    // 		},
-    // 	};
+    logout = () => {
+        return Api.post('/user/logout', {})
+    }
 
-    // 	return apiClient.post("/logout", data, config);
-    // };
 }
 
 export default new UserApi()

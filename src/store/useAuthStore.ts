@@ -1,6 +1,7 @@
 import create from 'zustand'
 import { devtools, persist } from 'zustand/middleware'
 import jwt_decode from 'jwt-decode'
+import UserApi from '../Api/User/UserApi'
 
 interface IToken {
     userId: string
@@ -19,13 +20,17 @@ interface IAuthState {
     isLogin: () => boolean
     user: IUser
     login: (user: IUser) => void
+    logout: () => void
+    getToken: () => string
 }
+
+const initUser = { _id: '', email: '', userName: '', token: '' }
 
 export const useAuthStore = create<IAuthState>()(
     devtools(
         persist(
             (set, get) => ({
-                user: { _id: '', email: '', userName: '', token: '' },
+                user: initUser,
                 isLogin: () => {
                     const token = get().user.token
                     if (!token) {
@@ -45,8 +50,12 @@ export const useAuthStore = create<IAuthState>()(
                         ...state,
                         user,
                     })),
+                logout: () =>
+                    set((state: IAuthState) => {
+                        return { user: initUser }
+                    }),
+                getToken: () => get().user.token,
             }),
-
             {
                 name: 'auth-storage',
             }

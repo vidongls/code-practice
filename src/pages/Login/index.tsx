@@ -1,13 +1,19 @@
 import { Button, Form, Input, notification } from 'antd'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import UserApi from '../../Api/User/UserApi'
 import { useAuthStore } from '../../store/useAuthStore'
 
 const Login: React.FC = () => {
-    const { login } = useAuthStore()
+    const { login, isLogin } = useAuthStore()
     const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
+
+    useEffect(() => {
+        if (isLogin()) {
+            navigate('/')
+        }
+    }, [])
 
     const handleLogin = async (data: any) => {
         setLoading(true)
@@ -15,8 +21,9 @@ const Login: React.FC = () => {
             const res = await UserApi.login(data)
             login(res.data)
             notification.success({ message: 'Đăng nhập thành công' })
-            navigate("/");
+            navigate('/')
         } catch (error) {
+            console.log("🚀 🐢 ~ error", error)
             notification.error({ message: 'Đăng nhập thất bại' })
         } finally {
             setLoading(false)

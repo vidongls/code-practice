@@ -1,0 +1,300 @@
+.admin-layout {
+    &.layout {
+        min-height: 100vh;
+    }
+
+    .header {
+        background-color: #fff;
+        padding: 0 16px;
+        box-shadow: 0 1px 4px rgb(0 21 41 / 8%);
+        [aria-label] {
+            font-size: 18px;
+        }
+    }
+
+    .sidebar {
+        background-color: #fff;
+        box-shadow: 0 8px 16px rgb(0 0 0 / 7%);
+
+        &.expand {
+            padding: 16px;
+            @include xs {
+                position: absolute;
+                z-index: 9999;
+                top: 0;
+                left: 0;
+                height: 100vh;
+                width: 100% !important;
+                max-width: 100% !important;
+                min-width: 100% !important;
+                flex: unset !important;
+            }
+        }
+        &.collapsed {
+            width: 0% !important;
+        }
+        &.ant-layout-sider {
+            li {
+                background-color: #fff;
+                color: #44566c;
+                font-weight: 500;
+                font-size: 15px;
+                border-radius: unset;
+                &:hover {
+                    color: #4169e1;
+                }
+                &.ant-menu-item-selected {
+                    background-color: #f8fafb !important;
+
+                    position: relative;
+                    span {
+                        color: #44566c;
+                    }
+                    &::before {
+                        content: '';
+                        position: absolute;
+                        left: 0;
+                        top: 0;
+                        bottom: 0;
+                        width: 4px;
+                        height: 100%;
+                        border-radius: 0 5px 5px 0;
+                        background-color: #0081ff;
+                    }
+                    &::after {
+                        display: none;
+                    }
+                }
+            }
+        }
+        &.ant-layout-sider-collapsed {
+            li {
+                margin-bottom: 16px;
+                color: #a7a8ab;
+                &:hover {
+                    color: #4169e1;
+                }
+            }
+        }
+
+        & .ant-menu {
+            background-color: #fff;
+        }
+
+        .menu-collapse {
+            font-size: 24px;
+            cursor: pointer;
+        }
+        .ant-menu-item {
+            background: rgba(65, 105, 225, 0.08);
+            border-radius: 15px;
+            &.ant-menu-item-selected {
+                color: #4169e1;
+            }
+        }
+        &.sidebar-mobile {
+            padding: 0;
+        }
+        .menu-collapse {
+            padding: 0.5rem 1rem;
+            margin-bottom: 12px;
+            border-bottom: 1px solid #e9f2ff;
+        }
+    }
+
+    .logo {
+        // padding: 15px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        img {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+        }
+    }
+    //Login Component
+
+    .login {
+        width: 100%;
+        height: 100vh;
+        overflow: hidden;
+        flex-grow: 1;
+        display: flex;
+        color: #44566c;
+        &-wrapper {
+            position: relative;
+            flex-grow: 1;
+            display: grid;
+            grid-template-columns: 1fr;
+            @include lg {
+                grid-template-columns: 1fr 33.3333rem;
+            }
+        }
+        &-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                margin-bottom: 6px;
+            }
+        }
+        &-left {
+            position: relative;
+            justify-content: flex-end;
+            padding: 0 40px 6rem;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            // background-image: url('../../images/sebastian.jpg');
+
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-position: center;
+            background-size: cover;
+            display: none;
+
+            @include md {
+                display: flex;
+            }
+            h1 {
+                margin-bottom: 2rem;
+                font-weight: 700;
+                color: #fff;
+                font-size: 3rem;
+                line-height: 1.2;
+                letter-spacing: 0.1em;
+                span {
+                    color: #0081ff;
+                }
+            }
+            p {
+                color: #fff;
+                margin-bottom: 0;
+                font-weight: 500;
+                line-height: 2.13333em;
+            }
+        }
+        &-right {
+            display: flex;
+            flex-direction: column;
+        }
+
+        & .register {
+            .ant-row.ant-form-item {
+                margin-bottom: 12px !important;
+            }
+        }
+
+        &-panel {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            z-index: 2;
+            padding: 0 40px;
+            width: 100%;
+            &__wrapper {
+                justify-content: center;
+                width: 100%;
+                max-width: 420px;
+                padding: 40px 0;
+                margin: auto;
+            }
+            &__content {
+                display: flex;
+                align-items: center;
+                flex-direction: column;
+            }
+            &__logo {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                img {
+                    flex-shrink: 0;
+                    min-width: 43px;
+                    width: 43px;
+                    margin-right: 5px;
+                }
+                > div {
+                    color: #44566c;
+                    font-family: 'Comfortaa', sans-serif;
+                    font-weight: 700;
+                    line-height: 1;
+                    letter-spacing: 0.1em;
+                    font-size: 1.875rem;
+                    white-space: nowrap;
+                }
+            }
+            &__sub {
+                margin: 40px 0;
+                color: #44566c;
+            }
+        }
+        &-content {
+            margin-bottom: 20px;
+            .ant-input-affix-wrapper {
+                border-radius: 6px;
+            }
+
+            &__input {
+                margin-bottom: 8px;
+                border-radius: 6px;
+            }
+        }
+        // .btn-login {
+        // 	display: flex;
+        // 	width: 100%;
+        // 	display: inline-flex;
+        // 	justify-content: center;
+        // 	align-items: center;
+        // 	height: 2.6667rem;
+        // 	padding: 0 1.4667rem;
+        // 	font-weight: 500;
+        // 	background-color: #0081ff;
+        // 	border: 1px solid #0081ff;
+        // 	border-radius: 5px;
+        // 	box-shadow: 0 5px 15px #0081ff26, 0 15px 40px #0081ff33;
+        // 	transition: all 0.3s cubic-bezier(0.075, 0.82, 0.165, 1);
+        // 	&:hover {
+        // 		background-color: #45a0fc;
+        // 	}
+        // }
+
+        .btn-login {
+            background-image: linear-gradient(to right, #56ccf2 0%, #2f80ed 51%, #56ccf2 100%);
+        }
+        .btn-login {
+            text-transform: uppercase;
+            transition: 0.5s;
+            background-size: 200% auto;
+
+            box-shadow: 0 0 20px #eee;
+
+            display: flex;
+            width: 100%;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            height: 2.6667rem;
+            padding: 0 1.4667rem;
+            font-weight: 500;
+
+            border-color: unset;
+            border-radius: 5px;
+        }
+
+        .btn-login:hover {
+            background-position: right center; /* change the direction of the change here */
+            color: #fff;
+            text-decoration: none;
+        }
+    }
+}

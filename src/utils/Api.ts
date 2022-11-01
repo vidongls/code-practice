@@ -1,8 +1,9 @@
+import { useAuthStore } from './../store/useAuthStore'
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios'
 
 import localStore from './localStore'
 
- class Api {
+class Api {
     axiosInstance: AxiosInstance
 
     constructor() {
@@ -20,7 +21,7 @@ import localStore from './localStore'
         return this.getInstance().get(url, config)
     }
 
-    put = (url: string ,config: AxiosRequestConfig) => {
+    put = (url: string, config: AxiosRequestConfig) => {
         return this.getInstance().put(url, config)
     }
 
@@ -37,7 +38,8 @@ import localStore from './localStore'
     }
 
     initialize = () => {
-        this.axiosInstance.defaults.headers.common['Authorization'] = 'Bearer ' + localStore.getItem('auth_token')
+        this.axiosInstance.defaults.headers.common['Authorization'] =
+            'Bearer ' + localStore.getStoreJson('auth-storage')?.user?.token
 
         this.axiosInstance.defaults.timeout = 30000
 

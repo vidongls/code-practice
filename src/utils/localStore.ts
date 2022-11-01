@@ -1,31 +1,39 @@
 class LocalStore {
-
     getItem = (key: string) => {
-        return localStorage.getItem(key);
-    };
+        return localStorage.getItem(key)
+    }
 
     setItem = (key: string, value: any) => {
-        return localStorage.setItem(key, value);
-    };
+        return localStorage.setItem(key, value)
+    }
 
     removeItem = (key: string) => {
-        return localStorage.removeItem(key);
-    };
+        return localStorage.removeItem(key)
+    }
 
     getJson = (key: string) => {
-        const value = this.getItem(key);
+        const value = this.getItem(key)
         try {
-            return value ? JSON.parse(value) : null;
+            return value ? JSON.parse(value) : null
         } catch {
-            return null;
+            return null
         }
-    };
+    }
+
+    getStoreJson = (key: string) => {
+        const value = this.getItem(key)
+        try {
+            return value ? JSON.parse(value)['state'] : null
+        } catch {
+            return null
+        }
+    }
 
     setJson = (key: string, value: any) => {
-        return this.setItem(key, JSON.stringify(value));
+        return this.setItem(key, JSON.stringify(value))
     }
 }
 
-const localStore = new LocalStore();
+const localStore = new LocalStore()
 
-export default localStore;
+export default localStore
