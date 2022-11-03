@@ -23,7 +23,7 @@ const Home: React.FC<IHomeProps> = props => {
                 </div>
                 {/* <div className="box text-center flex flex-col justify-between"> */}
                 <div>
-                    <Box className="flex flex-col justify-between p-10 text-center mt-4 lg:mt-0">
+                    <Box className="mt-4 flex flex-col justify-between p-10 text-center lg:mt-0">
                         <span className="mt-6 block">Rủ bạn bè vào cày rank thôi nào!</span>
                         <div className="mt-5 text-3xl font-semibold">
                             Thứ 5 <br /> 22/09/2022
