@@ -23,11 +23,12 @@ const Header: React.FC<IHeaderProp> = props => {
     ]
 
     return (
-        <HeaderAntd className="header sticky top-0 flex items-center bg-gray-700 h-[50px]">
+        <HeaderAntd className="header sticky top-0 z-50 flex h-[50px] items-center bg-gray-700">
             <div className="logo flex items-center justify-center">
                 <Link
                     to="/"
-                    className="text-4xl font-extrabold text-white">
+                    className="text-4xl font-extrabold text-white"
+                >
                     Non
                 </Link>
             </div>

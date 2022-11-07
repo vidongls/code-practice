@@ -1,4 +1,7 @@
-import React, { useState } from 'react'
+import { notification } from 'antd'
+import React, { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
+import ChallengeApi from '../../Api/Challenge/ChallengeApi'
 import { classNames } from '../../helper/helper'
 
 interface IItems {
@@ -15,8 +18,8 @@ const Tabs: React.FC<ITabsProps> = ({ items }) => {
     const [key, setKey] = useState<string>(items[0].key)
 
     return (
-        <div className="challenge-tabs flex">
-            <ul className="challenge-tabs__list">
+        <div className="challenge-tabs flex h-full">
+            <ul className="challenge-tabs__list border-r">
                 {items.map(item => (
                     <li
                         className={classNames(
@@ -27,7 +30,8 @@ const Tabs: React.FC<ITabsProps> = ({ items }) => {
                             }
                         )}
                         key={item.key}
-                        onClick={() => setKey(item.key)}>
+                        onClick={() => setKey(item.key)}
+                    >
                         {item.label}
                     </li>
                 ))}

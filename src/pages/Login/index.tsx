@@ -23,7 +23,6 @@ const Login: React.FC = () => {
             notification.success({ message: 'Đăng nhập thành công' })
             navigate('/')
         } catch (error) {
-            console.log("🚀 🐢 ~ error", error)
             notification.error({ message: 'Đăng nhập thất bại' })
         } finally {
             setLoading(false)

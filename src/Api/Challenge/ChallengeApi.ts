@@ -1,19 +1,28 @@
 import Api from '../../utils/Api'
 
 class ChallengeApi {
-    getAll = (params: any) => {
-        return Api.get('/challenge', params)
+    getAll = (params?: any) => {
+        return Api.get('/challenge', { params })
+    }
+
+    getOne = (id: string) => {
+        return Api.get(`/challenge/${id}`, {})
     }
 
     create = (data: any) => {
         return Api.post('/challenge', data)
     }
 
-    update = (id: number, data: any) => {
-        return Api.post(`/challenge/${id}`, data)
+    update = (id: string, data: any) => {
+        return Api.put(`/challenge/${id}`, data)
     }
-    remove = (id: number) => {
+
+    remove = (id: string) => {
         return Api.delete(`/challenge/${id}`, {})
+    }
+
+    compile = (data:any) =>{
+        return Api.post(`compile`, data)
     }
 }
 

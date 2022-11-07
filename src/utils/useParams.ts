@@ -6,25 +6,31 @@ const useParams = (currentParams = {}) => {
     const [searchParams, setSearchParams] = useSearchParams()
 
     useEffect(() => {
-        if (currentParams) {
+        if (Object.keys(currentParams).length) {
             addParams(currentParams)
         } else {
-            setParams(Object.fromEntries(searchParams))
+            const currParams = Object.fromEntries(searchParams)
+
+            if (Object.keys(currParams).length) {
+                setParams(Object.fromEntries(searchParams))
+            }
         }
     }, [])
 
     const addParams = (filter = {}) => {
         const newParams = { ...Object.fromEntries(searchParams), ...filter }
-        if (JSON.stringify(params) === JSON.stringify(newParams)) {
+        const newObj = JSON.stringify(newParams)
+
+        if (JSON.stringify(params) === JSON.stringify(filter)) {
             return
         }
 
-        if (filter) {
-            setSearchParams(newParams)
-            setParams(newParams)
+        if (Object.keys(filter).length) {
+            setSearchParams(JSON.parse(newObj))
+            setParams(JSON.parse(newObj))
         } else {
-            setSearchParams(filter)
-            setParams(filter)
+            setSearchParams({})
+            setParams({})
         }
     }
 

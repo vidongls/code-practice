@@ -1,31 +1,52 @@
-import { Button, Dropdown, Input, Menu, Table } from 'antd'
-import React from 'react'
+import { Button, Dropdown, Input, Menu, notification, Table } from 'antd'
+import React, { useEffect, useState } from 'react'
 import Box from '../../../../components/Box'
 import { DownOutlined, SearchOutlined, RedoOutlined } from '@ant-design/icons'
 import { ColumnsType } from 'antd/lib/table'
 import { Link } from 'react-router-dom'
-
-interface DataType {
-    key: React.Key
-    title: string
-    age: number
-    address: string
-}
+import ChallengeApi from '../../../../Api/Challenge/ChallengeApi'
+import { CHALLENGE_LEVEL, TChallengeLevel } from '../../../Challenge/constants/constants'
 
 interface IExerciseListProps {}
 
 const ExerciseList: React.FC<IExerciseListProps> = props => {
-    const columns: ColumnsType<DataType> = [
+    const [data, setData] = useState([])
+    useEffect(() => {
+        const getChallenge = async () => {
+            try {
+                const res = await ChallengeApi.getAll()
+                setData(res.data)
+            } catch (error) {
+                notification.error({ message: 'Có lỗi xảy ra!' })
+            }
+        }
+
+        getChallenge()
+    }, [])
+
+    const columns = [
         {
             title: <p className="font-semibold">Tiêu đề</p>,
             dataIndex: 'title',
-            render(title, record, index) {
-                return <Link to="/challenge">{title}</Link>
+            render: (title: string, record: any) => {
+                const id = record?._id
+                return (
+                    <Link
+                        to={`/challenge/${id}`}
+                        className="font-semibold text-blue-600"
+                    >
+                        {title}
+                    </Link>
+                )
             },
         },
         {
-            title: <p className="font-semibold">Mức độ</p>,
-            dataIndex: 'address',
+            title: 'Mức độ',
+            dataIndex: 'level',
+            key: 'level',
+            render: (text: TChallengeLevel) => {
+                return <span>{CHALLENGE_LEVEL[text]}</span>
+            },
         },
         {
             title: <p className="font-semibold">Đã nộp</p>,
@@ -60,35 +81,8 @@ const ExerciseList: React.FC<IExerciseListProps> = props => {
         />
     )
 
-    const data: DataType[] = [
-        {
-            key: '1',
-            title: 'John Brown',
-            age: 32,
-            address: 'New York No. 1 Lake Park',
-        },
-        {
-            key: '2',
-            title: 'Jim Green',
-            age: 42,
-            address: 'London No. 1 Lake Park',
-        },
-        {
-            key: '3',
-            title: 'Joe Black',
-            age: 32,
-            address: 'Sidney No. 1 Lake Park',
-        },
-        {
-            key: '4',
-            title: 'Jim Red',
-            age: 32,
-            address: 'London No. 2 Lake Park',
-        },
-    ]
-
     return (
-        <Box className="p-6">
+        <Box className="rounded-md p-6">
             <div className="mb-4 flex items-center justify-between">
                 <h3 className="text-medium text-lg">Danh sách bài tập</h3>
                 <div className="flex items-center gap-4">
@@ -112,6 +106,7 @@ const ExerciseList: React.FC<IExerciseListProps> = props => {
                 </div>
             </div>
             <Table
+                rowKey={record => record._id}
                 columns={columns}
                 dataSource={data}
             />

@@ -11,6 +11,7 @@ import PrivateRoute from './PrivateRoute'
 import AdminDefaultLayout from '../Admin/layout/AdminDefaultLayout'
 import AdminChallenge from '../Admin/pages/Challange'
 import ChallengeCreate from '../Admin/pages/Challange/Create'
+import ChallengeDetail from '../Admin/pages/Challange/Detail'
 
 const Router = () => {
     return (
@@ -42,7 +43,7 @@ const Router = () => {
             </Route>
 
             <Route
-                path="challenge"
+                path="challenge/:id"
                 element={<PrivateRoute Component={Challenge} />}
             />
 
@@ -54,7 +55,10 @@ const Router = () => {
                     path="challenge"
                     element={<AdminChallenge />}
                 />
-
+                <Route
+                    path="challenge/:id"
+                    element={<ChallengeDetail />}
+                />
                 <Route
                     path="challenge/create"
                     element={<ChallengeCreate />}

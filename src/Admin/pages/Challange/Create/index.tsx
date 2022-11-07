@@ -1,10 +1,11 @@
-import { Button, Form, Input, notification } from 'antd'
+import { Button, Form, Input, notification, Select } from 'antd'
 import React, { useState } from 'react'
 import ReactQuill from 'react-quill'
 import 'react-quill/dist/quill.snow.css'
 import { Link, useNavigate } from 'react-router-dom'
 import { ArrowLeftOutlined, PlusOutlined, MinusCircleOutlined } from '@ant-design/icons'
 import ChallengeApi from '../../../../Api/Challenge/ChallengeApi'
+import CodeEditor from '../../../../components/CodeEditor'
 
 interface IChallengeCreateProps {}
 
@@ -28,7 +29,6 @@ const ChallengeCreate: React.FC<IChallengeCreateProps> = props => {
                 })
                 .finally(() => setLoading(false))
         })
-        // console.log('first', form.getFieldsValue())
     }
 
     return (
@@ -68,6 +68,38 @@ const ChallengeCreate: React.FC<IChallengeCreateProps> = props => {
                         <Input placeholder="Nhập tiêu đề" />
                     </Form.Item>
                     <Form.Item
+                        label={<span>Độ khó</span>}
+                        name="level"
+                        className=" pr-5"
+                        wrapperCol={{ span: 24 }}
+                        rules={[{ required: true, message: 'Không được bỏ trống' }]}
+                    >
+                        <Select
+                            // style={{
+                            //     width: 120,
+                            // }}
+                            placeholder="Chọn độ khó"
+                            options={[
+                                {
+                                    value: 'EASY',
+                                    label: 'Dễ',
+                                },
+                                {
+                                    value: 'MEDIUM',
+                                    label: 'Thường',
+                                },
+                                {
+                                    value: 'HARD',
+                                    label: 'Khó',
+                                },
+                                {
+                                    value: 'EXPERT',
+                                    label: 'Chuyên gia',
+                                },
+                            ]}
+                        />
+                    </Form.Item>
+                    <Form.Item
                         label={<span>Mô tả</span>}
                         name="describe"
                         className="form-item-editor pr-5"
@@ -100,7 +132,6 @@ const ChallengeCreate: React.FC<IChallengeCreateProps> = props => {
                                             wrapperCol={{ span: 18, offset: 2 }}
                                             name={[name, 'input']}
                                             className="grow"
-                                            rules={[{ required: true, message: 'Nhập đầu vào' }]}
                                         >
                                             <Input.TextArea
                                                 rows={3}
