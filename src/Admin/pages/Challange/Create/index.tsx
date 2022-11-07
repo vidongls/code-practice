@@ -5,19 +5,21 @@ import 'react-quill/dist/quill.snow.css'
 import { Link, useNavigate } from 'react-router-dom'
 import { ArrowLeftOutlined, PlusOutlined, MinusCircleOutlined } from '@ant-design/icons'
 import ChallengeApi from '../../../../Api/Challenge/ChallengeApi'
-import CodeEditor from '../../../../components/CodeEditor'
 
+import Editor from '@monaco-editor/react'
 interface IChallengeCreateProps {}
 
 const ChallengeCreate: React.FC<IChallengeCreateProps> = props => {
     const [form] = Form.useForm()
     const [value, setValue] = useState('')
     const [loading, setLoading] = useState(false)
+    const [content, setContent] = useState('')
 
     const navigate = useNavigate()
 
     const handleCreate = () => {
         form.validateFields().then(values => {
+            console.log('🚀 🐢 ~ values', values)
             setLoading(true)
             ChallengeApi.create(values)
                 .then(res => {
@@ -112,6 +114,41 @@ const ChallengeCreate: React.FC<IChallengeCreateProps> = props => {
                             value={value}
                             onChange={setValue}
                         />
+                    </Form.Item>
+
+                    <Form.Item
+                        label={<span>Nội dung</span>}
+                        className="form-item-editor pr-5"
+                        wrapperCol={{ span: 24 }}
+                        name="content"
+                        rules={[{ required: true, message: 'Không được bỏ trống' }]}
+                    >
+                        <Editor
+                            theme={'light'}
+                            language={'javascript'}
+                            className="code-editor h-[500px] w-full border"
+                            saveViewState={false}
+                            // onChange={(value: any) => handleChangeEditor(value ?? '')}
+                        />
+                    </Form.Item>
+                    <Form.Item
+                        label={<span>Tên hàm</span>}
+                        className="form-item-editor pr-5"
+                        wrapperCol={{ span: 24 }}
+                        name="functionName"
+                        rules={[{ required: true, message: 'Không được bỏ trống' }]}
+                    >
+                        <Input placeholder="Nhập vào tên hàm" />
+                    </Form.Item>
+                    <Form.Item
+                        className="form-item-editor pr-5"
+                        wrapperCol={{ span: 18, offset: 3 }}
+                        rules={[{ required: true, message: 'Không được bỏ trống' }]}
+                    >
+                        <div>
+                            <span className="text-red-500">*</span>{' '}
+                            <span>Lưu ý: Nếu hàm có nhiều tham số các tham số sẽ cách nhau bằng dấu ","</span>
+                        </div>
                     </Form.Item>
 
                     <Form.List

@@ -1,17 +1,16 @@
-import { Typography, Table, Tooltip, Modal, Badge } from 'antd'
+import { Badge, Modal, Table, Typography } from 'antd'
 import React, { useState } from 'react'
-import { AlignType } from 'rc-table/lib/interface'
-import { CHALLENGE_LEVEL, CHALLENGE_LEVEL_COLOR, TChallengeLevel } from '../../../pages/Challenge/constants/constants'
-import { formatDate, truncateString } from '../../../helper/helper'
 import { Link } from 'react-router-dom'
+
+import { formatDate, truncateString } from '../../../helper/helper'
+import { CHALLENGE_LEVEL, CHALLENGE_LEVEL_COLOR, TChallengeLevel } from '../../../pages/Challenge/constants/constants'
+
 interface IListProps {
     data: any
     loading: boolean
 }
 const { Paragraph } = Typography
 const List: React.FC<IListProps> = ({ data, loading }) => {
-    const [ellipsis, setEllipsis] = useState(true)
-
     const columns = [
         {
             title: 'Mã challenge',
@@ -55,7 +54,7 @@ const List: React.FC<IListProps> = ({ data, loading }) => {
             render: (text: string) => {
                 return (
                     <div>
-                        <span>{truncateString(text, 80)}</span>
+                        <span dangerouslySetInnerHTML={{ __html: truncateString(text, 80) }}></span>
 
                         {text.length >= 80 && (
                             <span

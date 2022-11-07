@@ -15,6 +15,8 @@ export interface IDetail {
         input: string
         output: string
     }[]
+    content: string
+    functionName: string
 }
 
 interface IChallengeProps {}

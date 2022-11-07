@@ -24,7 +24,8 @@
 }
 
 .ant-form-item-explain-error {
-    margin: 6px 0 8px 0;
+    margin: 6px 0 16px 0;
+    font-size: 13px;
 }
 
 .ant-form-item-label {
@@ -42,10 +43,18 @@
 
 .ant-input-status-error:not(.ant-input-disabled):not(.ant-input-borderless).ant-input,
 .ant-input-status-error:not(.ant-input-disabled):not(.ant-input-borderless).ant-input:hover {
-    &::placeholder{
+    &::placeholder {
         color: #ff4d4f;
     }
 }
-.ant-form-item-label > label{
+
+.ant-select.ant-select-in-form-item.ant-select-status-error.ant-select-single.ant-select-show-arrow {
+    .ant-select-selector {
+        input::placeholder {
+            color: #ff4d4f;
+        }
+    }
+}
+.ant-form-item-label > label {
     height: unset !important;
 }

@@ -1,7 +1,7 @@
 import { RedoOutlined, CheckOutlined, CloseCircleOutlined } from '@ant-design/icons'
 import Editor from '@monaco-editor/react'
 import { Button, Select } from 'antd'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import ChallengeApi from '../../Api/Challenge/ChallengeApi'
 import { IDetail } from '../../pages/Challenge'
@@ -29,11 +29,15 @@ const options = {
 const CodeEditor: React.FC<ICodeEditorProps> = ({ detail }) => {
     const { id: challengeId } = useParams()
 
-    const [content, setContent] = useState<string>('')
+    const [content, setContent] = useState('')
     const [theme, setTheme] = useState<any>('light')
     const [language, setLanguage] = useState('javascript')
     const [compileResult, setCompileResult] = useState<IResult>({} as IResult)
     const [loading, setLoading] = useState(false)
+
+    useEffect(() => {
+        setContent(detail.content)
+    }, [detail.content])
 
     const handleChangeEditor = (value: string) => {
         setContent(value)
@@ -63,6 +67,7 @@ const CodeEditor: React.FC<ICodeEditorProps> = ({ detail }) => {
         setLoading(true)
         try {
             const res = await ChallengeApi.compile(data)
+            console.log('sa', res.data.data.split('ReferenceError')[1])
             setCompileResult(res.data)
         } catch (error) {
             console.log('🚀 🐢 ~ error', error)
@@ -70,6 +75,7 @@ const CodeEditor: React.FC<ICodeEditorProps> = ({ detail }) => {
             setLoading(false)
         }
     }
+
     return (
         <div className="p-2">
             <div className="flex items-center justify-between gap-3 bg-gray-50 p-5">
@@ -114,7 +120,7 @@ const CodeEditor: React.FC<ICodeEditorProps> = ({ detail }) => {
                     className="code-editor h-[700px] w-full"
                     theme={theme}
                     language={language}
-                    defaultValue={content}
+                    value={content}
                     saveViewState={false}
                     options={options}
                     onChange={(value: any) => handleChangeEditor(value ?? '')}
@@ -139,7 +145,7 @@ const CodeEditor: React.FC<ICodeEditorProps> = ({ detail }) => {
                 </div>
             </div>
 
-            <div className="border border-gray-200 bg-white p-7">
+            {/* <div className="border border-gray-200 bg-white p-7">
                 {loading ? (
                     <span>Processing...</span>
                 ) : (
@@ -181,7 +187,7 @@ const CodeEditor: React.FC<ICodeEditorProps> = ({ detail }) => {
                         )
                     })
                 )}
-            </div>
+            </div> */}
         </div>
     )
 }
