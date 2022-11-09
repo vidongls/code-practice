@@ -1,15 +1,14 @@
-import { Badge, Modal, Table, Typography } from 'antd'
+import { Badge, Modal, Table } from 'antd'
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 
-import { formatDate, truncateString } from '../../../helper/helper'
+import { classNames, formatDate, truncateString } from '../../../helper/helper'
 import { CHALLENGE_LEVEL, CHALLENGE_LEVEL_COLOR, TChallengeLevel } from '../../../pages/Challenge/constants/constants'
 
 interface IListProps {
     data: any
     loading: boolean
 }
-const { Paragraph } = Typography
 const List: React.FC<IListProps> = ({ data, loading }) => {
     const columns = [
         {
@@ -39,10 +38,13 @@ const List: React.FC<IListProps> = ({ data, loading }) => {
             key: 'level',
             render: (text: TChallengeLevel) => {
                 return (
-                    <Badge
-                        color={CHALLENGE_LEVEL_COLOR[text]}
-                        text={CHALLENGE_LEVEL[text]}
-                    />
+                    <span
+                        className={classNames('rounded px-2.5 py-0.5 text-xs font-semibold', {
+                            [CHALLENGE_LEVEL_COLOR[text]]: true,
+                        })}
+                    >
+                        {CHALLENGE_LEVEL[text]}
+                    </span>
                 )
             },
         },
@@ -54,9 +56,9 @@ const List: React.FC<IListProps> = ({ data, loading }) => {
             render: (text: string) => {
                 return (
                     <div>
-                        <span dangerouslySetInnerHTML={{ __html: truncateString(text, 80) }}></span>
+                        <span dangerouslySetInnerHTML={{ __html: truncateString(text, 100) }}></span>
 
-                        {text.length >= 80 && (
+                        {text.length >= 100 && (
                             <span
                                 onClick={() => onViewDescribe(text)}
                                 className="ml-2 cursor-pointer whitespace-nowrap text-blue-500 hover:text-blue-400"

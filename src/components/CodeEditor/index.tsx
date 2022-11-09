@@ -11,8 +11,10 @@ import { defineTheme, monacoThemes, TThemes } from './defineTheme'
 interface IResult {
     data: string
     result: {
+        data: string
         status: boolean
-        testCase: number
+        testCaseInput: string
+        expectedOutput: string
     }[]
 }
 
@@ -67,7 +69,9 @@ const CodeEditor: React.FC<ICodeEditorProps> = ({ detail }) => {
         setLoading(true)
         try {
             const res = await ChallengeApi.compile(data)
-            console.log('sa', res.data.data.split('ReferenceError')[1])
+            // console.log('sa', res.data.data.split('ReferenceError')[1])
+            console.log('res.data', res.data)
+
             setCompileResult(res.data)
         } catch (error) {
             console.log('🚀 🐢 ~ error', error)
@@ -145,12 +149,12 @@ const CodeEditor: React.FC<ICodeEditorProps> = ({ detail }) => {
                 </div>
             </div>
 
-            {/* <div className="border border-gray-200 bg-white p-7">
+            <div className="border border-gray-200 bg-white p-7">
                 {loading ? (
                     <span>Processing...</span>
                 ) : (
                     compileResult?.data &&
-                    detail?.testCase?.map((item, idx) => {
+                    compileResult?.result?.map((item, idx) => {
                         return (
                             <div
                                 className="mb-4 grid grid-cols-3 gap-6 border-b pb-14"
@@ -172,22 +176,22 @@ const CodeEditor: React.FC<ICodeEditorProps> = ({ detail }) => {
                                 </div>
                                 <div className="col-span-2">
                                     <span>Compiler Message</span>
-                                    <pre className="mt-2 mb-5 w-full bg-gray-100 p-5 ">{compileResult.data}</pre>
+                                    <pre className="mt-2 mb-5 w-full bg-gray-100 p-5 ">{item.data}</pre>
 
                                     <span>Input </span>
-                                    <pre className="mt-2 mb-5 w-full bg-gray-100 p-2">{item.input}</pre>
+                                    <pre className="mt-2 mb-5 w-full bg-gray-100 p-2">{item.testCaseInput}</pre>
 
                                     <span>Your Output</span>
-                                    <pre className="mt-2 mb-5 w-full bg-gray-100 p-2 ">{compileResult.data}</pre>
+                                    <pre className="mt-2 mb-5 w-full bg-gray-100 p-2 ">{item.data}</pre>
 
                                     <span>Expected Output</span>
-                                    <pre className="mt-2 w-full bg-gray-100 p-2">{item.output}</pre>
+                                    <pre className="mt-2 w-full bg-gray-100 p-2">{item.expectedOutput}</pre>
                                 </div>
                             </div>
                         )
                     })
                 )}
-            </div> */}
+            </div>
         </div>
     )
 }

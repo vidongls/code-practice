@@ -13,7 +13,6 @@ const ChallengeCreate: React.FC<IChallengeCreateProps> = props => {
     const [form] = Form.useForm()
     const [value, setValue] = useState('')
     const [loading, setLoading] = useState(false)
-    const [content, setContent] = useState('')
 
     const navigate = useNavigate()
 
@@ -141,7 +140,7 @@ const ChallengeCreate: React.FC<IChallengeCreateProps> = props => {
                         <Input placeholder="Nhập vào tên hàm" />
                     </Form.Item>
                     <Form.Item
-                        className="form-item-editor pr-5"
+                        className="mb-3 pr-5"
                         wrapperCol={{ span: 18, offset: 3 }}
                         rules={[{ required: true, message: 'Không được bỏ trống' }]}
                     >

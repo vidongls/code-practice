@@ -5,7 +5,8 @@ import { DownOutlined, SearchOutlined, RedoOutlined } from '@ant-design/icons'
 import { ColumnsType } from 'antd/lib/table'
 import { Link } from 'react-router-dom'
 import ChallengeApi from '../../../../Api/Challenge/ChallengeApi'
-import { CHALLENGE_LEVEL, TChallengeLevel } from '../../../Challenge/constants/constants'
+import { CHALLENGE_LEVEL, CHALLENGE_LEVEL_COLOR, TChallengeLevel } from '../../../Challenge/constants/constants'
+import { classNames } from '../../../../helper/helper'
 
 interface IExerciseListProps {}
 
@@ -45,7 +46,15 @@ const ExerciseList: React.FC<IExerciseListProps> = props => {
             dataIndex: 'level',
             key: 'level',
             render: (text: TChallengeLevel) => {
-                return <span>{CHALLENGE_LEVEL[text]}</span>
+                return (
+                    <span
+                        className={classNames('rounded px-2.5 py-0.5 text-xs font-semibold', {
+                            [CHALLENGE_LEVEL_COLOR[text]]: true,
+                        })}
+                    >
+                        {CHALLENGE_LEVEL[text]}
+                    </span>
+                )
             },
         },
         {
