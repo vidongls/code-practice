@@ -12,7 +12,7 @@ interface IDescriptionProps {
 const Description: React.FC<IDescriptionProps> = ({ loading, detail }) => {
     return (
         <Spin spinning={loading}>
-            <h2 className="mb-2 text-2xl font-medium">{detail.title}</h2>
+            <h2 className="mb-5 text-2xl font-medium">{detail.title}</h2>
 
             {/* <span className="my-2 inline-block text-lg font-semibold">Đề bài</span> */}
             <div dangerouslySetInnerHTML={{ __html: detail.describe }}></div>
