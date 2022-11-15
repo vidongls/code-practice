@@ -18,7 +18,6 @@ const ChallengeCreate: React.FC<IChallengeCreateProps> = props => {
 
     const handleCreate = () => {
         form.validateFields().then(values => {
-            console.log('🚀 🐢 ~ values', values)
             setLoading(true)
             ChallengeApi.create(values)
                 .then(res => {

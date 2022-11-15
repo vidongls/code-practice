@@ -12,6 +12,7 @@ import AdminDefaultLayout from '../Admin/layout/AdminDefaultLayout'
 import AdminChallenge from '../Admin/pages/Challange'
 import ChallengeCreate from '../Admin/pages/Challange/Create'
 import ChallengeDetail from '../Admin/pages/Challange/Detail'
+import Submission from '../pages/Submission'
 
 const Router = () => {
     return (
@@ -39,6 +40,10 @@ const Router = () => {
                 <Route
                     path="exam"
                     element={<Exam />}
+                />
+                 <Route
+                    path="submissions"
+                    element={<Submission />}
                 />
             </Route>
 

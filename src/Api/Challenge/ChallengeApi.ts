@@ -21,8 +21,12 @@ class ChallengeApi {
         return Api.delete(`/challenge/${id}`, {})
     }
 
-    compile = (data:any) =>{
+    compile = (data: any) => {
         return Api.post(`compile`, data)
+    }
+
+    submitChallenge = (data: any) => {
+        return Api.post(`submit/challenge`, data)
     }
 }
 

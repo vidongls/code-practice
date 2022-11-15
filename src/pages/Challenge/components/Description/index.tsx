@@ -1,8 +1,7 @@
-import { notification, Spin } from 'antd'
-import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { Spin } from 'antd'
+import React from 'react'
+
 import { IDetail } from '../..'
-import ChallengeApi from '../../../../Api/Challenge/ChallengeApi'
 
 interface IDescriptionProps {
     loading: boolean

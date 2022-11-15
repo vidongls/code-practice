@@ -1,4 +1,3 @@
-import { RegisterCommand } from '../../Command/RegisterCommand'
 import Api from '../../utils/Api'
 
 class UserApi {
@@ -13,7 +12,6 @@ class UserApi {
     logout = () => {
         return Api.post('/user/logout', {})
     }
-
 }
 
 export default new UserApi()

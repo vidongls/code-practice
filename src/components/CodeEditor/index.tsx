@@ -1,6 +1,6 @@
-import { RedoOutlined, CheckOutlined, CloseCircleOutlined } from '@ant-design/icons'
+import { RedoOutlined, CheckOutlined, CloseCircleOutlined, ExclamationCircleOutlined } from '@ant-design/icons'
 import Editor from '@monaco-editor/react'
-import { Button, Select } from 'antd'
+import { Button, Modal, notification, Select } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import ChallengeApi from '../../Api/Challenge/ChallengeApi'
@@ -10,6 +10,8 @@ import { defineTheme, monacoThemes, TThemes } from './defineTheme'
 
 interface IResult {
     data: string
+    success: boolean
+    err: String
     result: {
         data: string
         status: boolean
@@ -69,15 +71,33 @@ const CodeEditor: React.FC<ICodeEditorProps> = ({ detail }) => {
         setLoading(true)
         try {
             const res = await ChallengeApi.compile(data)
-            // console.log('sa', res.data.data.split('ReferenceError')[1])
-            console.log('res.data', res.data)
-
             setCompileResult(res.data)
         } catch (error) {
             console.log('🚀 🐢 ~ error', error)
         } finally {
             setLoading(false)
         }
+    }
+
+    const confirmSubmit = () => {
+        Modal.confirm({
+            title: 'Bạn chắc chắn muốn nộp bài?',
+            icon: <ExclamationCircleOutlined />,
+            content: 'Some descriptions',
+            onOk() {
+                return ChallengeApi.submitChallenge({ challengeId, answerContent: content })
+                    .then(res => {
+                        console.log('🧙 ~ res', res.data?.data)
+                        setCompileResult(res.data?.dataCompile)
+                        notification.success({ message: 'Nộp bài thành công' })
+                    })
+                    .catch(error => {
+                        notification.error({ message: 'Nộp bài thất bại' })
+                    })
+            },
+            cancelText: 'Quay lại',
+            okText: 'Nộp',
+        })
     }
 
     return (
@@ -103,7 +123,7 @@ const CodeEditor: React.FC<ICodeEditorProps> = ({ detail }) => {
                     </Select>
 
                     <Button
-                        icon={<RedoOutlined />}
+                        icon={<RedoOutlined className="mt-1" />}
                         className="ml-2 rounded"
                     />
                 </div>
@@ -143,8 +163,9 @@ const CodeEditor: React.FC<ICodeEditorProps> = ({ detail }) => {
                     <Button
                         type="primary"
                         className="h-9 rounded-sm bg-primary shadow-lg"
+                        onClick={confirmSubmit}
                     >
-                        Submit code
+                        Nộp bài
                     </Button>
                 </div>
             </div>
@@ -152,8 +173,7 @@ const CodeEditor: React.FC<ICodeEditorProps> = ({ detail }) => {
             <div className="border border-gray-200 bg-white p-7">
                 {loading ? (
                     <span>Processing...</span>
-                ) : (
-                    compileResult?.data &&
+                ) : compileResult.success ? (
                     compileResult?.result?.map((item, idx) => {
                         return (
                             <div
@@ -190,6 +210,8 @@ const CodeEditor: React.FC<ICodeEditorProps> = ({ detail }) => {
                             </div>
                         )
                     })
+                ) : (
+                    <pre className="mt-2 mb-5 w-full bg-gray-100 p-2 ">{compileResult.err}</pre>
                 )}
             </div>
         </div>

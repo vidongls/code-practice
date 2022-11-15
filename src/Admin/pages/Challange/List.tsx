@@ -1,15 +1,18 @@
-import { Badge, Modal, Table } from 'antd'
+import { Modal, notification, Spin, Table, Tooltip } from 'antd'
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { DeleteOutlined, ExclamationCircleOutlined } from '@ant-design/icons'
 
 import { classNames, formatDate, truncateString } from '../../../helper/helper'
 import { CHALLENGE_LEVEL, CHALLENGE_LEVEL_COLOR, TChallengeLevel } from '../../../pages/Challenge/constants/constants'
+import ChallengeApi from '../../../Api/Challenge/ChallengeApi'
 
 interface IListProps {
     data: any
     loading: boolean
 }
 const List: React.FC<IListProps> = ({ data, loading }) => {
+    const [loadingDelete, setLoadingDelete] = useState(false)
     const columns = [
         {
             title: 'Mã challenge',
@@ -83,6 +86,23 @@ const List: React.FC<IListProps> = ({ data, loading }) => {
             dataIndex: 'createdAt',
             render: (text: string) => <span>{formatDate(text)}</span>,
         },
+        {
+            title: '',
+            key: '_id',
+            dataIndex: '_id',
+            render: (text: string) => (
+                <div>
+                    <Tooltip title="Xóa">
+                        <Spin spinning={loadingDelete}>
+                            <DeleteOutlined
+                                className="cursor-pointer p-3 hover:text-red-500"
+                                onClick={() => onDeleteChallenge(text)}
+                            />
+                        </Spin>
+                    </Tooltip>
+                </div>
+            ),
+        },
     ]
 
     const onViewDescribe = (content: string) => {
@@ -97,25 +117,68 @@ const List: React.FC<IListProps> = ({ data, loading }) => {
         })
     }
 
-    return (
-        <div className="rounded-md bg-white p-6 ">
-            <div className="my-6 mt-0 flex items-center">
-                <h3 className="text-base font-semibold">Danh sách challenge</h3>
+    // const onConfirmDelete = (id: string) => {
+    //     Modal.confirm({
+    //         title: 'Bạn thực sự muốn xóa challenge này?',
+    //         icon: <ExclamationCircleOutlined />,
+    //         width: 600,
+    //         content: '',
+    //         closable: true,
+    //         cancelText: 'Đóng',
+    //         okText: 'Xoá',
+    //         okButtonProps: { loading: loadingDelete },
+    //         onOk: () => onDeleteChallenge(id),
+    //     })
+    // }
 
-                <span className="text-gray-900y ml-2 inline-flex h-5 w-5 items-center justify-center rounded-full bg-blue-200 text-xs font-semibold ">
-                    2
-                </span>
+    const onDeleteChallenge = (id: string) => {
+        Modal.confirm({
+            title: 'Bạn thực sự muốn xóa challenge này?',
+            icon: <ExclamationCircleOutlined />,
+            content: '',
+            onOk() {
+                return ChallengeApi.remove(id)
+                    .then(result => {
+                        notification.success({ message: 'Xoá challenge thành công' })
+                    })
+                    .catch(err => {
+                        notification.error({ message: 'Xoá challenge thất bại' })
+                    })
+            },
+            onCancel() {},
+        })
+    }
+
+    return (
+        <>
+            <div className="rounded-md bg-white p-6 ">
+                <div className="my-6 mt-0 flex items-center">
+                    <h3 className="text-base font-semibold">Danh sách challenge</h3>
+
+                    <span className="text-gray-900y ml-2 inline-flex h-5 w-5 items-center justify-center rounded-full bg-blue-200 text-xs font-semibold ">
+                        2
+                    </span>
+                </div>
+                <Table
+                    columns={columns}
+                    rowKey={(record: any) => record?._id}
+                    loading={loading}
+                    dataSource={data}
+                    scroll={{
+                        x: 768,
+                    }}
+                />
             </div>
-            <Table
-                columns={columns}
-                rowKey={(record: any) => record?._id}
-                loading={loading}
-                dataSource={data}
-                scroll={{
-                    x: 768,
-                }}
-            />
-        </div>
+            <Modal
+                title="Title"
+                // open={open}
+                // onOk={handleOk}
+                // confirmLoading={confirmLoading}
+                // onCancel={handleCancel}
+            >
+                {/* <p>{modalText}</p> */}
+            </Modal>
+        </>
     )
 }
 
