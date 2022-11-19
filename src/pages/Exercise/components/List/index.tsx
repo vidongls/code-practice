@@ -16,7 +16,7 @@ const ExerciseList: React.FC<IExerciseListProps> = props => {
         const getChallenge = async () => {
             try {
                 const res = await ChallengeApi.getAll()
-                setData(res.data)
+                setData(res.data?.challenge)
             } catch (error) {
                 notification.error({ message: 'Có lỗi xảy ra!' })
             }

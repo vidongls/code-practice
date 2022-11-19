@@ -135,7 +135,7 @@ const CodeEditor: React.FC<ICodeEditorProps> = ({ detail }) => {
                         className="w-36"
                     >
                         <Option value="javascript">Javascript</Option>
-                        <Option value="cpp">C++</Option>
+                        {/* <Option value="cpp">C++</Option> */}
                     </Select>
                 </div>
             </div>

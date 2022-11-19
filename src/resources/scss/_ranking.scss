@@ -1,0 +1,21 @@
+.table-ranking {
+    .ant-table-thead > tr > th {
+        border-color: #f0f0f0;
+    }
+    .ant-table {
+        background: transparent;
+    }
+    .ant-table-cell {
+        &::before {
+            display: none;
+        }
+    }
+
+    // .ant-table-tbody {
+    //     .ant-table-cell {
+    //         &:last-child {
+    //             border-bottom: none;
+    //         }
+    //     }
+    // }
+}

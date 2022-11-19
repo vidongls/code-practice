@@ -5,10 +5,12 @@ import ChallengeApi from '../../Api/Challenge/ChallengeApi'
 import CodeEditor from '../../components/CodeEditor'
 
 import Tabs from '../../components/Tabs'
+import Comment from './components/Comment'
 
 import Description from './components/Description'
 import Header from './components/Header'
 export interface IDetail {
+    _id: string
     title: string
     describe: string
     testCase: {
@@ -53,21 +55,23 @@ const Challenge: React.FC<IChallengeProps> = props => {
                 />
             ),
         },
-        { label: 'Thảo luận', key: 'discussion', content: 'dis' },
-        { label: 'Bảng xếp hạng', key: 'ranking', content: 'bxh' },
+        { label: 'Thảo luận', key: 'discussion', content: <Comment challengeId={detail._id} /> },
+        // { label: 'Bảng xếp hạng', key: 'ranking', content: 'bxh' },
     ]
     return (
         <div className="bg-white">
             <Header />
             {/* h-[calc(100vh_-_50px)] */}
-            <div className="grid  grid-cols-2 bg-white ">
-                <div className="overflow-y-auto shadow-xl shadow-gray-200">
+            <div className="grid  grid-cols-3 bg-white ">
+                <div className="col-spa overflow-y-auto shadow-xl shadow-gray-200">
                     <Tabs items={items} />
                 </div>
 
-                <Spin spinning={loading}>
-                    <CodeEditor detail={detail} />
-                </Spin>
+                <div className="col-span-2">
+                    <Spin spinning={loading}>
+                        <CodeEditor detail={detail} />
+                    </Spin>
+                </div>
             </div>
         </div>
     )

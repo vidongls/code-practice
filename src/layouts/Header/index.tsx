@@ -4,7 +4,6 @@ import { Avatar, Button, Dropdown, Layout, Menu } from 'antd'
 import Navbar from './Navbar'
 import { useNavigate } from 'react-router-dom'
 import { useAuthStore } from '../../store/useAuthStore'
-import localStore from '../../utils/localStore'
 
 const { Header: HeaderAntd } = Layout
 
@@ -33,7 +32,7 @@ const Header: React.FC = props => {
     )
 
     return (
-        <HeaderAntd className="header sticky top-0 mb-5 bg-white">
+        <HeaderAntd className="header sticky top-0 z-50 mb-5 bg-white">
             <div className=" flex items-center justify-between px-9">
                 <Navbar />
 

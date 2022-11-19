@@ -28,6 +28,14 @@ class ChallengeApi {
     submitChallenge = (data: any) => {
         return Api.post(`submit/challenge`, data)
     }
+
+    userDoChallenge = (params?: any) => {
+        return Api.get('/challenge', { params })
+    }
+
+    getNewestChallenge = () => {
+        return Api.get('/challenge/all/newest', {})
+    }
 }
 
 export default new ChallengeApi()

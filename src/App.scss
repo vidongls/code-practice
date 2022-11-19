@@ -2,15 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
-@import "antd/dist/antd.css";
-@import "resources/scss/mixins/breakpoint";
+@import 'antd/dist/antd.css';
+@import 'resources/scss/mixins/breakpoint';
 
+@import 'resources/scss/ant-custom';
+@import 'resources/scss/main.scss';
 
-@import "resources/scss/ant-custom";
-@import "resources/scss/main.scss";
-
-@import "resources/scss/_common";
-@import "resources/scss/_layout";
-@import "resources/scss/admin-layout";
-@import "resources/scss/challenge";
-
+@import 'resources/scss/_common';
+@import 'resources/scss/_layout';
+@import 'resources/scss/admin-layout';
+@import 'resources/scss/challenge';
+@import 'resources/scss/ranking';
