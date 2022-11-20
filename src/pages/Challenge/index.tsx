@@ -31,7 +31,6 @@ const Challenge: React.FC<IChallengeProps> = props => {
     useEffect(() => {
         const getDetailChallenge = async () => {
             setLoading(true)
-            console.log('as')
             try {
                 const res = await ChallengeApi.getOne(id!)
                 setDetail(res.data)

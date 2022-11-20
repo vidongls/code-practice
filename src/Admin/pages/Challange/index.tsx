@@ -18,7 +18,7 @@ const AdminChallenge: React.FC<IAdminChallengeProps> = props => {
             setLoading(true)
             ChallengeApi.getAll(params)
                 .then(res => {
-                    setData(res.data)
+                    setData(res.data?.challenge)
                 })
                 .catch(error => {})
                 .finally(() => {
