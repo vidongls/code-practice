@@ -1,13 +1,18 @@
-import './App.scss';
+import './App.scss'
 
-import React from 'react';
+import React, { useEffect } from 'react'
 
-import Router from './router';
+import Router from './router'
+import { fireSet } from './utils/firebaseUtil'
 
 function App() {
-	return <Router />;
+    // useEffect(() => {
+    //     fireSet('hehe', true)
+    // }, [])
+
+    return <Router />
 }
 
-export default App;
+export default App
 
 // zustand, axios, monaco editor, chart js.

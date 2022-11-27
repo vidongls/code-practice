@@ -12,6 +12,10 @@ class UserApi {
     logout = () => {
         return Api.post('/user/logout', {})
     }
+
+    getAll = (params?: any) => {
+        return Api.get('/user', { params })
+    }
 }
 
 export default new UserApi()

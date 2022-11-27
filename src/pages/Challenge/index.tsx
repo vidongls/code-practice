@@ -1,11 +1,11 @@
 import { notification, Spin } from 'antd'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import ChallengeApi from '../../Api/Challenge/ChallengeApi'
 import CodeEditor from '../../components/CodeEditor'
 
 import Tabs from '../../components/Tabs'
-import Comment from './components/Comment'
+import Comment, { IComment } from './components/Comment'
 
 import Description from './components/Description'
 import Header from './components/Header'
@@ -19,6 +19,7 @@ export interface IDetail {
     }[]
     content: string
     functionName: string
+    comments: IComment[]
 }
 
 interface IChallengeProps {}
@@ -28,20 +29,21 @@ const Challenge: React.FC<IChallengeProps> = props => {
     const [loading, setLoading] = useState(false)
     const [detail, setDetail] = useState<IDetail>({} as IDetail)
 
-    useEffect(() => {
-        const getDetailChallenge = async () => {
-            setLoading(true)
-            try {
-                const res = await ChallengeApi.getOne(id!)
-                setDetail(res.data)
-            } catch (error) {
-                notification.error({ message: 'Có lỗi xảy ra!' })
-            } finally {
-                setLoading(false)
-            }
+    const getDetailChallenge = useCallback(async () => {
+        setLoading(true)
+        try {
+            const res = await ChallengeApi.getOne(id!)
+            setDetail(res.data)
+        } catch (error) {
+            notification.error({ message: 'Có lỗi xảy ra!' })
+        } finally {
+            setLoading(false)
         }
-        getDetailChallenge()
     }, [id])
+
+    useEffect(() => {
+        getDetailChallenge()
+    }, [getDetailChallenge])
 
     const items = [
         {
@@ -54,19 +56,29 @@ const Challenge: React.FC<IChallengeProps> = props => {
                 />
             ),
         },
-        { label: 'Thảo luận', key: 'discussion', content: <Comment challengeId={detail._id} /> },
+        {
+            label: 'Thảo luận',
+            key: 'discussion',
+            content: (
+                <Comment
+                    challengeId={detail._id}
+                    comments={detail.comments}
+                    refetch={getDetailChallenge}
+                />
+            ),
+        },
         // { label: 'Bảng xếp hạng', key: 'ranking', content: 'bxh' },
     ]
     return (
         <div className="bg-white">
             <Header />
             {/* h-[calc(100vh_-_50px)] */}
-            <div className="grid  grid-cols-3 bg-white ">
-                <div className="col-spa overflow-y-auto shadow-xl shadow-gray-200">
+            <div className="grid  grid-cols-5 bg-white ">
+                <div className="col-span-2 overflow-y-auto shadow-xl shadow-gray-200">
                     <Tabs items={items} />
                 </div>
 
-                <div className="col-span-2">
+                <div className="col-span-3">
                     <Spin spinning={loading}>
                         <CodeEditor detail={detail} />
                     </Spin>

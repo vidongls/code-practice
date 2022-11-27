@@ -58,3 +58,10 @@
 .ant-form-item-label > label {
     height: unset !important;
 }
+
+.complete-ant {
+    &.ant-select:not(.ant-select-disabled):hover .ant-select-selector {
+        border-color: unset;
+        border-right: unset;
+    }
+}

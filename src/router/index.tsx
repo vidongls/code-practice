@@ -13,6 +13,7 @@ import AdminChallenge from '../Admin/pages/Challange'
 import ChallengeCreate from '../Admin/pages/Challange/Create'
 import ChallengeDetail from '../Admin/pages/Challange/Detail'
 import Submission from '../pages/Submission'
+import Student from '../Admin/pages/Student'
 
 const Router = () => {
     return (
@@ -41,7 +42,7 @@ const Router = () => {
                     path="exam"
                     element={<Exam />}
                 />
-                 <Route
+                <Route
                     path="submissions"
                     element={<Submission />}
                 />
@@ -67,6 +68,10 @@ const Router = () => {
                 <Route
                     path="challenge/create"
                     element={<ChallengeCreate />}
+                />
+                <Route
+                    path="students"
+                    element={<Student />}
                 />
             </Route>
         </Routes>

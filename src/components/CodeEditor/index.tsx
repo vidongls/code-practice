@@ -101,7 +101,7 @@ const CodeEditor: React.FC<ICodeEditorProps> = ({ detail }) => {
     }
 
     return (
-        <div className="p-2">
+        <div className="p-2 w-full">
             <div className="flex items-center justify-between gap-3 bg-gray-50 p-5">
                 <div>
                     <span className="mr-2">Theme: </span>

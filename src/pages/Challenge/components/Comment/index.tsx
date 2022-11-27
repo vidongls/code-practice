@@ -1,25 +1,53 @@
-import { Button, Form, Input } from 'antd'
-import React from 'react'
+import { Button, Form, Input, notification } from 'antd'
+import React, { useState } from 'react'
 import CommentApi from '../../../../Api/Comment/CommentApi'
+import { formatDate } from '../../../../helper/helper'
 
-interface ICommentProps {
-    challengeId: String
+export interface IComment {
+    _id: string,
+    author: {
+        userName: string
+        avatar: string
+    }
+    content: string
+    createdAt: string
 }
 
-const Comment: React.FC<ICommentProps> = ({ challengeId }) => {
+interface ICommentProps {
+    challengeId: string
+    comments: IComment[],
+    refetch: ()=>void
+}
+
+const Comment: React.FC<ICommentProps> = ({ challengeId, comments, refetch }) => {
     const [form] = Form.useForm()
+
+    const [loading, setLoading] = useState(false)
 
     const handleSendComment = () => {
         form.validateFields().then(values => {
-            CommentApi.sendComment({ challengeId, ...values }).then(res => {
-                console.log('🧙 ~ res', res)
-            })
+            setLoading(true)
+
+            CommentApi.sendComment({ challengeId, ...values })
+                .then(res => {
+                    form.resetFields()
+                    refetch()
+                    notification.success({ message: 'Gửi bình luận thành công!' })
+                })
+                .catch(() => {
+                
+                    notification.error({ message: 'Có lỗi xảy ra!' })
+                })
+                .finally(() => {
+                    setLoading(false)
+                })
         })
     }
-
+    console.log('comments', comments)
     return (
         <div>
             <h2 className="text-2xl font-semibold">Bình luận</h2>
+
             <div className="mt-8">
                 <Form
                     className="mb-6"
@@ -45,37 +73,39 @@ const Comment: React.FC<ICommentProps> = ({ challengeId }) => {
                     <Button
                         className="  inline-flex items-center rounded-lg bg-primary py-2.5 px-4 text-center text-xs font-medium text-white focus:ring-2"
                         onClick={handleSendComment}
+                        loading={loading}
                     >
                         Bình luận
                     </Button>
                 </Form>
             </div>
             <div className="mt-12">
-                <div className="flex flex-col border-b pb-4">
-                    <div className="flex items-center">
-                        <p className="mr-3 inline-flex items-center text-sm text-gray-900 dark:text-white">
-                            <img
-                                className="mr-2 h-6 w-6 rounded-full"
-                                src="https://flowbite.com/docs/images/people/profile-picture-2.jpg"
-                                alt="Michael Gough"
-                            />
-                            Michael Gough
-                        </p>
-                        <p className="text-sm text-gray-600 dark:text-gray-400">
-                            <time
-                                dateTime="2022-02-08"
-                                title="February 8th, 2022"
-                            >
-                                Feb. 8, 2022
-                            </time>
-                        </p>
+                {comments?.map(comment => (
+                    <div className="mt-4 flex flex-col border-b pb-4" key={comment._id} >
+                        <div className="flex items-center">
+                            <p className="mr-3 inline-flex items-center text-sm text-gray-900 dark:text-white">
+                                <img
+                                    className="mr-2 h-6 w-6 rounded-full"
+                                    src={
+                                        comment.author.avatar ||
+                                        'https://flowbite.com/docs/images/people/profile-picture-2.jpg'
+                                    }
+                                    alt="Michael Gough"
+                                />
+                                {comment.author.userName}
+                            </p>
+                            <p className="text-xs text-gray-600 dark:text-gray-400">
+                                <time
+                                    dateTime="2022-02-08"
+                                    title="February 8th, 2022"
+                                >
+                                    {formatDate(comment.createdAt)}
+                                </time>
+                            </p>
+                        </div>
+                        <p className="py-3 text-gray-500 dark:text-gray-400">{comment.content}</p>
                     </div>
-                    <p className="py-3 text-gray-500 dark:text-gray-400">
-                        Very straight-to-point article. Really worth time reading. Thank you! But tools are just the
-                        instruments for the UX designers. The knowledge of the design tools are as important as the
-                        creation of the design strategy.
-                    </p>
-                </div>
+                ))}
             </div>
         </div>
     )
