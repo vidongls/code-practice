@@ -49,11 +49,11 @@ const ModalAddStudents: React.FC<IModalAddStudentsProps> = props => {
             dataIndex: 'email',
             key: 'email',
         },
-        {
-            title: 'Lớp',
-            dataIndex: 'level',
-            key: 'level',
-        },
+        // {
+        //     title: 'Lớp',
+        //     dataIndex: 'level',
+        //     key: 'level',
+        // },
 
         {
             title: '',
@@ -84,7 +84,7 @@ const ModalAddStudents: React.FC<IModalAddStudentsProps> = props => {
                 <PlusOutlined className="anticon-custom" />
                 Thêm sinh viên
             </Button>
-
+            {console.log('selectedItems', selectedItems)}
             {visible && (
                 <Modal
                     title="Thêm sinh viên"
@@ -111,7 +111,7 @@ const ModalAddStudents: React.FC<IModalAddStudentsProps> = props => {
 
                     <Table
                         columns={columns}
-                        rowKey={(record: any) => record?._id}
+                        rowKey={(record: any) => record?.id}
                         dataSource={selectedItems}
                         className="mt-10"
                         scroll={{

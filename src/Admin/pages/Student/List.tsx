@@ -14,6 +14,8 @@ interface IListProps {
 }
 const List: React.FC<IListProps> = ({ data, loading }) => {
     const [loadingDelete, setLoadingDelete] = useState(false)
+ 
+
 
     const columns = [
         {

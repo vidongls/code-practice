@@ -31,26 +31,13 @@ const SearchStudent: React.FC<ISearchStudentProps> = ({ selectedItems, setSelect
 
     const [loading, setLoading] = useState(false)
 
-    // useEffect(() => {
-    //     const timeout = setTimeout(() => {
-    //         setValue(tempValue)
-    //     }, 2000)
-
-    //     return () => clearTimeout(timeout)
-    // }, [tempValue])
-
     const debouncedSearchTerm = useDebounce(value, 1500)
 
     // Effect for API call
     useEffect(
         () => {
-            console.log('🧙 ~ debouncedSearchTerm', debouncedSearchTerm)
             if (debouncedSearchTerm) {
                 setLoading(true)
-                // searchCharacters(debouncedSearchTerm).then(results => {
-                //     setIsSearching(false)
-                //     setResults(results)
-                // })
 
                 UserApi.getAll({ keyword: debouncedSearchTerm })
                     .then(res => {
@@ -77,10 +64,15 @@ const SearchStudent: React.FC<ISearchStudentProps> = ({ selectedItems, setSelect
             label: `${option.userName} - ${option.code}`,
             value: option?._id,
             id: option?._id,
+            ...option,
         }
     }
 
     const onSelect = (option: any) => {
+        const selectedIds = selectedItems.map(item => item._id)
+        if (!selectedIds.includes(option._id)) {
+            setSelectedItems([...selectedItems, option])
+        }
         setValue('')
         setResults([])
     }
