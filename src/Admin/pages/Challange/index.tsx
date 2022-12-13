@@ -48,6 +48,7 @@ const AdminChallenge: React.FC<IAdminChallengeProps> = props => {
             />
             <List
                 data={data}
+                params={params}
                 loading={loading}
             />
         </div>

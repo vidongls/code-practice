@@ -9,7 +9,8 @@ import ChallengeApi from '../../../Api/Challenge/ChallengeApi'
 
 interface IListProps {
     data: any
-    loading: boolean
+    loading: boolean,
+    params: object
 }
 const List: React.FC<IListProps> = ({ data, loading }) => {
     const [loadingDelete, setLoadingDelete] = useState(false)

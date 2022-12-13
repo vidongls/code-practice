@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
 const useParams = (currentParams = {}) => {
-    const [params, setParams] = useState({})
+    const [params, setParams] = useState({} as any)
     const [searchParams, setSearchParams] = useSearchParams()
 
     useEffect(() => {

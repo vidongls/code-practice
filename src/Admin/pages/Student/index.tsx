@@ -6,6 +6,7 @@ import { Button } from 'antd'
 import { Link } from 'react-router-dom'
 import useParams from '../../../utils/useParams'
 import ChallengeApi from '../../../Api/Challenge/ChallengeApi'
+import ClassApi from '../../../Api/Class/ClassApi'
 
 interface IStudentsProps {}
 
@@ -13,19 +14,24 @@ const Students: React.FC<IStudentsProps> = props => {
     const { params, addParams } = useParams()
     const [data, setData] = useState()
     const [loading, setLoading] = useState(false)
+
     useEffect(() => {
         const getStudent = () => {
-            // setLoading(true)
-            // ChallengeApi.getAll(params)
-            //     .then(res => {
-            //         setData(res.data?.challenge)
-            //     })
-            //     .catch(error => {})
-            //     .finally(() => {
-            //         setLoading(false)
-            //     })
+            setLoading(true)
+            ClassApi.getOne(params.class)
+                .then(res => {
+                    setData(res.data?.data?.students)
+                })
+                .catch(error => {})
+                .finally(() => {
+                    setLoading(false)
+                })
         }
-        getStudent()
+
+        if (params.class) {
+            getStudent()
+        }
+
     }, [params])
 
     return (
@@ -48,6 +54,7 @@ const Students: React.FC<IStudentsProps> = props => {
             />
             <List
                 data={data}
+                params={params}
                 loading={loading}
             />
         </div>

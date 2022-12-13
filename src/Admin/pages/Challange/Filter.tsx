@@ -11,7 +11,7 @@ const Filter: React.FC<IFilterProps> = ({ params, addParams }) => {
 
     useEffect(() => {
         form.setFieldsValue(params)
-    }, [params])
+    }, [form, params])
 
     const handleClear = () => {
         addParams({})

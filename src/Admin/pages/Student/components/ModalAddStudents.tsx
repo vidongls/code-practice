@@ -1,10 +1,13 @@
 import { Button, Modal, Table, Tooltip } from 'antd'
 import React, { useState } from 'react'
-import { PlusOutlined } from '@ant-design/icons'
+import { PlusOutlined, UserOutlined } from '@ant-design/icons'
 import SearchStudent from './SearchStudent'
 import { Link } from 'react-router-dom'
-
-interface IModalAddStudentsProps {}
+import Avatar from '../../../../components/Avatar'
+import { AlignType } from 'rc-table/lib/interface'
+interface IModalAddStudentsProps {
+    classId: string
+}
 
 const ModalAddStudents: React.FC<IModalAddStudentsProps> = props => {
     const [visible, setVisible] = useState(false)
@@ -16,17 +19,26 @@ const ModalAddStudents: React.FC<IModalAddStudentsProps> = props => {
 
     const handleHideModal = () => {
         setVisible(false)
+        setSelectedItems([])
     }
     const columns = [
         {
             title: 'Avatar',
             dataIndex: 'avatar',
             key: 'avatar',
+            render: (text: string, record: any) => {
+                return (
+                    <div className="w-fit">
+                        <Avatar src={text} />
+                    </div>
+                )
+            },
         },
         {
             title: 'Mã sinh viên',
             dataIndex: 'code',
             key: 'code',
+            // align: 'right' as AlignType,
             render: (text: string, record: any) => {
                 const id = record?._id
                 return (
@@ -74,6 +86,10 @@ const ModalAddStudents: React.FC<IModalAddStudentsProps> = props => {
         },
     ]
 
+    const handleSave = () => {
+        console.log('á',selectedItems );
+    }
+
     return (
         <>
             <Button
@@ -84,11 +100,10 @@ const ModalAddStudents: React.FC<IModalAddStudentsProps> = props => {
                 <PlusOutlined className="anticon-custom" />
                 Thêm sinh viên
             </Button>
-            {console.log('selectedItems', selectedItems)}
             {visible && (
                 <Modal
                     title="Thêm sinh viên"
-                    open={visible}
+                    open={true}
                     // onOk={handleOk}
                     onCancel={handleHideModal}
                     width={1000}
@@ -98,6 +113,7 @@ const ModalAddStudents: React.FC<IModalAddStudentsProps> = props => {
                             <Button
                                 className="bg-primary"
                                 type="primary"
+                                onClick={handleSave}
                             >
                                 Lưu
                             </Button>

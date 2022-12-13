@@ -10,11 +10,14 @@ import ModalAddStudents from './components/ModalAddStudents'
 
 interface IListProps {
     data: any
-    loading: boolean
+    loading: boolean,
+    params: any
 }
-const List: React.FC<IListProps> = ({ data, loading }) => {
+const List: React.FC<IListProps> = ({ data, loading, params }) => {
     const [loadingDelete, setLoadingDelete] = useState(false)
  
+
+
 
 
     const columns = [
@@ -140,7 +143,7 @@ const List: React.FC<IListProps> = ({ data, loading }) => {
                             {data?.length || 0}
                         </span>
                     </div>
-                    <ModalAddStudents />
+                    <ModalAddStudents classId={params?.class}/>
                 </div>
                 <Table
                     columns={columns}
