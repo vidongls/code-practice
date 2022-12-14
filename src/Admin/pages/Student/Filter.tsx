@@ -12,7 +12,7 @@ const Filter: React.FC<IFilterProps> = ({ params, addParams }) => {
 
     useEffect(() => {
         form.setFieldsValue(params)
-    }, [params])
+    }, [form, params])
 
     const handleClear = () => {
         addParams({})
@@ -26,7 +26,6 @@ const Filter: React.FC<IFilterProps> = ({ params, addParams }) => {
     const onChangeSelect = (key: string, value: any) => {
         addParams({ [key]: value })
     }
-
     return (
         <div className="mb-6 rounded-md bg-white p-6 filter">
             <Form

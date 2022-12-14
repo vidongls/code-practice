@@ -4,9 +4,10 @@ import ClassApi from '../../../../Api/Class/ClassApi'
 
 interface ISelectClassProps {
     onChange: (value: any) => void
+    value?: any
 }
 
-const SelectClass: React.FC<ISelectClassProps> = ({ onChange }) => {
+const SelectClass: React.FC<ISelectClassProps> = ({ onChange, value }) => {
     const [data, setData] = useState([])
     const [loading, setLoading] = useState(false)
 
@@ -32,6 +33,7 @@ const SelectClass: React.FC<ISelectClassProps> = ({ onChange }) => {
             loading={loading}
             options={data.map((item: any) => ({ label: item.name, value: item._id }))}
             onChange={onChange}
+            value={value ? value : undefined}
         />
     )
 }

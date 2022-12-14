@@ -5,9 +5,16 @@ class ClassApi {
         return Api.get('/class/get-by/author', { params })
     }
 
-
-    getOne = (id:string) => {
+    getOne = (id: string) => {
         return Api.get(`/class/${id}`, {})
+    }
+
+    addMemberToClass = (classId: string, data: any) => {
+        return Api.post(`/class/${classId}/add-user`, data)
+    }
+
+    removeMember = (classId: string, data: any) => {
+        return Api.post(`/class/${classId}/remove-user`, data)
     }
 }
 

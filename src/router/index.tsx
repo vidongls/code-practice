@@ -14,6 +14,7 @@ import ChallengeCreate from '../Admin/pages/Challange/Create'
 import ChallengeDetail from '../Admin/pages/Challange/Detail'
 import Submission from '../pages/Submission'
 import Student from '../Admin/pages/Student'
+import Lobby from '../pages/Lobby'
 
 const Router = () => {
     return (
@@ -45,6 +46,10 @@ const Router = () => {
                 <Route
                     path="submissions"
                     element={<Submission />}
+                />
+                <Route
+                    path="lobby"
+                    element={<Lobby />}
                 />
             </Route>
 

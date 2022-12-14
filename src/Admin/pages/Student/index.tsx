@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import Filter from './Filter'
 import List from './List'
 import { PlusOutlined } from '@ant-design/icons'
@@ -15,24 +15,23 @@ const Students: React.FC<IStudentsProps> = props => {
     const [data, setData] = useState()
     const [loading, setLoading] = useState(false)
 
-    useEffect(() => {
-        const getStudent = () => {
-            setLoading(true)
-            ClassApi.getOne(params.class)
-                .then(res => {
-                    setData(res.data?.data?.students)
-                })
-                .catch(error => {})
-                .finally(() => {
-                    setLoading(false)
-                })
-        }
+    const getStudent = useCallback(() => {
+        setLoading(true)
+        ClassApi.getOne(params.class)
+            .then(res => {
+                setData(res.data?.data?.students)
+            })
+            .catch(error => {})
+            .finally(() => {
+                setLoading(false)
+            })
+    }, [params])
 
+    useEffect(() => {
         if (params.class) {
             getStudent()
         }
-
-    }, [params])
+    }, [getStudent, params.class])
 
     return (
         <div className="h-full w-full py-8 px-7">
@@ -56,6 +55,7 @@ const Students: React.FC<IStudentsProps> = props => {
                 data={data}
                 params={params}
                 loading={loading}
+                getStudent={getStudent}
             />
         </div>
     )

@@ -7,24 +7,30 @@ import { classNames } from '../../../helper/helper'
 import { CHALLENGE_LEVEL, CHALLENGE_LEVEL_COLOR, TChallengeLevel } from '../../../pages/Challenge/constants/constants'
 import ChallengeApi from '../../../Api/Challenge/ChallengeApi'
 import ModalAddStudents from './components/ModalAddStudents'
+import ClassApi from '../../../Api/Class/ClassApi'
+import Avatar from '../../../components/Avatar'
 
 interface IListProps {
     data: any
-    loading: boolean,
+    loading: boolean
     params: any
+    getStudent: () => void
 }
-const List: React.FC<IListProps> = ({ data, loading, params }) => {
+const List: React.FC<IListProps> = ({ data, loading, params, getStudent }) => {
     const [loadingDelete, setLoadingDelete] = useState(false)
- 
-
-
-
 
     const columns = [
         {
             title: 'Avatar',
             dataIndex: 'avatar',
             key: 'avatar',
+            render: (text: string, record: any) => {
+                return (
+                    <div className="w-fit">
+                        <Avatar src={text} />
+                    </div>
+                )
+            },
         },
         {
             title: 'Mã sinh viên',
@@ -120,8 +126,9 @@ const List: React.FC<IListProps> = ({ data, loading, params }) => {
             icon: <ExclamationCircleOutlined />,
             content: '',
             onOk() {
-                return ChallengeApi.remove(id)
+                return ClassApi.removeMember(params?.class, { student: id })
                     .then(result => {
+                        getStudent()
                         notification.success({ message: 'Xoá sinh viên thành công' })
                     })
                     .catch(err => {
@@ -143,7 +150,10 @@ const List: React.FC<IListProps> = ({ data, loading, params }) => {
                             {data?.length || 0}
                         </span>
                     </div>
-                    <ModalAddStudents classId={params?.class}/>
+                    <ModalAddStudents
+                        classId={params?.class}
+                        getStudent={getStudent}
+                    />
                 </div>
                 <Table
                     columns={columns}

@@ -3,8 +3,7 @@ import { Outlet } from 'react-router-dom'
 import Footer from './Footer'
 import Header from './Header'
 
-interface IDefaultLayoutProps {
-}
+interface IDefaultLayoutProps {}
 
 const DefaultLayout: React.FC<IDefaultLayoutProps> = () => {
     return (
@@ -13,7 +12,7 @@ const DefaultLayout: React.FC<IDefaultLayoutProps> = () => {
             <main>
                 <Outlet />
             </main>
-            <Footer />
+            {/* <Footer /> */}
         </>
     )
 }

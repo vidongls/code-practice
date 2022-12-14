@@ -1,17 +1,20 @@
-import { Button, Modal, Table, Tooltip } from 'antd'
+import { Button, Modal, notification, Spin, Table, Tooltip } from 'antd'
 import React, { useState } from 'react'
-import { PlusOutlined, UserOutlined } from '@ant-design/icons'
+import { PlusOutlined, UserOutlined, DeleteOutlined } from '@ant-design/icons'
 import SearchStudent from './SearchStudent'
 import { Link } from 'react-router-dom'
 import Avatar from '../../../../components/Avatar'
 import { AlignType } from 'rc-table/lib/interface'
+import ClassApi from '../../../../Api/Class/ClassApi'
 interface IModalAddStudentsProps {
     classId: string
+    getStudent: () => void
 }
 
-const ModalAddStudents: React.FC<IModalAddStudentsProps> = props => {
+const ModalAddStudents: React.FC<IModalAddStudentsProps> = ({ classId, getStudent }) => {
     const [visible, setVisible] = useState(false)
     const [selectedItems, setSelectedItems] = useState([])
+    const [loading, setLoading] = useState(false)
 
     const handleShowModal = () => {
         setVisible(true)
@@ -72,22 +75,34 @@ const ModalAddStudents: React.FC<IModalAddStudentsProps> = props => {
             key: '_id',
             dataIndex: '_id',
             render: (text: string) => (
-                <div>
-                    <Tooltip title="Xóa">
-                        {/* <Spin spinning={loadingDelete}>
-                            <DeleteOutlined
-                                className="cursor-pointer p-3 hover:text-red-500"
-                                onClick={() => onDeleteChallenge(text)}
-                            />
-                        </Spin> */}
-                    </Tooltip>
-                </div>
+                <Tooltip title="Xóa">
+                    <DeleteOutlined
+                        className="cursor-pointer p-3 hover:text-red-500"
+                        onClick={() => handleDeleteStudent(text)}
+                    />
+                </Tooltip>
             ),
         },
     ]
 
-    const handleSave = () => {
-        console.log('á',selectedItems );
+    const handleSave = async () => {
+        setLoading(true)
+
+        try {
+            const data = selectedItems.map((item: any) => item._id)
+            const res = await ClassApi.addMemberToClass(classId, { student: data })
+            handleHideModal()
+            getStudent()
+            notification.success({ message: 'Thêm sinh viên thành công!' })
+        } catch (error) {
+            notification.error({ message: 'Thêm sinh viên thất bại!' })
+        } finally {
+            setLoading(false)
+        }
+    }
+
+    const handleDeleteStudent = (id: string) => {
+        setSelectedItems(prev => prev.filter((item: any) => item._id !== id))
     }
 
     return (
@@ -114,6 +129,8 @@ const ModalAddStudents: React.FC<IModalAddStudentsProps> = props => {
                                 className="bg-primary"
                                 type="primary"
                                 onClick={handleSave}
+                                disabled={!selectedItems.length}
+                                loading={loading}
                             >
                                 Lưu
                             </Button>
