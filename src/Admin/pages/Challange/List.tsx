@@ -1,18 +1,21 @@
-import { Modal, notification, Spin, Table, Tooltip } from 'antd'
+import { Modal, notification, Spin, Switch, Table, Tooltip } from 'antd'
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { DeleteOutlined, ExclamationCircleOutlined } from '@ant-design/icons'
+import { DeleteOutlined, ExclamationCircleOutlined, PlayCircleOutlined } from '@ant-design/icons'
 
 import { classNames, formatDate, truncateString } from '../../../helper/helper'
 import { CHALLENGE_LEVEL, CHALLENGE_LEVEL_COLOR, TChallengeLevel } from '../../../pages/Challenge/constants/constants'
 import ChallengeApi from '../../../Api/Challenge/ChallengeApi'
+import { fireGet } from '../../../utils/firebaseUtil'
+import moment from 'moment'
 
 interface IListProps {
     data: any
-    loading: boolean,
+    loading: boolean
     params: object
+    getChallenge: () => void
 }
-const List: React.FC<IListProps> = ({ data, loading }) => {
+const List: React.FC<IListProps> = ({ data, loading, getChallenge }) => {
     const [loadingDelete, setLoadingDelete] = useState(false)
     const columns = [
         {
@@ -88,23 +91,87 @@ const List: React.FC<IListProps> = ({ data, loading }) => {
             render: (text: string) => <span>{formatDate(text)}</span>,
         },
         {
+            title: 'Realtime',
+            key: 'isRealtime',
+            dataIndex: 'isRealtime',
+            render: (status: boolean, record: any) => {
+                const id = record?._id
+
+                return (
+                    <Switch
+                        className="ant-switch"
+                        checked={status}
+                        onChange={(value: boolean) => onChangeRealtime(id, value)}
+                    />
+                )
+            },
+        },
+        {
             title: '',
             key: '_id',
             dataIndex: '_id',
-            render: (text: string) => (
-                <div>
-                    <Tooltip title="Xóa">
-                        <Spin spinning={loadingDelete}>
-                            <DeleteOutlined
-                                className="cursor-pointer p-3 hover:text-red-500"
-                                onClick={() => onDeleteChallenge(text)}
-                            />
-                        </Spin>
-                    </Tooltip>
-                </div>
-            ),
+            render: (text: string, record: any) => {
+                const isRealtime = record?.isRealtime
+                const startedAt = record?.startedAt
+
+                return (
+                    <div className="flex items-center">
+                        <Tooltip title="Xóa">
+                            <Spin spinning={loadingDelete}>
+                                <DeleteOutlined
+                                    className="cursor-pointer p-3 hover:text-red-500"
+                                    onClick={() => onDeleteChallenge(text)}
+                                />
+                            </Spin>
+                        </Tooltip>
+
+                        {isRealtime && (
+                            <>
+                                <Tooltip title="Bắt đầu">
+                                    <Spin spinning={loadingDelete}>
+                                        <PlayCircleOutlined
+                                            className="cursor-pointer p-3 hover:text-red-500"
+                                            onClick={() => onStartChallenge(text)}
+                                        />
+                                    </Spin>
+                                </Tooltip>
+                                <span>{moment(startedAt).startOf('minutes').fromNow()}</span>
+                            </>
+                        )}
+                    </div>
+                )
+            },
         },
     ]
+
+    const onChangeRealtime = async (id: string, status: boolean) => {
+        try {
+            await ChallengeApi.changeRealtime(id, { isRealtime: status })
+            getChallenge()
+            notification.success({ message: 'Đổi trạng thái thành công' })
+        } catch (error) {
+            notification.error({ message: 'Đổi trạng thái thất bại' })
+        }
+    }
+
+    const onStartChallenge = (id: string) => {
+        Modal.confirm({
+            title: 'Bạn thực sự muốn bắt đầu challenge?',
+            icon: <ExclamationCircleOutlined />,
+            content: '',
+            onOk() {
+                return ChallengeApi.startRealtimeChallenge(id)
+                    .then(result => {
+                        getChallenge()
+                        notification.success({ message: 'Bắt đầu thành công' })
+                    })
+                    .catch(err => {
+                        notification.error({ message: 'Bắt đầu thất bại' })
+                    })
+            },
+            onCancel() {},
+        })
+    }
 
     const onViewDescribe = (content: string) => {
         Modal.confirm({

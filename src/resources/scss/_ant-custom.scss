@@ -65,3 +65,10 @@
         border-right: unset;
     }
 }
+
+.ant-switch {
+    background-color: #00000021;
+    &.ant-switch-checked {
+        background-color: #1890ff;
+    }
+}

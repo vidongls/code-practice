@@ -1,12 +1,9 @@
 import React, { useCallback, useEffect, useState } from 'react'
+
+import ClassApi from '../../../Api/Class/ClassApi'
+import useParams from '../../../utils/useParams'
 import Filter from './Filter'
 import List from './List'
-import { PlusOutlined } from '@ant-design/icons'
-import { Button } from 'antd'
-import { Link } from 'react-router-dom'
-import useParams from '../../../utils/useParams'
-import ChallengeApi from '../../../Api/Challenge/ChallengeApi'
-import ClassApi from '../../../Api/Class/ClassApi'
 
 interface IStudentsProps {}
 

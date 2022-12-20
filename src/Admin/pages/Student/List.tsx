@@ -33,6 +33,11 @@ const List: React.FC<IListProps> = ({ data, loading, params, getStudent }) => {
             },
         },
         {
+            title: 'Username',
+            dataIndex: 'userName',
+            key: 'userName',
+        },
+        {
             title: 'Mã sinh viên',
             dataIndex: 'code',
             key: 'code',
@@ -59,36 +64,20 @@ const List: React.FC<IListProps> = ({ data, loading, params, getStudent }) => {
             key: 'email',
         },
         {
-            title: 'Lớp',
-            dataIndex: 'level',
-            key: 'level',
-            render: (text: TChallengeLevel) => {
-                return (
-                    <span
-                        className={classNames('rounded px-2.5 py-0.5 text-xs font-semibold', {
-                            [CHALLENGE_LEVEL_COLOR[text]]: true,
-                        })}
-                    >
-                        {CHALLENGE_LEVEL[text]}
-                    </span>
-                )
-            },
-        },
-
-        {
             title: '',
             key: '_id',
             dataIndex: '_id',
             render: (text: string) => (
                 <div>
-                    <Tooltip title="Xóa">
-                        <Spin spinning={loadingDelete}>
+                    {' '}
+                    <Spin spinning={loadingDelete}>
+                        <Tooltip title="Xóa">
                             <DeleteOutlined
                                 className="cursor-pointer p-3 hover:text-red-500"
                                 onClick={() => onDeleteChallenge(text)}
                             />
-                        </Spin>
-                    </Tooltip>
+                        </Tooltip>{' '}
+                    </Spin>
                 </div>
             ),
         },

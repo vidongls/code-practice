@@ -36,6 +36,14 @@ class ChallengeApi {
     getNewestChallenge = () => {
         return Api.get('/challenge/all/newest', {})
     }
+
+    changeRealtime = (challengeId: string, data: any) => {
+        return Api.post(`/challenge/${challengeId}/change-realtime`, data)
+    }
+
+    startRealtimeChallenge = (challengeId: string) => {
+        return Api.post(`/challenge/${challengeId}/start-challenge`, {})
+    }
 }
 
 export default new ChallengeApi()

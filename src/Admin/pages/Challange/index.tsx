@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import Filter from './Filter'
 import List from './List'
 import { PlusOutlined } from '@ant-design/icons'
@@ -13,20 +13,22 @@ const AdminChallenge: React.FC<IAdminChallengeProps> = props => {
     const { params, addParams } = useParams()
     const [data, setData] = useState()
     const [loading, setLoading] = useState(false)
-    useEffect(() => {
-        const getChallenge = () => {
-            setLoading(true)
-            ChallengeApi.getAll(params)
-                .then(res => {
-                    setData(res.data?.challenge)
-                })
-                .catch(error => {})
-                .finally(() => {
-                    setLoading(false)
-                })
-        }
-        getChallenge()
+
+    const getChallenge = useCallback(() => {
+        setLoading(true)
+        ChallengeApi.getAll(params)
+            .then(res => {
+                setData(res.data?.challenge)
+            })
+            .catch(error => {})
+            .finally(() => {
+                setLoading(false)
+            })
     }, [params])
+
+    useEffect(() => {
+        getChallenge()
+    }, [getChallenge])
 
     return (
         <div className="h-full w-full py-8 px-7">
@@ -50,6 +52,7 @@ const AdminChallenge: React.FC<IAdminChallengeProps> = props => {
                 data={data}
                 params={params}
                 loading={loading}
+                getChallenge={getChallenge}
             />
         </div>
     )

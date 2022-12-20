@@ -5,10 +5,12 @@ import ChallengeApi from '../../Api/Challenge/ChallengeApi'
 import CodeEditor from '../../components/CodeEditor'
 
 import Tabs from '../../components/Tabs'
+import { fireGet } from '../../utils/firebaseUtil'
 import Comment, { IComment } from './components/Comment'
 
 import Description from './components/Description'
 import Header from './components/Header'
+import ChallengeLobby from './components/Lobby'
 export interface IDetail {
     _id: string
     title: string
@@ -20,6 +22,7 @@ export interface IDetail {
     content: string
     functionName: string
     comments: IComment[]
+    isRealtime: boolean
 }
 
 interface IChallengeProps {}
@@ -28,6 +31,7 @@ const Challenge: React.FC<IChallengeProps> = props => {
     const { id } = useParams()
     const [loading, setLoading] = useState(false)
     const [detail, setDetail] = useState<IDetail>({} as IDetail)
+    const [isStarted, setIsStarted] = useState(false)
 
     const getDetailChallenge = useCallback(async () => {
         setLoading(true)
@@ -44,6 +48,15 @@ const Challenge: React.FC<IChallengeProps> = props => {
     useEffect(() => {
         getDetailChallenge()
     }, [getDetailChallenge])
+
+    useEffect(() => {
+        fireGet(`challenge-${id}`, (data: any) => {
+            if (data.started) {
+                getDetailChallenge()
+                setIsStarted(true)
+            }
+        })
+    }, [id, getDetailChallenge])
 
     const items = [
         {
@@ -71,19 +84,24 @@ const Challenge: React.FC<IChallengeProps> = props => {
     ]
     return (
         <div className="bg-white">
-            <Header />
+            {/* <Header /> */}
             {/* h-[calc(100vh_-_50px)] */}
-            <div className="grid  grid-cols-5 bg-white ">
-                <div className="col-span-2 overflow-y-auto shadow-xl shadow-gray-200">
-                    <Tabs items={items} />
-                </div>
 
-                <div className="col-span-3">
-                    <Spin spinning={loading}>
-                        <CodeEditor detail={detail} />
-                    </Spin>
+            {!detail.isRealtime || isStarted ? (
+                <div className="grid grid-cols-5 bg-white ">
+                    <div className="col-span-2 overflow-y-auto shadow-xl shadow-gray-200">
+                        <Tabs items={items} />
+                    </div>
+
+                    <div className="col-span-3">
+                        <Spin spinning={loading}>
+                            <CodeEditor detail={detail} />
+                        </Spin>
+                    </div>
                 </div>
-            </div>
+            ) : (
+                <ChallengeLobby />
+            )}
         </div>
     )
 }
