@@ -54,6 +54,8 @@ const Challenge: React.FC<IChallengeProps> = props => {
             if (data.started) {
                 getDetailChallenge()
                 setIsStarted(true)
+            }else{
+                setIsStarted(false)
             }
         })
     }, [id, getDetailChallenge])

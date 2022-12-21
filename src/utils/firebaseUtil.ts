@@ -5,7 +5,9 @@ export const fireGet = (path: string, cb: (data: unknown) => void) => {
     onValue(ref(firebaseDb, path), snapshot => {
         const data = snapshot.val()
         cb(data)
-    })
+    }, (error) => {
+        console.log(error);
+      })
 }
 
 export const fireSet = async (path: string, data: unknown) => {
