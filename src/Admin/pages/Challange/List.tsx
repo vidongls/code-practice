@@ -64,7 +64,6 @@ const List: React.FC<IListProps> = ({ data, loading, getChallenge }) => {
                 return (
                     <div>
                         <span dangerouslySetInnerHTML={{ __html: truncateString(text, 100) }}></span>
-
                         {text.length >= 100 && (
                             <span
                                 onClick={() => onViewDescribe(text)}
@@ -90,22 +89,22 @@ const List: React.FC<IListProps> = ({ data, loading, getChallenge }) => {
             dataIndex: 'createdAt',
             render: (text: string) => <span>{formatDate(text)}</span>,
         },
-        {
-            title: 'Realtime',
-            key: 'isRealtime',
-            dataIndex: 'isRealtime',
-            render: (status: boolean, record: any) => {
-                const id = record?._id
+        // {
+        //     title: 'Realtime',
+        //     key: 'isRealtime',
+        //     dataIndex: 'isRealtime',
+        //     render: (status: boolean, record: any) => {
+        //         const id = record?._id
 
-                return (
-                    <Switch
-                        className="ant-switch"
-                        checked={status}
-                        onChange={(value: boolean) => onChangeRealtime(id, value)}
-                    />
-                )
-            },
-        },
+        //         return (
+        //             <Switch
+        //                 className="ant-switch"
+        //                 checked={status}
+        //                 onChange={(value: boolean) => onChangeRealtime(id, value)}
+        //             />
+        //         )
+        //     },
+        // },
         {
             title: '',
             key: '_id',

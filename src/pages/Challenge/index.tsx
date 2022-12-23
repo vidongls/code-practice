@@ -23,6 +23,7 @@ export interface IDetail {
     functionName: string
     comments: IComment[]
     isRealtime: boolean
+    time: number
 }
 
 interface IChallengeProps {}
@@ -54,7 +55,7 @@ const Challenge: React.FC<IChallengeProps> = props => {
             if (data.started) {
                 getDetailChallenge()
                 setIsStarted(true)
-            }else{
+            } else {
                 setIsStarted(false)
             }
         })

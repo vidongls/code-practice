@@ -52,11 +52,11 @@ const Router = () => {
                     element={<Lobby />}
                 />
                 <Route
-                path="challenge/:id"
-                element={<Challenge/>}
-            />
+                    path="challenge/:id"
+                    element={<Challenge />}
+                />
             </Route>
-{/* 
+            {/* 
             <Route
                 path="challenge/:id"
                 element={<PrivateRoute Component={Challenge} />}

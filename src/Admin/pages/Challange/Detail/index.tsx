@@ -1,4 +1,4 @@
-import { Button, Form, Input, notification, Select, Spin } from 'antd'
+import { Button, Checkbox, Form, Input, notification, Select, Spin } from 'antd'
 import React, { useEffect, useState } from 'react'
 import ReactQuill from 'react-quill'
 import 'react-quill/dist/quill.snow.css'
@@ -7,12 +7,17 @@ import { ArrowLeftOutlined, PlusOutlined, MinusCircleOutlined } from '@ant-desig
 import ChallengeApi from '../../../../Api/Challenge/ChallengeApi'
 import Editor from '@monaco-editor/react'
 
+interface IData {
+    isRealtime: boolean
+    time: number
+}
+
 interface IChallengeDetailProps {}
 
 const ChallengeDetail: React.FC<IChallengeDetailProps> = props => {
     const [form] = Form.useForm()
     const [value, setValue] = useState('')
-    const [data, setData] = useState([])
+    const [data, setData] = useState<IData>({} as IData)
     const [loading, setLoading] = useState(false)
     const [loadingPage, setLoadingPage] = useState(false)
 
@@ -35,15 +40,15 @@ const ChallengeDetail: React.FC<IChallengeDetailProps> = props => {
     }, [id])
 
     useEffect(() => {
-        if (data.length !== 0) {
-            form.setFieldsValue(data)
+        if (Object.keys(data).length !== 0) {
+            form.setFieldsValue({ ...data, time: data.time / 1000 / 60 })
         }
-    }, [data])
+    }, [data, form])
 
     const handleCreate = () => {
-        form.validateFields().then(values => {
+        form.validateFields().then((values: any) => {
             setLoading(true)
-            ChallengeApi.update(id!, values)
+            ChallengeApi.update(id!, { ...values, time: parseInt(values.time) * 1000 * 60 })
                 .then(res => {
                     notification.success({ message: 'Chỉnh sửa thành công' })
                     navigate('/admin/challenge')
@@ -124,6 +129,26 @@ const ChallengeDetail: React.FC<IChallengeDetailProps> = props => {
                                 ]}
                             />
                         </Form.Item>
+                        <Form.Item
+                            label={<span>Realtime</span>}
+                            name="isRealtime"
+                            className="form-item-editor pr-5"
+                            wrapperCol={{ span: 24 }}
+                            valuePropName="checked"
+                        >
+                            <Checkbox />
+                        </Form.Item>
+                        {data.isRealtime && (
+                            <Form.Item
+                                label={<span>Thời gian (phút)</span>}
+                                name="time"
+                                className="form-item-editor pr-5"
+                                wrapperCol={{ span: 24 }}
+                                rules={[{ required: true, message: 'Không được bỏ trống' }]}
+                            >
+                                <Input />
+                            </Form.Item>
+                        )}
                         <Form.Item
                             label={<span>Mô tả</span>}
                             name="describe"
