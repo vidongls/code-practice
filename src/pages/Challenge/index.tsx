@@ -23,7 +23,8 @@ export interface IDetail {
     functionName: string
     comments: IComment[]
     isRealtime: boolean
-    time: number
+    time: number,
+    startTime: number
 }
 
 interface IChallengeProps {}
@@ -33,6 +34,7 @@ const Challenge: React.FC<IChallengeProps> = props => {
     const [loading, setLoading] = useState(false)
     const [detail, setDetail] = useState<IDetail>({} as IDetail)
     const [isStarted, setIsStarted] = useState(false)
+    const [isEnded, setIsEnded] = useState(false)
 
     const getDetailChallenge = useCallback(async () => {
         setLoading(true)
@@ -49,6 +51,18 @@ const Challenge: React.FC<IChallengeProps> = props => {
     useEffect(() => {
         getDetailChallenge()
     }, [getDetailChallenge])
+
+    useEffect(() => {
+        const duration = detail.time * 1000 * 60
+        const isEnded = new Date().getTime() / 1000 + duration < Date.now()
+
+        if(detail.isRealtime){
+            setIsEnded(isEnded)
+        }
+
+    }, [detail])
+    
+
 
     useEffect(() => {
         fireGet(`challenge-${id}`, (data: any) => {
@@ -69,6 +83,7 @@ const Challenge: React.FC<IChallengeProps> = props => {
                 <Description
                     loading={loading}
                     detail={detail}
+                    isEnded={isEnded}
                 />
             ),
         },

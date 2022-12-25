@@ -1,7 +1,13 @@
 import { Modal, notification, Spin, Switch, Table, Tooltip } from 'antd'
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { DeleteOutlined, ExclamationCircleOutlined, PlayCircleOutlined } from '@ant-design/icons'
+import {
+    DeleteOutlined,
+    ExclamationCircleOutlined,
+    PlayCircleOutlined,
+    EditOutlined,
+    BarChartOutlined,
+} from '@ant-design/icons'
 
 import { classNames, formatDate, truncateString } from '../../../helper/helper'
 import { CHALLENGE_LEVEL, CHALLENGE_LEVEL_COLOR, TChallengeLevel } from '../../../pages/Challenge/constants/constants'
@@ -26,7 +32,7 @@ const List: React.FC<IListProps> = ({ data, loading, getChallenge }) => {
                 const id = record?._id
                 return (
                     <Link
-                        to={id}
+                        to={`/challenge/${id}`}
                         className="font-semibold text-blue-600"
                     >
                         {text}
@@ -109,32 +115,48 @@ const List: React.FC<IListProps> = ({ data, loading, getChallenge }) => {
             title: '',
             key: '_id',
             dataIndex: '_id',
-            render: (text: string, record: any) => {
+            render: (id: string, record: any) => {
                 const isRealtime = record?.isRealtime
                 const startedAt = record?.startedAt
 
                 return (
                     <div className="flex items-center">
+                        <Tooltip title="Chỉnh sửa">
+                            <Link
+                                to={id}
+                                className="leading-3"
+                            >
+                                <EditOutlined className="cursor-pointer p-3 hover:text-blue-500" />
+                            </Link>
+                        </Tooltip>
                         <Tooltip title="Xóa">
                             <Spin spinning={loadingDelete}>
                                 <DeleteOutlined
                                     className="cursor-pointer p-3 hover:text-red-500"
-                                    onClick={() => onDeleteChallenge(text)}
+                                    onClick={() => onDeleteChallenge(id)}
                                 />
                             </Spin>
                         </Tooltip>
 
                         {isRealtime && (
                             <>
-                                <Tooltip title="Bắt đầu">
-                                    <Spin spinning={loadingDelete}>
-                                        <PlayCircleOutlined
-                                            className="cursor-pointer p-3 hover:text-red-500"
-                                            onClick={() => onStartChallenge(text)}
-                                        />
-                                    </Spin>
+                                <Tooltip title={`Bắt đầu (${moment(startedAt).startOf('minutes').fromNow()})`}>
+                                    <PlayCircleOutlined
+                                        className="cursor-pointer p-3 hover:text-blue-500"
+                                        onClick={() => onStartChallenge(id)}
+                                    />
+                                   
                                 </Tooltip>
-                                <span>{moment(startedAt).startOf('minutes').fromNow()}</span>
+                                <Tooltip title="Thống kê">
+                                    <Link
+                                        to={`statics/${id}`}
+                                        className="leading-3"
+                                    >
+                                        <BarChartOutlined
+                                            className="cursor-pointer p-3 hover:text-blue-500"
+                                        />
+                                    </Link>
+                                </Tooltip>
                             </>
                         )}
                     </div>

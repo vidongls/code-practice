@@ -15,6 +15,7 @@ import ChallengeDetail from '../Admin/pages/Challange/Detail'
 import Submission from '../pages/Submission'
 import Student from '../Admin/pages/Student'
 import Lobby from '../pages/Lobby'
+import ChallengeStatics from '../Admin/pages/Challange/Statics'
 
 const Router = () => {
     return (
@@ -66,18 +67,25 @@ const Router = () => {
                 path="admin"
                 element={<AdminDefaultLayout />}
             >
-                <Route
-                    path="challenge"
-                    element={<AdminChallenge />}
-                />
-                <Route
-                    path="challenge/:id"
-                    element={<ChallengeDetail />}
-                />
-                <Route
-                    path="challenge/create"
-                    element={<ChallengeCreate />}
-                />
+                <Route path="challenge">
+                    <Route
+                        index
+                        element={<AdminChallenge />}
+                    />
+                    <Route
+                        path="challenge/:id"
+                        element={<ChallengeDetail />}
+                    />
+                    <Route
+                        path="challenge/create"
+                        element={<ChallengeCreate />}
+                    />
+                    <Route
+                        path="statics/:id"
+                        element={<ChallengeStatics />}
+                    />
+                </Route>
+
                 <Route
                     path="students"
                     element={<Student />}

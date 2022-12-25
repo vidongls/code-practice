@@ -13,9 +13,16 @@ interface ICountDownProps {
     duration?: number
     isHidden?: boolean
     className?: string
+    onComplete?: () => void
 }
 
-const CountDown: React.FC<ICountDownProps> = ({ startTime = 0, duration = 1, isHidden = false, className }) => {
+const CountDown: React.FC<ICountDownProps> = ({
+    startTime = 0,
+    duration = 1,
+    isHidden = false,
+    className,
+    onComplete,
+}) => {
     const formatCountdown = (hours: number, minutes: number, seconds: number): string => {
         const formatHours = hours >= 10 ? hours + '' : '0' + hours
         const formatMinutes = minutes >= 10 ? minutes + '' : '0' + minutes
@@ -42,7 +49,7 @@ const CountDown: React.FC<ICountDownProps> = ({ startTime = 0, duration = 1, isH
 
     // Thêm time cho realtime challenge
     // Hiển thị countdown và xử lý khi hết tgian
-    // Thống kê challeng cho realtime challenge thời gian làm, time resolve, test case resolve
+    // Thống kê challenge cho realtime challenge thời gian làm, time resolve, test case resolve
     //  + Xem chi tiết -> modal
 
     return isHidden ? null : (
@@ -50,6 +57,7 @@ const CountDown: React.FC<ICountDownProps> = ({ startTime = 0, duration = 1, isH
             date={startTime + duration}
             renderer={rendererCountdown}
             key={startTime}
+            onComplete={onComplete}
         />
     )
 }
