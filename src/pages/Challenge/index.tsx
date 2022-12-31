@@ -23,7 +23,7 @@ export interface IDetail {
     functionName: string
     comments: IComment[]
     isRealtime: boolean
-    time: number,
+    time: number
     startTime: number
 }
 
@@ -54,19 +54,16 @@ const Challenge: React.FC<IChallengeProps> = props => {
 
     useEffect(() => {
         const duration = detail.time * 1000 * 60
-        const isEnded = new Date().getTime() / 1000 + duration < Date.now()
-
-        if(detail.isRealtime){
-            setIsEnded(isEnded)
-        }
-
+        // const isEnded = new Date().getTime() / 1000 + duration < Date.now()
+        const isEnded = false
+        // if (detail.isRealtime) {
+        //     setIsEnded(isEnded)
+        // }
     }, [detail])
-    
-
 
     useEffect(() => {
         fireGet(`challenge-${id}`, (data: any) => {
-            if (data.started) {
+            if (data?.started) {
                 getDetailChallenge()
                 setIsStarted(true)
             } else {

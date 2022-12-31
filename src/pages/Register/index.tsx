@@ -160,7 +160,8 @@ const Register: React.FC = () => {
             </div>
             <div className="hidden flex-col items-center justify-end bg-[#FFFAE7] p-12 pb-0 lg:col-span-1 lg:flex">
                 <div className="mb-28 p-5 text-4xl font-bold">
-                    Welcome to <span className="text-[#FF8A2D]">DongViProCode.</span>
+                    Chào mừng tới với 
+                    <span className="text-[#FF8A2D] inline-block">Code Practice.</span>
                 </div>
                 <div className="">
                     <img

@@ -27,15 +27,17 @@ const Description: React.FC<IDescriptionProps> = ({ loading, detail, isEnded }) 
     }
 
     const onComplete = () => {
+        console.log('ád')
         showModal()
     }
 
-   
+    console.log('detail.time', detail.time)
 
-    return (
+    return Object.keys(detail).length ? (
         <Spin spinning={loading}>
             <div className="flex items-center justify-between">
                 <h2 className="mb-5 text-2xl font-medium">{detail.title}</h2>
+
                 {detail.isRealtime && (
                     <CountDown
                         startTime={new Date().getTime()}
@@ -55,7 +57,7 @@ const Description: React.FC<IDescriptionProps> = ({ loading, detail, isEnded }) 
                     footer={false}
                     closable={false}
                 >
-                    <p className="text-2xl font-medium text-center">Bài thi đã kết thúc!</p>
+                    <p className="text-center text-2xl font-medium">Bài thi đã kết thúc!</p>
                     <div className="mt-8 flex justify-end">
                         <Link to={'/'}>
                             <Button>Về trang chủ</Button>
@@ -64,7 +66,7 @@ const Description: React.FC<IDescriptionProps> = ({ loading, detail, isEnded }) 
                 </Modal>
             )}
         </Spin>
-    )
+    ) : null
 }
 
 export default Description

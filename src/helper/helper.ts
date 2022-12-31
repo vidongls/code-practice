@@ -1,3 +1,5 @@
+import moment from "moment"
+
 export const classNames = (currentClass = '', restClass = {}) => {
     if (!restClass) return currentClass
 
@@ -32,4 +34,14 @@ export const runCode = (code: string) => {
     const result = eval(`try { ${code}  } catch(err) { console.log(err); }`)
 
     return result + ''
+}
+
+
+type TDifferentDate = "minutes" | "hours" | "days"| "weeks" | "seconds" | "milliseconds"
+
+export const differentDate = (dateEnd:string, dateStart:string, format: TDifferentDate)=>{
+    const end = moment(dateEnd);//now
+    const start = moment(dateStart);
+    
+    return end.diff(start, format)
 }

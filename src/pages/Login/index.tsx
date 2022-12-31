@@ -85,7 +85,7 @@ const Login: React.FC = () => {
                 </div>
             </div>
             <div className="flex flex-col items-center justify-end bg-[#FFFAE7] p-12 pb-0 lg:col-span-1">
-                <div className="mb-28 p-5 text-4xl font-bold">Everything you are. In one simple link.</div>
+                <div className="mb-28 p-5 text-4xl font-bold">Chào mừng bạn tới với trang web luyện tập và thực hành code.</div>
                 <div className="h-full w-full bg-authen bg-contain bg-no-repeat">
                     {/* <img src={imgLogin} alt="" /> */}
                 </div>

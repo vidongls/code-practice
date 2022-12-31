@@ -73,11 +73,11 @@ const Router = () => {
                         element={<AdminChallenge />}
                     />
                     <Route
-                        path="challenge/:id"
+                        path=":id"
                         element={<ChallengeDetail />}
                     />
                     <Route
-                        path="challenge/create"
+                        path="create"
                         element={<ChallengeCreate />}
                     />
                     <Route

@@ -87,7 +87,6 @@ const CodeEditor: React.FC<ICodeEditorProps> = ({ detail }) => {
             onOk() {
                 return ChallengeApi.submitChallenge({ challengeId, answerContent: content })
                     .then(res => {
-                        console.log('🧙 ~ res', res.data?.data)
                         setCompileResult(res.data?.dataCompile)
                         notification.success({ message: 'Nộp bài thành công' })
                     })
