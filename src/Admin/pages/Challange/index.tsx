@@ -11,7 +11,7 @@ interface IAdminChallengeProps {}
 
 const AdminChallenge: React.FC<IAdminChallengeProps> = props => {
     const { params, addParams } = useParams()
-    const [data, setData] = useState()
+    const [data, setData] = useState([])
     const [loading, setLoading] = useState(false)
 
     const getChallenge = useCallback(() => {

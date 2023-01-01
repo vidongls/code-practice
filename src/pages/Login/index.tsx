@@ -20,10 +20,10 @@ const Login: React.FC = () => {
         try {
             const res = await UserApi.login(data)
             login(res.data)
-            notification.success({ message: 'Đăng nhập thành công' })
+            // notification.success({ message: 'Đăng nhập thành công' })
             navigate('/')
         } catch (error) {
-            notification.error({ message: 'Đăng nhập thất bại' })
+            notification.error({ message: 'Tài khoản hoặc mật khẩu không chính xác' })
         } finally {
             setLoading(false)
         }

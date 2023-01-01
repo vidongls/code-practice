@@ -115,7 +115,12 @@ const Register: React.FC = () => {
                                 size="middle"
                             />
                         </Form.Item>
-
+                        <Form.Item>
+                            <div>
+                                * Định dạng mật khẩu 8-36 ký tự.<br/>
+                                * Chứa ít nhất 1 chữ hoa, chữ thường và ký tự đặc biệt
+                            </div>
+                        </Form.Item>
                         <Form.Item
                             name="re-password"
                             label={<span className="font-medium">Nhập lại mật khẩu</span>}

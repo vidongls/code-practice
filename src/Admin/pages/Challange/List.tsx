@@ -1,5 +1,5 @@
 import { Modal, notification, Spin, Switch, Table, Tooltip } from 'antd'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import {
     DeleteOutlined,
@@ -12,7 +12,7 @@ import {
 import { classNames, formatDate, truncateString } from '../../../helper/helper'
 import { CHALLENGE_LEVEL, CHALLENGE_LEVEL_COLOR, TChallengeLevel } from '../../../pages/Challenge/constants/constants'
 import ChallengeApi from '../../../Api/Challenge/ChallengeApi'
-import { fireGet } from '../../../utils/firebaseUtil'
+import { fireGet, fireGetOne } from '../../../utils/firebaseUtil'
 import moment from 'moment'
 
 interface IListProps {
@@ -23,6 +23,29 @@ interface IListProps {
 }
 const List: React.FC<IListProps> = ({ data, loading, getChallenge }) => {
     const [loadingDelete, setLoadingDelete] = useState(false)
+    const [dataRealtime, setDataRealtime] = useState([])
+
+    useEffect(() => {
+        const getDataFire = async () => {
+            const listIsRealtime = data.filter((item: any) => item.isRealtime)
+
+            const ids = listIsRealtime.map((item: any) => item._id)
+
+            const listChallengeFire: any = []
+
+            ids.forEach((id: string) => {
+                fireGetOne(`challenge-${id}`).then(data => {
+                    if (data) {
+                        listChallengeFire.push({ id, ...data })
+                        setDataRealtime(listChallengeFire)
+                    }
+                })
+            })
+        }
+
+        getDataFire()
+    }, [data])
+
     const columns = [
         {
             title: 'Mã challenge',
@@ -118,6 +141,7 @@ const List: React.FC<IListProps> = ({ data, loading, getChallenge }) => {
             render: (id: string, record: any) => {
                 const isRealtime = record?.isRealtime
                 const startedAt = record?.startedAt
+                const time = record?.time
 
                 return (
                     <div className="flex items-center">
@@ -140,21 +164,20 @@ const List: React.FC<IListProps> = ({ data, loading, getChallenge }) => {
 
                         {isRealtime && (
                             <>
-                                <Tooltip title={`Bắt đầu (${moment(startedAt).startOf('minutes').fromNow()})`}>
-                                    <PlayCircleOutlined
-                                        className="cursor-pointer p-3 hover:text-blue-500"
-                                        onClick={() => onStartChallenge(id)}
-                                    />
-                                   
-                                </Tooltip>
+                                {
+                                    <Tooltip title={`Bắt đầu (${moment(startedAt).startOf('minutes').fromNow()})`}>
+                                        <PlayCircleOutlined
+                                            className="cursor-pointer p-3 hover:text-blue-500"
+                                            onClick={() => onStartChallenge(id)}
+                                        />
+                                    </Tooltip>
+                                }
                                 <Tooltip title="Thống kê">
                                     <Link
                                         to={`statics/${id}`}
                                         className="leading-3"
                                     >
-                                        <BarChartOutlined
-                                            className="cursor-pointer p-3 hover:text-blue-500"
-                                        />
+                                        <BarChartOutlined className="cursor-pointer p-3 hover:text-blue-500" />
                                     </Link>
                                 </Tooltip>
                             </>
@@ -237,7 +260,7 @@ const List: React.FC<IListProps> = ({ data, loading, getChallenge }) => {
             onCancel() {},
         })
     }
-
+    console.log('dsfsd', dataRealtime)
     return (
         <>
             <div className="rounded-md bg-white p-6 ">

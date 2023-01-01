@@ -2,12 +2,32 @@ import { ref, get, set, push, remove, update, onValue } from 'firebase/database'
 import { firebaseDb } from '../firebase.js'
 
 export const fireGet = (path: string, cb: (data: unknown) => void) => {
-    onValue(ref(firebaseDb, path), snapshot => {
-        const data = snapshot.val()
-        cb(data)
-    }, (error) => {
-        console.log(error);
-      })
+    onValue(
+        ref(firebaseDb, path),
+        snapshot => {
+            const data = snapshot.val()
+            cb(data)
+        },
+        error => {
+            console.log(error)
+        }
+    )
+}
+
+export const fireGetOne = (path: string) => {
+    return new Promise((resolve, reject) => {
+        onValue(
+            ref(firebaseDb, path),
+            snapshot => {
+                const data = snapshot.val()
+                resolve(data)
+            },
+            error => {
+                reject(error)
+            },
+            { onlyOnce: true }
+        )
+    })
 }
 
 export const fireSet = async (path: string, data: unknown) => {

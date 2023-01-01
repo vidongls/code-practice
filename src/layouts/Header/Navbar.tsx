@@ -4,6 +4,10 @@ import { Link, NavLink } from "react-router-dom";
 interface INavbarProps {}
 
 const navList = [
+    {
+        label: "Trang chủ",
+		to: "",
+    },
 	{
 		label: "Bài tập",
 		to: "exercise",
