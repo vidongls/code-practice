@@ -1,11 +1,12 @@
 import { notification, Spin } from 'antd'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
+import { IRealtimeData } from '../../Admin/pages/Challange/List'
 import ChallengeApi from '../../Api/Challenge/ChallengeApi'
 import CodeEditor from '../../components/CodeEditor'
 
 import Tabs from '../../components/Tabs'
-import { fireGet } from '../../utils/firebaseUtil'
+import { fireGet, fireGetOne } from '../../utils/firebaseUtil'
 import Comment, { IComment } from './components/Comment'
 
 import Description from './components/Description'
@@ -35,6 +36,7 @@ const Challenge: React.FC<IChallengeProps> = props => {
     const [detail, setDetail] = useState<IDetail>({} as IDetail)
     const [isStarted, setIsStarted] = useState(false)
     const [isEnded, setIsEnded] = useState(false)
+    const [dataRealtime, setDataRealtime] = useState({} as IRealtimeData)
 
     const getDetailChallenge = useCallback(async () => {
         setLoading(true)
@@ -53,13 +55,30 @@ const Challenge: React.FC<IChallengeProps> = props => {
     }, [getDetailChallenge])
 
     useEffect(() => {
-        const duration = detail.time * 1000 * 60
-        // const isEnded = new Date().getTime() / 1000 + duration < Date.now()
-        const isEnded = false
-        // if (detail.isRealtime) {
-        //     setIsEnded(isEnded)
-        // }
-    }, [detail])
+        if (detail.isRealtime) {
+            fireGetOne(`challenge-${id}`).then((data: any) => {
+                if (data) {
+                    const duration = detail.time
+                    const isEnded = data.startTime + duration < Date.now()
+
+                    if (!isEnded) {
+                        startDoingChallenge()
+                    }
+
+                    setIsEnded(isEnded)
+                    setDataRealtime(data)
+                }
+            })
+        }
+
+        const startDoingChallenge = async () => {
+            if (id) {
+                try {
+                    await ChallengeApi.startDoingChallenge(id)
+                } catch (error) {}
+            }
+        }
+    }, [detail, id])
 
     useEffect(() => {
         fireGet(`challenge-${id}`, (data: any) => {

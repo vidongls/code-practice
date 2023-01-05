@@ -59,11 +59,17 @@ const ExerciseList: React.FC<IExerciseListProps> = props => {
         },
         {
             title: <p className="font-semibold">Đã nộp</p>,
-            dataIndex: 'address',
+            dataIndex: 'countResolve',
+            render: (text: string) => {
+                return <span className="font-medium">{text}</span>
+            },
         },
         {
             title: <p className="font-semibold">Bài đạt</p>,
-            dataIndex: 'address',
+            dataIndex: 'countSubmit',
+            render: (text: string) => {
+                return <span className="font-medium">{text}</span>
+            },
         },
     ]
 

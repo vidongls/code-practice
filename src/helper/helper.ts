@@ -1,4 +1,4 @@
-import moment from "moment"
+import moment from 'moment'
 
 export const classNames = (currentClass = '', restClass = {}) => {
     if (!restClass) return currentClass
@@ -36,12 +36,17 @@ export const runCode = (code: string) => {
     return result + ''
 }
 
+type TDifferentDate = 'minutes' | 'hours' | 'days' | 'weeks' | 'seconds' | 'milliseconds'
 
-type TDifferentDate = "minutes" | "hours" | "days"| "weeks" | "seconds" | "milliseconds"
+export const differentDate = (dateEnd: string, dateStart: string, format: TDifferentDate) => {
+    const end = moment(dateEnd) //now
+    const start = moment(dateStart)
 
-export const differentDate = (dateEnd:string, dateStart:string, format: TDifferentDate)=>{
-    const end = moment(dateEnd);//now
-    const start = moment(dateStart);
-    
     return end.diff(start, format)
+}
+
+export const isManager = (role: string) => {
+    const userEnum = ['ADMIN', 'SUPER_ADMIN']
+
+    return userEnum.includes(role)
 }

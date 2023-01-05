@@ -1,4 +1,4 @@
-import { Button, Form, Input, notification, Select } from 'antd'
+import { Button, Checkbox, Form, Input, InputNumber, notification, Select, Switch } from 'antd'
 import React, { useState } from 'react'
 import ReactQuill from 'react-quill'
 import 'react-quill/dist/quill.snow.css'
@@ -11,15 +11,18 @@ interface IChallengeCreateProps {}
 
 const ChallengeCreate: React.FC<IChallengeCreateProps> = props => {
     const [form] = Form.useForm()
+    const isRealtime = Form.useWatch('isRealtime', form)
+
     const [value, setValue] = useState('')
     const [loading, setLoading] = useState(false)
+    const [time, setTime] = useState(15)
 
     const navigate = useNavigate()
 
     const handleCreate = () => {
         form.validateFields().then(values => {
             setLoading(true)
-            ChallengeApi.create(values)
+            ChallengeApi.create({ ...values, time: (time || 15) * 1000 * 60 })
                 .then(res => {
                     notification.success({ message: 'Tạo mới thành công' })
                     navigate('/admin/challenge')
@@ -29,6 +32,10 @@ const ChallengeCreate: React.FC<IChallengeCreateProps> = props => {
                 })
                 .finally(() => setLoading(false))
         })
+    }
+
+    const onChangeTime = (value: any) => {
+        setTime(!!value ? parseInt(value) : 15)
     }
 
     return (
@@ -55,7 +62,7 @@ const ChallengeCreate: React.FC<IChallengeCreateProps> = props => {
                 <h3 className="my-5 text-lg font-semibold">Tạo Challenge</h3>
                 <Form
                     name="basic"
-                    labelCol={{ span: 3 }}
+                    labelCol={{ span: 4 }}
                     form={form}
                 >
                     <Form.Item
@@ -100,6 +107,34 @@ const ChallengeCreate: React.FC<IChallengeCreateProps> = props => {
                         />
                     </Form.Item>
                     <Form.Item
+                        label={<span>Realtime</span>}
+                        name="isRealtime"
+                        className="form-item-editor pr-5"
+                        wrapperCol={{ span: 24 }}
+                        valuePropName="checked"
+                    >
+                        <Switch />
+                    </Form.Item>
+                    {isRealtime && (
+                        <Form.Item
+                            label={<span>Thời gian (phút)</span>}
+                            // name="time"
+                            className="form-item-editor pr-5"
+                            wrapperCol={{ span: 24 }}
+                            help={!time ? 'Không được bỏ trống' : false}
+                            required
+                            validateStatus={!time ? 'error' : undefined}
+                        >
+                            <InputNumber
+                                min={15}
+                                className="w-full"
+                                defaultValue={15}
+                                value={time}
+                                onChange={onChangeTime}
+                            />
+                        </Form.Item>
+                    )}
+                    <Form.Item
                         label={<span>Mô tả</span>}
                         name="describe"
                         className="form-item-editor pr-5"
@@ -140,8 +175,8 @@ const ChallengeCreate: React.FC<IChallengeCreateProps> = props => {
                     </Form.Item>
                     <Form.Item
                         className="mb-3 pr-5"
-                        wrapperCol={{ span: 18, offset: 3 }}
-                        rules={[{ required: true, message: 'Không được bỏ trống' }]}
+                        wrapperCol={{ span: 18, offset: 4 }}
+                        // rules={[{ required: true, message: 'Không được bỏ trống' }]}
                     >
                         <div>
                             <span className="text-red-500">*</span>{' '}
@@ -155,7 +190,7 @@ const ChallengeCreate: React.FC<IChallengeCreateProps> = props => {
                     >
                         {(fields, { add, remove }) => (
                             <>
-                                {fields.map(({ key, name, ...restField }) => (
+                                {fields.map(({ key, name, ...restField }, index) => (
                                     <div
                                         key={key}
                                         className="mb-2 flex w-full items-baseline gap-2"
@@ -163,10 +198,11 @@ const ChallengeCreate: React.FC<IChallengeCreateProps> = props => {
                                         <Form.Item
                                             {...restField}
                                             label={<span>Đầu vào</span>}
-                                            labelCol={{ span: 4 }}
+                                            labelCol={{ span: 6 }}
                                             wrapperCol={{ span: 18, offset: 2 }}
                                             name={[name, 'input']}
                                             className="grow"
+                                            rules={[{ required: true, message: 'Nhập đầu vào' }]}
                                         >
                                             <Input.TextArea
                                                 rows={3}
@@ -175,7 +211,7 @@ const ChallengeCreate: React.FC<IChallengeCreateProps> = props => {
                                         </Form.Item>
                                         <Form.Item
                                             {...restField}
-                                            labelCol={{ span: 4 }}
+                                            labelCol={{ span: 6 }}
                                             wrapperCol={{ span: 18, offset: 2 }}
                                             label={<span>Đầu ra</span>}
                                             name={[name, 'output']}
@@ -187,7 +223,11 @@ const ChallengeCreate: React.FC<IChallengeCreateProps> = props => {
                                                 placeholder="Đầu ra"
                                             />
                                         </Form.Item>
-                                        <MinusCircleOutlined onClick={() => remove(name)} />
+                                        {index !== 0 ? (
+                                            <MinusCircleOutlined onClick={() => remove(name)} />
+                                        ) : (
+                                            <div className="h-3 w-3"></div>
+                                        )}
                                     </div>
                                 ))}
 

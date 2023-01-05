@@ -4,6 +4,7 @@ import { Button, Modal, notification, Select } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import ChallengeApi from '../../Api/Challenge/ChallengeApi'
+import { classNames } from '../../helper/helper'
 import { IDetail } from '../../pages/Challenge'
 
 import { defineTheme, monacoThemes, TThemes } from './defineTheme'
@@ -99,8 +100,11 @@ const CodeEditor: React.FC<ICodeEditorProps> = ({ detail }) => {
         })
     }
 
+    const itemFail = compileResult?.result?.find(item => !item.status)
+    const listSuccess = compileResult?.result?.filter(item => item.status)
+
     return (
-        <div className="p-2 w-full">
+        <div className="w-full p-2">
             <div className="flex items-center justify-between gap-3 bg-gray-50 p-5">
                 <div>
                     <span className="mr-2">Theme: </span>
@@ -171,46 +175,52 @@ const CodeEditor: React.FC<ICodeEditorProps> = ({ detail }) => {
 
             <div className="border border-gray-200 bg-white p-7">
                 {loading ? (
-                    <span>Processing...</span>
-                ) : compileResult.success ? (
-                    compileResult?.result?.map((item, idx) => {
-                        return (
-                            <div
-                                className="mb-4 grid grid-cols-3 gap-6 border-b pb-14"
-                                key={idx}
-                            >
+                    <span>Đang xử lý...</span>
+                ) : compileResult?.success ? (
+                    <>
+                        {listSuccess &&
+                            listSuccess.map(item => {
+                                return (
+                                    <div className="mb-4 grid grid-cols-3 gap-6 border-b pb-8">
+                                        <div className="flex justify-between border border-green-400 p-2 text-base font-medium">
+                                            Testcase
+                                            <span className="ml-2">
+                                                <CloseCircleOutlined className="anticon-custom text-green-400" />
+                                            </span>
+                                        </div>
+                                    </div>
+                                )
+                            })}
+
+                        {itemFail && (
+                            <div className="mb-4 grid grid-cols-3 gap-6 border-b pb-8">
                                 <div>
-                                    <div className="border bg-slate-100 p-3 text-base font-medium">
-                                        Testcase {idx}
+                                    <div className="flex justify-between border border-red-500 p-2 text-base font-medium">
+                                        Testcase
                                         <span className="ml-2">
-                                            {compileResult?.result ? (
-                                                compileResult?.result[idx].status ? (
-                                                    <CheckOutlined className="anticon-custom text-green-500" />
-                                                ) : (
-                                                    <CloseCircleOutlined className="anticon-custom text-red-500" />
-                                                )
-                                            ) : null}
+                                            <CloseCircleOutlined className="anticon-custom text-red-500" />
                                         </span>
                                     </div>
                                 </div>
+
                                 <div className="col-span-2">
                                     <span>Compiler Message</span>
-                                    <pre className="mt-2 mb-5 w-full bg-gray-100 p-5 ">{item.data}</pre>
+                                    <pre className="mt-2 mb-5 w-full bg-gray-100 p-3 ">{itemFail?.data}</pre>
 
                                     <span>Input </span>
-                                    <pre className="mt-2 mb-5 w-full bg-gray-100 p-2">{item.testCaseInput}</pre>
+                                    <pre className="mt-2 mb-5 w-full bg-gray-100 p-2">{itemFail?.testCaseInput}</pre>
 
                                     <span>Your Output</span>
-                                    <pre className="mt-2 mb-5 w-full bg-gray-100 p-2 ">{item.data}</pre>
+                                    <pre className="mt-2 mb-5 w-full bg-gray-100 p-2 ">{itemFail?.data}</pre>
 
                                     <span>Expected Output</span>
-                                    <pre className="mt-2 w-full bg-gray-100 p-2">{item.expectedOutput}</pre>
+                                    <pre className="mt-2 w-full bg-gray-100 p-2">{itemFail?.expectedOutput}</pre>
                                 </div>
                             </div>
-                        )
-                    })
+                        )}
+                    </>
                 ) : (
-                    <pre className="mt-2 mb-5 w-full bg-gray-100 p-2 ">{compileResult.err}</pre>
+                    <pre className="mt-2 mb-5 w-full bg-gray-100 p-2 ">{compileResult?.err}</pre>
                 )}
             </div>
         </div>

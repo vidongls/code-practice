@@ -15,15 +15,22 @@ import ChallengeApi from '../../../Api/Challenge/ChallengeApi'
 import { fireGet, fireGetOne } from '../../../utils/firebaseUtil'
 import moment from 'moment'
 
+export interface IRealtimeData {
+    id: string
+    startTime: number
+    started: boolean
+}
+
 interface IListProps {
     data: any
     loading: boolean
     params: object
     getChallenge: () => void
 }
+
 const List: React.FC<IListProps> = ({ data, loading, getChallenge }) => {
     const [loadingDelete, setLoadingDelete] = useState(false)
-    const [dataRealtime, setDataRealtime] = useState([])
+    const [dataRealtime, setDataRealtime] = useState<IRealtimeData[]>([])
 
     useEffect(() => {
         const getDataFire = async () => {
@@ -32,7 +39,6 @@ const List: React.FC<IListProps> = ({ data, loading, getChallenge }) => {
             const ids = listIsRealtime.map((item: any) => item._id)
 
             const listChallengeFire: any = []
-
             ids.forEach((id: string) => {
                 fireGetOne(`challenge-${id}`).then(data => {
                     if (data) {
@@ -55,7 +61,7 @@ const List: React.FC<IListProps> = ({ data, loading, getChallenge }) => {
                 const id = record?._id
                 return (
                     <Link
-                        to={`/challenge/${id}`}
+                        to={id}
                         className="font-semibold text-blue-600"
                     >
                         {text}
@@ -108,11 +114,6 @@ const List: React.FC<IListProps> = ({ data, loading, getChallenge }) => {
             // align: 'right' as AlignType,
         },
         {
-            title: 'Người tạo',
-            key: 'author',
-            dataIndex: ['author', 'userName'],
-        },
-        {
             title: 'Ngày tạo',
             key: 'createdAt',
             dataIndex: 'createdAt',
@@ -143,11 +144,13 @@ const List: React.FC<IListProps> = ({ data, loading, getChallenge }) => {
                 const startedAt = record?.startedAt
                 const time = record?.time
 
+                const realtimeData = dataRealtime.find((element: any) => element.id === id)
+
                 return (
                     <div className="flex items-center">
                         <Tooltip title="Chỉnh sửa">
                             <Link
-                                to={id}
+                                to={`edit/${id}`}
                                 className="leading-3"
                             >
                                 <EditOutlined className="cursor-pointer p-3 hover:text-blue-500" />
@@ -164,14 +167,14 @@ const List: React.FC<IListProps> = ({ data, loading, getChallenge }) => {
 
                         {isRealtime && (
                             <>
-                                {
-                                    <Tooltip title={`Bắt đầu (${moment(startedAt).startOf('minutes').fromNow()})`}>
-                                        <PlayCircleOutlined
-                                            className="cursor-pointer p-3 hover:text-blue-500"
-                                            onClick={() => onStartChallenge(id)}
-                                        />
-                                    </Tooltip>
-                                }
+                                {(realtimeData?.startTime || 0) + time < Date.now() && (
+                                    // <Tooltip title={`Bắt đầu (${moment(startedAt).startOf('minutes').fromNow()})`}>
+                                    <PlayCircleOutlined
+                                        className="cursor-pointer p-3 hover:text-blue-500"
+                                        onClick={() => onStartChallenge(id)}
+                                    />
+                                    // </Tooltip>
+                                )}
                                 <Tooltip title="Thống kê">
                                     <Link
                                         to={`statics/${id}`}
@@ -260,7 +263,6 @@ const List: React.FC<IListProps> = ({ data, loading, getChallenge }) => {
             onCancel() {},
         })
     }
-    console.log('dsfsd', dataRealtime)
     return (
         <>
             <div className="rounded-md bg-white p-6 ">
@@ -268,7 +270,7 @@ const List: React.FC<IListProps> = ({ data, loading, getChallenge }) => {
                     <h3 className="text-base font-semibold">Danh sách challenge</h3>
 
                     <span className="text-gray-900y ml-2 inline-flex h-5 w-5 items-center justify-center rounded-full bg-blue-200 text-xs font-semibold ">
-                        2
+                        {data.length}
                     </span>
                 </div>
                 <Table

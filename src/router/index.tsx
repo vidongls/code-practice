@@ -11,11 +11,13 @@ import PrivateRoute from './PrivateRoute'
 import AdminDefaultLayout from '../Admin/layout/AdminDefaultLayout'
 import AdminChallenge from '../Admin/pages/Challange'
 import ChallengeCreate from '../Admin/pages/Challange/Create'
-import ChallengeDetail from '../Admin/pages/Challange/Detail'
 import Submission from '../pages/Submission'
 import Student from '../Admin/pages/Student'
 import Lobby from '../pages/Lobby'
 import ChallengeStatics from '../Admin/pages/Challange/Statics'
+import ChallengeEdit from '../Admin/pages/Challange/Edit'
+import AdminChallengeDetail from '../Admin/pages/Challange/Detail'
+import PrivateAdminRoute from './PrivateAdminRoute'
 
 const Router = () => {
     return (
@@ -65,7 +67,7 @@ const Router = () => {
 
             <Route
                 path="admin"
-                element={<AdminDefaultLayout />}
+                element={<PrivateAdminRoute Component={AdminDefaultLayout} />}
             >
                 <Route path="challenge">
                     <Route
@@ -74,7 +76,11 @@ const Router = () => {
                     />
                     <Route
                         path=":id"
-                        element={<ChallengeDetail />}
+                        element={<AdminChallengeDetail />}
+                    />
+                    <Route
+                        path="edit/:id"
+                        element={<ChallengeEdit />}
                     />
                     <Route
                         path="create"

@@ -48,6 +48,10 @@ class ChallengeApi {
     getStaticsChallengeRealtime = (id: string, params: any) => {
         return Api.get(`/challenge/${id}/realtime-statics`, { params })
     }
+
+    startDoingChallenge = (challengeId: string) => {
+        return Api.post(`/challenge/${challengeId}/start-doing-challenge`, {})
+    }
 }
 
 export default new ChallengeApi()

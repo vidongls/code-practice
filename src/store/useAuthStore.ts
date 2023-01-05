@@ -14,6 +14,7 @@ interface IUser {
     email: string
     userName: string
     token: string
+    role: string
 }
 
 interface IAuthState {
@@ -22,9 +23,10 @@ interface IAuthState {
     login: (user: IUser) => void
     logout: () => void
     getToken: () => string
+    getUser: () => IUser
 }
 
-const initUser = { _id: '', email: '', userName: '', token: '' }
+const initUser = { _id: '', email: '', userName: '', token: '', role: '' }
 
 export const useAuthStore = create<IAuthState>()(
     devtools(
@@ -55,6 +57,7 @@ export const useAuthStore = create<IAuthState>()(
                         return { user: initUser }
                     }),
                 getToken: () => get().user.token,
+                getUser: () => get().user,
             }),
             {
                 name: 'auth-storage',
