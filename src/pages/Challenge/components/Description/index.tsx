@@ -9,9 +9,10 @@ interface IDescriptionProps {
     loading: boolean
     detail: IDetail
     isEnded: boolean
+    dataRealtime: any
 }
 
-const Description: React.FC<IDescriptionProps> = ({ loading, detail, isEnded }) => {
+const Description: React.FC<IDescriptionProps> = ({ loading, detail, isEnded, dataRealtime }) => {
     const [isModalOpen, setIsModalOpen] = useState(false)
 
     const showModal = () => {
@@ -40,7 +41,7 @@ const Description: React.FC<IDescriptionProps> = ({ loading, detail, isEnded }) 
 
                 {detail.isRealtime && (
                     <CountDown
-                        startTime={new Date().getTime()}
+                        startTime={dataRealtime?.startTime}
                         duration={detail.time}
                         className="text-xl"
                         onComplete={onComplete}

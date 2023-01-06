@@ -1,11 +1,11 @@
 import { CheckOutlined, CloseCircleOutlined, InfoCircleOutlined } from '@ant-design/icons'
-import { Modal, Table, Tooltip } from 'antd'
+import { Modal, Table, Tabs, Tooltip } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { CopyBlock, dracula } from 'react-code-blocks'
 import { useParams as useParamsReactRouter } from 'react-router-dom'
 
 import ChallengeApi from '../../../../Api/Challenge/ChallengeApi'
-import { differentDate, formatDate } from '../../../../helper/helper'
+import { classNames, differentDate, formatDate } from '../../../../helper/helper'
 import useParams from '../../../../utils/useParams'
 
 const ChallengeStatics = () => {
@@ -134,17 +134,84 @@ const ChallengeStatics = () => {
                         <div className="col-span-1 overflow-y-auto">
                             {/* <div dangerouslySetInnerHTML={{ __html: contentAnswer?.challenge?.describe }}></div> */}
 
-                            <div className="mt-4 mr-2 border border-gray-200 bg-white p-4">
-                                {contentAnswer?.compileResult?.map((item: any, idx: number) => {
+                            <div className=" mr-2 border border-gray-200 bg-white p-4">
+                                <Tabs
+                                    defaultActiveKey="1"
+                                    tabPosition={'left'}
+                                    type="card"
+                                    className="mt-2 border"
+                                    items={contentAnswer?.compileResult?.map((item: any, index: any) => {
+                                        return {
+                                            label: (
+                                                <>
+                                                    <div
+                                                        className={'flex justify-between p-1 text-base font-medium'}
+                                                        key={index}
+                                                    >
+                                                        <span
+                                                            className={classNames(' ', {
+                                                                'text-green-500': item?.status,
+                                                                'text-red-500': !item?.status,
+                                                            })}
+                                                        >
+                                                            Testcase {index + 1}
+                                                        </span>
+                                                        <span className="ml-2">
+                                                            <CloseCircleOutlined
+                                                                className={classNames('anticon-custom', {
+                                                                    'text-green-500': item?.status,
+                                                                    'text-red-500': !item?.status,
+                                                                })}
+                                                            />
+                                                        </span>
+                                                    </div>
+                                                </>
+                                            ),
+                                            key: index,
+                                            children: (
+                                                <div className="mb-4 py-8 pr-4">
+                                                    <span>Compiler Message</span>
+                                                    <pre className="mt-2 mb-5 w-full bg-gray-100 p-3 ">
+                                                        {item?.data}
+                                                    </pre>
+
+                                                    <span>Input </span>
+                                                    <pre className="mt-2 mb-5 w-full bg-gray-100 p-2 font-semibold">
+                                                        {item?.testCaseInput}
+                                                    </pre>
+
+                                                    <span>Your Output</span>
+                                                    <pre className="mt-2 mb-5 w-full bg-gray-100 p-2 font-semibold">
+                                                        {item?.data}
+                                                    </pre>
+
+                                                    <span>Expected Output</span>
+                                                    <pre className="mt-2 w-full bg-gray-100 p-2 font-semibold">
+                                                        {item?.expectedOutput}
+                                                    </pre>
+                                                </div>
+                                            ),
+                                        }
+                                    })}
+                                />
+                                {/* {contentAnswer?.compileResult?.map((item: any, idx: number) => {
                                     return (
                                         <div
                                             className="mb-6 gap-3 border-b pb-5"
                                             key={idx}
                                         >
                                             <div className="mb-3">
-                                                <div className=" bg-green-200 p-1 text-base font-medium">
+                                                <div
+                                                    className={classNames(
+                                                        'flex w-fit justify-between border p-1 px-2 text-base font-medium',
+                                                        {
+                                                            'border-green-400': item?.status,
+                                                            'border-red-400': !item?.status,
+                                                        }
+                                                    )}
+                                                >
                                                     Testcase {idx}
-                                                    <span className="ml-2">
+                                                    <span className="ml-5">
                                                         {item?.status ? (
                                                             <CheckOutlined className="anticon-custom text-green-500" />
                                                         ) : (
@@ -167,7 +234,7 @@ const ChallengeStatics = () => {
                                             </div>
                                         </div>
                                     )
-                                })}
+                                })} */}
                             </div>
                         </div>
 

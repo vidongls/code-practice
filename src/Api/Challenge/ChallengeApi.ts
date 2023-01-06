@@ -52,6 +52,10 @@ class ChallengeApi {
     startDoingChallenge = (challengeId: string) => {
         return Api.post(`/challenge/${challengeId}/start-doing-challenge`, {})
     }
+
+    getOneDoingChallenge = (challengeId: string) => {
+        return Api.post(`/challenge/${challengeId}/get-doing-challenge`, {})
+    }
 }
 
 export default new ChallengeApi()

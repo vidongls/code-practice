@@ -56,6 +56,33 @@ const Challenge: React.FC<IChallengeProps> = props => {
 
     useEffect(() => {
         if (detail.isRealtime) {
+            const checkSubmittedChallenge = () => {
+                if (id) {
+                    try {
+                        setLoading(true)
+                        ChallengeApi.getOneDoingChallenge(id)
+                            .then(res => {
+                                const { data } = res
+                                if (data.isResolved) {
+                                    return true
+                                }
+                            })
+                            .catch(error => {
+                                console.log(error)
+                            })
+                            .finally(() => {
+                                setLoading(false)
+                            })
+
+                        return false
+                    } catch (error) {}
+                }
+            }
+
+            if (checkSubmittedChallenge()) {
+                return
+            }
+
             fireGetOne(`challenge-${id}`).then((data: any) => {
                 if (data) {
                     const duration = detail.time
@@ -100,6 +127,7 @@ const Challenge: React.FC<IChallengeProps> = props => {
                     loading={loading}
                     detail={detail}
                     isEnded={isEnded}
+                    dataRealtime={dataRealtime}
                 />
             ),
         },
@@ -129,7 +157,10 @@ const Challenge: React.FC<IChallengeProps> = props => {
 
                     <div className="col-span-3">
                         <Spin spinning={loading}>
-                            <CodeEditor detail={detail} />
+                            <CodeEditor
+                                detail={detail}
+                                isEnded={isEnded}
+                            />
                         </Spin>
                     </div>
                 </div>
