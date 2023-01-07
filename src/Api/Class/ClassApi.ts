@@ -1,6 +1,10 @@
 import Api from '../../utils/Api'
 
 class ClassApi {
+    createClass = (data: any) => {
+        return Api.post(`/class`, data)
+    }
+
     getClassByAuthor = (params?: any) => {
         return Api.get('/class/get-by/author', { params })
     }

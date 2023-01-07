@@ -41,10 +41,9 @@ const Header: React.FC<Props> = ({ handleOpenSidebar, handleCloseSidebar, collap
 
             <Dropdown
                 overlay={menu}
-                trigger={['click']}
-                className="cursor-pointer"
+                className="cursor-pointer hover:text-blue-400"
             >
-                <div>
+                <div className="cursor-pointer ">
                     <Avatar icon={<UserOutlined />} />
 
                     <span className="ml-2"> {user?.userName}</span>

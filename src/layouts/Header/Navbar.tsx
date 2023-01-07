@@ -1,36 +1,49 @@
 import React from 'react'
 import { Link, NavLink } from 'react-router-dom'
+import { useAuthStore } from '../../store/useAuthStore'
 
 interface INavbarProps {}
 
-const navList = [
-    {
-        label: 'Trang chủ',
-        to: '/',
-    },
-    {
-        label: 'Bài tập',
-        to: 'exercise',
-    },
-    {
-        label: 'Kỳ thi',
-        to: 'exam',
-    },
-    {
-        label: 'Bài nộp',
-        to: 'submissions',
-    },
-    {
-        label: 'Xếp hạng',
-        to: 'rank',
-    },
-    {
-        label: 'Live IDE',
-        to: 'live-code',
-    },
-]
-
 const Navbar: React.FC<INavbarProps> = props => {
+    const { user } = useAuthStore()
+    console.log('🧙 ~ user', user)
+
+    const navList = [
+        {
+            label: 'Trang chủ',
+            to: '/',
+        },
+        {
+            label: 'Bài tập',
+            to: 'exercise',
+        },
+        {
+            label: 'Kỳ thi',
+            to: 'exam',
+        },
+        {
+            label: 'Bài nộp',
+            to: 'submissions',
+        },
+        {
+            label: 'Xếp hạng',
+            to: 'rank',
+        },
+        {
+            label: 'Live IDE',
+            to: 'live-code',
+        },
+        user.role !== 'USER'
+            ? {
+                  label: 'Quản lý',
+                  to: 'admin',
+              }
+            : {
+                  label: '',
+                  to: '',
+              },
+    ]
+
     return (
         <div className="header-left flex items-center">
             <div className="logo flex items-center justify-center">
