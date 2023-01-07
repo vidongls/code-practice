@@ -1,6 +1,6 @@
 import { Modal, notification, Spin, Switch, Table, Tooltip } from 'antd'
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import {
     DeleteOutlined,
     ExclamationCircleOutlined,
@@ -61,7 +61,7 @@ const List: React.FC<IListProps> = ({ data, loading, getChallenge }) => {
                 const id = record?._id
                 return (
                     <Link
-                        to={id}
+                        to={`/admin/challenge/${id}`}
                         className="font-semibold text-blue-600"
                     >
                         {text}
@@ -143,6 +143,7 @@ const List: React.FC<IListProps> = ({ data, loading, getChallenge }) => {
                 const isRealtime = record?.isRealtime
                 const startedAt = record?.startedAt
                 const time = record?.time
+                const title = record?.title
 
                 const realtimeData = dataRealtime.find((element: any) => element.id === id)
 
@@ -150,7 +151,7 @@ const List: React.FC<IListProps> = ({ data, loading, getChallenge }) => {
                     <div className="flex items-center">
                         <Tooltip title="Chỉnh sửa">
                             <Link
-                                to={`edit/${id}`}
+                                to={`/admin/challenge/edit/${id}`}
                                 className="leading-3"
                             >
                                 <EditOutlined className="cursor-pointer p-3 hover:text-blue-500" />
@@ -177,7 +178,9 @@ const List: React.FC<IListProps> = ({ data, loading, getChallenge }) => {
                                 )}
                                 <Tooltip title="Thống kê">
                                     <Link
-                                        to={`statics/${id}`}
+                                        to={`/admin/challenge/statics/${id}?title=${
+                                            title ? title.replaceAll(' ', '+') : ''
+                                        }`}
                                         className="leading-3"
                                     >
                                         <BarChartOutlined className="cursor-pointer p-3 hover:text-blue-500" />
@@ -270,7 +273,7 @@ const List: React.FC<IListProps> = ({ data, loading, getChallenge }) => {
                     <h3 className="text-base font-semibold">Danh sách challenge</h3>
 
                     <span className="text-gray-900y ml-2 inline-flex h-5 w-5 items-center justify-center rounded-full bg-blue-200 text-xs font-semibold ">
-                        {data.length}
+                        {data?.length}
                     </span>
                 </div>
                 <Table

@@ -4,7 +4,7 @@ import CommentApi from '../../../../Api/Comment/CommentApi'
 import { formatDate } from '../../../../helper/helper'
 
 export interface IComment {
-    _id: string,
+    _id: string
     author: {
         userName: string
         avatar: string
@@ -15,8 +15,8 @@ export interface IComment {
 
 interface ICommentProps {
     challengeId: string
-    comments: IComment[],
-    refetch: ()=>void
+    comments: IComment[]
+    refetch: () => void
 }
 
 const Comment: React.FC<ICommentProps> = ({ challengeId, comments, refetch }) => {
@@ -35,7 +35,6 @@ const Comment: React.FC<ICommentProps> = ({ challengeId, comments, refetch }) =>
                     notification.success({ message: 'Gửi bình luận thành công!' })
                 })
                 .catch(() => {
-                
                     notification.error({ message: 'Có lỗi xảy ra!' })
                 })
                 .finally(() => {
@@ -43,7 +42,6 @@ const Comment: React.FC<ICommentProps> = ({ challengeId, comments, refetch }) =>
                 })
         })
     }
-    console.log('comments', comments)
     return (
         <div>
             <h2 className="text-2xl font-semibold">Bình luận</h2>
@@ -81,18 +79,21 @@ const Comment: React.FC<ICommentProps> = ({ challengeId, comments, refetch }) =>
             </div>
             <div className="mt-12">
                 {comments?.map(comment => (
-                    <div className="mt-4 flex flex-col border-b pb-4" key={comment._id} >
+                    <div
+                        className="mt-4 flex flex-col border-b pb-4"
+                        key={comment._id}
+                    >
                         <div className="flex items-center">
                             <p className="mr-3 inline-flex items-center text-sm text-gray-900 dark:text-white">
                                 <img
                                     className="mr-2 h-6 w-6 rounded-full"
                                     src={
-                                        comment.author.avatar ||
+                                        comment?.author?.avatar ||
                                         'https://flowbite.com/docs/images/people/profile-picture-2.jpg'
                                     }
                                     alt="Michael Gough"
                                 />
-                                {comment.author.userName}
+                                {comment?.author?.userName}
                             </p>
                             <p className="text-xs text-gray-600 dark:text-gray-400">
                                 <time

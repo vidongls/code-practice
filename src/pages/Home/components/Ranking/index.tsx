@@ -23,8 +23,9 @@ const Ranking: React.FC<IRankingProps> = props => {
         {
             userName: 'hihi',
             challengeResolve: 12,
-        },{
-            userName: 'hihi',
+        },
+        {
+            userName: 'hihiaaa',
             challengeResolve: 12,
         },
     ])

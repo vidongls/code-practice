@@ -54,7 +54,7 @@ const ChallengeEdit: React.FC<IChallengeEditProps> = props => {
             ChallengeApi.update(id!, { ...values, time: (time || 15) * 1000 * 60 })
                 .then(res => {
                     notification.success({ message: 'Chỉnh sửa thành công' })
-                    navigate('/admin/challenge')
+                    navigate(`/admin/challenge/${id}`)
                 })
                 .catch(err => {
                     notification.error({ message: 'Chỉnh sửa thất bại' })

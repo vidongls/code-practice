@@ -1,5 +1,6 @@
 import React from 'react'
 import { Avatar, Button, Dropdown, Layout, Menu } from 'antd'
+import { UserOutlined } from '@ant-design/icons'
 
 import Navbar from './Navbar'
 import { useNavigate } from 'react-router-dom'
@@ -56,12 +57,11 @@ const Header: React.FC = props => {
                         overlay={menu}
                         trigger={['click']}
                     >
-                        <Avatar
-                            size="large"
-                            className="cursor-pointer"
-                        >
-                            {user.userName}
-                        </Avatar>
+                        <div>
+                            <Avatar icon={<UserOutlined />} />
+
+                            <span className="ml-2"> {user?.userName}</span>
+                        </div>
                     </Dropdown>
                 )}
             </div>

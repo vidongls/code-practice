@@ -56,8 +56,8 @@ const ModalAddStudents: React.FC<IModalAddStudentsProps> = ({ classId, getStuden
         },
         {
             title: 'Họ và tên',
-            dataIndex: 'name',
-            key: 'name',
+            dataIndex: 'userName',
+            key: 'userName',
         },
         {
             title: 'Email',

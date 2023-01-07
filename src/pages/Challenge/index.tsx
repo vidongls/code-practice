@@ -1,6 +1,6 @@
-import { notification, Spin } from 'antd'
+import { Button, notification, Result, Spin } from 'antd'
 import React, { useCallback, useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { IRealtimeData } from '../../Admin/pages/Challange/List'
 import ChallengeApi from '../../Api/Challenge/ChallengeApi'
 import CodeEditor from '../../components/CodeEditor'
@@ -36,6 +36,7 @@ const Challenge: React.FC<IChallengeProps> = props => {
     const [detail, setDetail] = useState<IDetail>({} as IDetail)
     const [isStarted, setIsStarted] = useState(false)
     const [isEnded, setIsEnded] = useState(false)
+    const [errors, setErrors] = useState({} as any)
     const [dataRealtime, setDataRealtime] = useState({} as IRealtimeData)
 
     const getDetailChallenge = useCallback(async () => {
@@ -43,7 +44,9 @@ const Challenge: React.FC<IChallengeProps> = props => {
         try {
             const res = await ChallengeApi.getOne(id!)
             setDetail(res.data)
-        } catch (error) {
+        } catch (error: any) {
+            const { response } = error
+            setErrors(response)
             notification.error({ message: 'Có lỗi xảy ra!' })
         } finally {
             setLoading(false)
@@ -63,7 +66,7 @@ const Challenge: React.FC<IChallengeProps> = props => {
                         ChallengeApi.getOneDoingChallenge(id)
                             .then(res => {
                                 const { data } = res
-                                if (data.isResolved) {
+                                if (data?.isResolved) {
                                     return true
                                 }
                             })
@@ -144,6 +147,22 @@ const Challenge: React.FC<IChallengeProps> = props => {
         },
         // { label: 'Bảng xếp hạng', key: 'ranking', content: 'bxh' },
     ]
+
+    if (errors?.status === 404) {
+        return (
+            <Result
+                status="404"
+                title="404"
+                subTitle="Xin lỗi, Trang web bạn truy cập không tồn tại"
+                extra={
+                    <Link to={'/'}>
+                        <Button>Về trang chủ</Button>
+                    </Link>
+                }
+            />
+        )
+    }
+
     return (
         <div className="bg-white">
             {/* <Header /> */}

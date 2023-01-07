@@ -28,8 +28,14 @@ const Register: React.FC = () => {
             await UserApi.register(data)
             notification.success({ message: 'Đăng ký thành công' })
             navigate('/login')
-        } catch (error) {
-            notification.error({ message: 'Đăng ký thất bại' })
+        } catch (error: any) {
+            const { data } = error.response
+            console.log('🧙 ~ data', data)
+            if (data?.code === 'USER_EXISTED') {
+                notification.error({ message: 'Tài khoản đã tồn tại' })
+            } else {
+                notification.error({ message: 'Đăng ký thất bại' })
+            }
         } finally {
             setLoading(false)
         }
@@ -48,30 +54,18 @@ const Register: React.FC = () => {
                     >
                         <Form.Item
                             name="userName"
-                            label={<span className="font-medium">Tên tài khoản</span>}
+                            label={<span className="font-medium">Họ và tên</span>}
                             rules={[
                                 {
                                     required: true,
-                                    message: 'Tên tài khoản không được bỏ trống',
+                                    message: 'Họ và tên không được bỏ trống',
                                     whitespace: false,
-                                },
-                                {
-                                    pattern: /^[A-Za-z0-9._]+$/,
-                                    message: 'Tên tài khoản không được chứa dấu cách và ký tự đặc biệt (~!@#$%^&*...)',
-                                },
-                                {
-                                    min: 8,
-                                    message: 'Tên tài khoản ít nhất 8 ký tự',
-                                },
-                                {
-                                    max: 30,
-                                    message: 'Tên tài khoản không quá 30 ký tự',
                                 },
                             ]}
                         >
                             <Input
                                 className="rounded-lg border-[#F2F2F2] bg-[#F2F2F2] p-4 lg:w-[450px]"
-                                placeholder="Nhập tên tài khoản..."
+                                placeholder="Nhập họ và tên..."
                                 size="middle"
                             />
                         </Form.Item>
@@ -99,6 +93,7 @@ const Register: React.FC = () => {
 
                         <Form.Item
                             name="password"
+                            className="mb-2"
                             label={<span className="font-medium">Mật khẩu</span>}
                             rules={[
                                 { required: true, message: 'Mật khẩu không được để trống!' },
@@ -108,17 +103,18 @@ const Register: React.FC = () => {
                                 },
                             ]}
                         >
-                            <Input
+                            <Input.Password
                                 className="rounded-lg border-[#F2F2F2] bg-[#F2F2F2] p-4 lg:w-[450px]"
-                                type="password"
                                 placeholder="Nhập mật khẩu..."
                                 size="middle"
                             />
                         </Form.Item>
                         <Form.Item>
                             <div>
-                                * Định dạng mật khẩu 8-36 ký tự.<br/>
-                                * Chứa ít nhất 1 chữ hoa, chữ thường và ký tự đặc biệt
+                                <span className="text-red-500">*</span> Định dạng mật khẩu 8-36 ký tự.
+                                <br />
+                                <span className="text-red-500">*</span> Chứa ít nhất 1 chữ hoa, chữ thường và ký tự đặc
+                                biệt
                             </div>
                         </Form.Item>
                         <Form.Item
@@ -136,9 +132,8 @@ const Register: React.FC = () => {
                                 }),
                             ]}
                         >
-                            <Input
+                            <Input.Password
                                 className="rounded-lg border-[#F2F2F2] bg-[#F2F2F2] p-4 lg:w-[450px]"
-                                type="password"
                                 placeholder="Nhập lại mật khẩu..."
                                 size="middle"
                             />
@@ -165,8 +160,8 @@ const Register: React.FC = () => {
             </div>
             <div className="hidden flex-col items-center justify-end bg-[#FFFAE7] p-12 pb-0 lg:col-span-1 lg:flex">
                 <div className="mb-28 p-5 text-4xl font-bold">
-                    Chào mừng tới với 
-                    <span className="text-[#FF8A2D] inline-block">Code Practice.</span>
+                    Chào mừng tới với
+                    <span className="inline-block text-[#FF8A2D]">Code Practice.</span>
                 </div>
                 <div className="">
                     <img

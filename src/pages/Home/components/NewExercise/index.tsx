@@ -11,7 +11,6 @@ const NewExercise: React.FC = () => {
     useEffect(() => {
         const getNewestChallenge = async () => {
             const res = await ChallengeApi.getNewestChallenge()
-            console.log('🧙 ~ res', res)
             setData(res.data?.data)
         }
 

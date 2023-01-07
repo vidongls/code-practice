@@ -28,11 +28,8 @@ const Description: React.FC<IDescriptionProps> = ({ loading, detail, isEnded, da
     }
 
     const onComplete = () => {
-        console.log('ád')
         showModal()
     }
-
-    console.log('detail.time', detail.time)
 
     return Object.keys(detail).length ? (
         <Spin spinning={loading}>

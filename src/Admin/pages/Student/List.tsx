@@ -33,11 +33,6 @@ const List: React.FC<IListProps> = ({ data, loading, params, getStudent }) => {
             },
         },
         {
-            title: 'Username',
-            dataIndex: 'userName',
-            key: 'userName',
-        },
-        {
             title: 'Mã sinh viên',
             dataIndex: 'code',
             key: 'code',
@@ -55,8 +50,8 @@ const List: React.FC<IListProps> = ({ data, loading, params, getStudent }) => {
         },
         {
             title: 'Họ và tên',
-            dataIndex: 'name',
-            key: 'name',
+            dataIndex: 'userName',
+            key: 'userName',
         },
         {
             title: 'Email',

@@ -51,8 +51,5 @@ export const isManager = (role: string) => {
     return userEnum.includes(role)
 }
 
-// Báo đã thi
-// Tao tk binh thuong test
-// Thong bao ket qua thi, submit
-// ket qua chi co dung sai. con moi thuc khac kqt. ke yeu thua cuoc
+// first name, last name
 //

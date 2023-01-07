@@ -1,9 +1,8 @@
 import { Avatar, Dropdown, Layout, Menu } from 'antd'
 import React from 'react'
-import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons'
+import { MenuUnfoldOutlined, MenuFoldOutlined, UserOutlined } from '@ant-design/icons'
 import { useNavigate } from 'react-router-dom'
 import { useAuthStore } from '../../store/useAuthStore'
-
 interface Props {
     handleOpenSidebar: () => void
     handleCloseSidebar: () => void
@@ -13,7 +12,7 @@ interface Props {
 const { Header: HeaderAntd } = Layout
 
 const Header: React.FC<Props> = ({ handleOpenSidebar, handleCloseSidebar, collapsed }) => {
-    const { logout } = useAuthStore()
+    const { isLogin, user, logout } = useAuthStore()
 
     let navigate = useNavigate()
     const handleLogout = (): void => {
@@ -45,12 +44,11 @@ const Header: React.FC<Props> = ({ handleOpenSidebar, handleCloseSidebar, collap
                 trigger={['click']}
                 className="cursor-pointer"
             >
-                <Avatar
-                    style={{ backgroundColor: '#f56a00', verticalAlign: 'middle' }}
-                    size="large"
-                >
-                    User
-                </Avatar>
+                <div>
+                    <Avatar icon={<UserOutlined />} />
+
+                    <span className="ml-2"> {user?.userName}</span>
+                </div>
             </Dropdown>
         </HeaderAntd>
     )

@@ -57,8 +57,7 @@ const Login: React.FC = () => {
                             label={<span className="font-medium">Mật khẩu</span>}
                             rules={[{ required: true, message: 'Mật khẩu không được để trống!' }]}
                         >
-                            <Input
-                                type="password"
+                            <Input.Password
                                 placeholder="Nhập mật khẩu..."
                                 className="rounded-lg border-[#F2F2F2] bg-[#F2F2F2] p-4 lg:w-[450px]"
                             />
@@ -85,7 +84,9 @@ const Login: React.FC = () => {
                 </div>
             </div>
             <div className="flex flex-col items-center justify-end bg-[#FFFAE7] p-12 pb-0 lg:col-span-1">
-                <div className="mb-28 p-5 text-4xl font-bold">Chào mừng bạn tới với trang web luyện tập và thực hành code.</div>
+                <div className="mb-28 p-5 text-4xl font-bold">
+                    Chào mừng bạn tới với trang web luyện tập và thực hành code.
+                </div>
                 <div className="h-full w-full bg-authen bg-contain bg-no-repeat">
                     {/* <img src={imgLogin} alt="" /> */}
                 </div>

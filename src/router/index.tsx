@@ -69,10 +69,18 @@ const Router = () => {
                 path="admin"
                 element={<PrivateAdminRoute Component={AdminDefaultLayout} />}
             >
+                <Route
+                    path=""
+                    element={<AdminChallenge />}
+                />
                 <Route path="challenge">
                     <Route
                         index
                         element={<AdminChallenge />}
+                    />
+                    <Route
+                        path="create"
+                        element={<ChallengeCreate />}
                     />
                     <Route
                         path=":id"
@@ -82,10 +90,7 @@ const Router = () => {
                         path="edit/:id"
                         element={<ChallengeEdit />}
                     />
-                    <Route
-                        path="create"
-                        element={<ChallengeCreate />}
-                    />
+
                     <Route
                         path="statics/:id"
                         element={<ChallengeStatics />}

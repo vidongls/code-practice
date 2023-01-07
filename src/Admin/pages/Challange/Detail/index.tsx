@@ -1,5 +1,5 @@
 import { EditOutlined, ArrowLeftOutlined } from '@ant-design/icons'
-import { Button, Spin } from 'antd'
+import { Button, Form, Spin, Tabs } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { CopyBlock, dracula } from 'react-code-blocks'
 import 'react-quill/dist/quill.snow.css'
@@ -72,7 +72,40 @@ const AdminChallengeDetail: React.FC<IAdminChallengeDetailProps> = props => {
                                     wrapLines={true}
                                     codeBlock
                                 />
-                                <div>aas</div>
+                                <Tabs
+                                    defaultActiveKey="1"
+                                    tabPosition={'left'}
+                                    type="card"
+                                    className="mt-7 border"
+                                    items={data?.testCase.map((item: any, index: any) => {
+                                        return {
+                                            label: (
+                                                <>
+                                                    <div
+                                                        className={' p-1 text-base font-medium'}
+                                                        key={index}
+                                                    >
+                                                        <span>Testcase {index + 1}</span>
+                                                    </div>
+                                                </>
+                                            ),
+                                            key: index,
+                                            children: (
+                                                <div className="mb-4 py-8 pr-4">
+                                                    <span>Input </span>
+                                                    <pre className="mt-2 mb-5 w-full bg-gray-100 p-2 font-semibold">
+                                                        {item?.input}
+                                                    </pre>
+
+                                                    <span>Output</span>
+                                                    <pre className="mt-2 w-full bg-gray-100 p-2 font-semibold">
+                                                        {item?.input}
+                                                    </pre>
+                                                </div>
+                                            ),
+                                        }
+                                    })}
+                                />
                             </div>
                         </div>
                     </div>

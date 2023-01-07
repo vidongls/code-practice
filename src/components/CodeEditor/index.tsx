@@ -37,6 +37,7 @@ const CodeEditor: React.FC<ICodeEditorProps> = ({ detail, isEnded }) => {
     const { id: challengeId } = useParams()
 
     const [content, setContent] = useState('')
+    const [defaultContent, setDefaultContent] = useState('')
     const [theme, setTheme] = useState<any>('light')
     const [language, setLanguage] = useState('javascript')
     const [compileResult, setCompileResult] = useState<IResult>({} as IResult)
@@ -45,7 +46,8 @@ const CodeEditor: React.FC<ICodeEditorProps> = ({ detail, isEnded }) => {
     const [isVisible, setIsVisible] = useState(false)
 
     useEffect(() => {
-        setContent(detail.content)
+        setDefaultContent(detail?.content)
+        // setContent(detail?.content)
     }, [detail.content])
 
     const handleChangeEditor = (value: string) => {
@@ -102,7 +104,6 @@ const CodeEditor: React.FC<ICodeEditorProps> = ({ detail, isEnded }) => {
                     .then(res => {
                         setCompileResult(res.data?.dataCompile)
                         handleVisibleSubmitModal()
-                        notification.success({ message: 'Nộp bài thành công' })
                     })
                     .catch(error => {
                         notification.error({ message: 'Nộp bài thất bại' })
@@ -244,7 +245,7 @@ const CodeEditor: React.FC<ICodeEditorProps> = ({ detail, isEnded }) => {
                                 defaultActiveKey="1"
                                 tabPosition={'left'}
                                 type="card"
-                                className="mt-7 border"
+                                className="border"
                                 items={compileResult?.result.map((item: any, index: any) => {
                                     return {
                                         label: (
@@ -262,12 +263,11 @@ const CodeEditor: React.FC<ICodeEditorProps> = ({ detail, isEnded }) => {
                                                         Testcase {index + 1}
                                                     </span>
                                                     <span className="ml-2">
-                                                        <CloseCircleOutlined
-                                                            className={classNames('anticon-custom', {
-                                                                'text-green-500': item?.status,
-                                                                'text-red-500': !item?.status,
-                                                            })}
-                                                        />
+                                                        {item?.status ? (
+                                                            <CheckOutlined className="anticon-custom text-green-500" />
+                                                        ) : (
+                                                            <CloseCircleOutlined className="anticon-custom text-red-500" />
+                                                        )}
                                                     </span>
                                                 </div>
                                             </>

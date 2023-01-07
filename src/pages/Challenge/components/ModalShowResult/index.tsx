@@ -1,4 +1,4 @@
-import { CloseCircleOutlined } from '@ant-design/icons'
+import { CloseCircleOutlined, CheckOutlined } from '@ant-design/icons'
 import { Modal, Tabs } from 'antd'
 import React, { useEffect, useState } from 'react'
 
@@ -59,12 +59,11 @@ const ModalShowResult: React.FC<IModalShowResultProps> = ({ compileResult, handl
                                             Testcase {index + 1}
                                         </span>
                                         <span className="ml-2">
-                                            <CloseCircleOutlined
-                                                className={classNames('anticon-custom', {
-                                                    'text-green-500': item?.status,
-                                                    'text-red-500': !item?.status,
-                                                })}
-                                            />
+                                            {item?.status ? (
+                                                <CheckOutlined className="anticon-custom text-green-500" />
+                                            ) : (
+                                                <CloseCircleOutlined className="anticon-custom text-red-500" />
+                                            )}
                                         </span>
                                     </div>
                                 </>

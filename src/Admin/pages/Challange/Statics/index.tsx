@@ -1,8 +1,8 @@
-import { CheckOutlined, CloseCircleOutlined, InfoCircleOutlined } from '@ant-design/icons'
+import { CheckOutlined, CloseCircleOutlined, InfoCircleOutlined, ArrowLeftOutlined } from '@ant-design/icons'
 import { Modal, Table, Tabs, Tooltip } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { CopyBlock, dracula } from 'react-code-blocks'
-import { useParams as useParamsReactRouter } from 'react-router-dom'
+import { Link, useParams as useParamsReactRouter, useSearchParams } from 'react-router-dom'
 
 import ChallengeApi from '../../../../Api/Challenge/ChallengeApi'
 import { classNames, differentDate, formatDate } from '../../../../helper/helper'
@@ -98,14 +98,20 @@ const ChallengeStatics = () => {
         showModal()
         setContentAnswer(data)
     }
-    console.log('contentAnswer', contentAnswer)
     return (
         <div className="h-full w-full py-8 px-7">
+            <Link
+                to={'/admin/challenge'}
+                className="mb-5 flex w-fit items-center"
+            >
+                <ArrowLeftOutlined className="mr-2" />
+                Trở về Danh Sách Challenge
+            </Link>
             <div className="rounded-md bg-white p-6 ">
                 <div className="my-6 mt-0 flex items-center">
                     <h3 className="text-base font-semibold">
-                        Thống kê challenge -{' '}
-                        {data.length ? `${data[0]?.challenge?.code} - ${data[0]?.challenge?.title}` : null}
+                        Thống kê challenge
+                        {params?.title ? ` - ${params?.title}` : null}
                     </h3>
 
                     {/* <span className="text-gray-900y ml-2 inline-flex h-5 w-5 items-center justify-center rounded-full bg-blue-200 text-xs font-semibold ">

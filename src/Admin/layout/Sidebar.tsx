@@ -20,7 +20,7 @@ const Sidebar = ({ collapsed, setCollapsed, handleCloseSidebar }: Props) => {
     useEffect(() => {
         switch (location.pathname) {
             case '/admin':
-                setOpenKeys(['admin'])
+                setOpenKeys(['challenge'])
                 break
             case '/admin/challenge':
                 setOpenKeys(['challenge'])
@@ -38,11 +38,6 @@ const Sidebar = ({ collapsed, setCollapsed, handleCloseSidebar }: Props) => {
     }
 
     const items: MenuProps['items'] = [
-        {
-            label: <Link to={''}>Admin</Link>,
-            key: 'admin',
-            icon: <UserOutlined />,
-        },
         {
             label: <Link to={'challenge'}>Challenge</Link>,
             key: 'challenge',

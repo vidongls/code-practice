@@ -59,7 +59,6 @@ const SearchStudent: React.FC<ISearchStudentProps> = ({ selectedItems, setSelect
         setValue(text)
     }
     const renderOptions = (option: any) => {
-        console.log('🧙 ~ option', option)
         return {
             label: `${option.userName} - ${option.code}`,
             value: option?._id,
