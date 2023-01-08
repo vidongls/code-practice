@@ -28,6 +28,7 @@ const Description: React.FC<IDescriptionProps> = ({ loading, detail, isEnded, da
     }
 
     const onComplete = () => {
+        console.log('âsas')
         showModal()
     }
 
@@ -36,7 +37,7 @@ const Description: React.FC<IDescriptionProps> = ({ loading, detail, isEnded, da
             <div className="flex items-center justify-between">
                 <h2 className="mb-5 text-2xl font-medium">{detail.title}</h2>
 
-                {detail.isRealtime && (
+                {Object.keys(detail).length && Object.keys(dataRealtime).length && detail.isRealtime && (
                     <CountDown
                         startTime={dataRealtime?.startTime}
                         duration={detail.time}

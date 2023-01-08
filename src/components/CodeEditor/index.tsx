@@ -37,7 +37,6 @@ const CodeEditor: React.FC<ICodeEditorProps> = ({ detail, isEnded }) => {
     const { id: challengeId } = useParams()
 
     const [content, setContent] = useState('')
-    const [defaultContent, setDefaultContent] = useState('')
     const [theme, setTheme] = useState<any>('light')
     const [language, setLanguage] = useState('javascript')
     const [compileResult, setCompileResult] = useState<IResult>({} as IResult)
@@ -46,8 +45,7 @@ const CodeEditor: React.FC<ICodeEditorProps> = ({ detail, isEnded }) => {
     const [isVisible, setIsVisible] = useState(false)
 
     useEffect(() => {
-        setDefaultContent(detail?.content)
-        // setContent(detail?.content)
+        setContent(detail?.content)
     }, [detail.content])
 
     const handleChangeEditor = (value: string) => {
@@ -141,11 +139,6 @@ const CodeEditor: React.FC<ICodeEditorProps> = ({ detail, isEnded }) => {
                                 </Option>
                             ))}
                         </Select>
-
-                        <Button
-                            icon={<RedoOutlined className="mt-1" />}
-                            className="ml-2 rounded"
-                        />
                     </div>
                     <div>
                         <span className="mr-2">Ngôn ngữ: </span>
@@ -192,55 +185,6 @@ const CodeEditor: React.FC<ICodeEditorProps> = ({ detail, isEnded }) => {
                         <span>Đang xử lý...</span>
                     ) : compileResult?.success ? (
                         <>
-                            {/* {listSuccess &&
-                                listSuccess.map((item, index) => {
-                                    return (
-                                        <div
-                                            className="mb-4 grid grid-cols-3 gap-6 border-b pb-8"
-                                            key={index}
-                                        >
-                                            <div className="flex justify-between border border-green-400 p-2 text-base font-medium">
-                                                Testcase
-                                                <span className="ml-2">
-                                                    <CloseCircleOutlined className="anticon-custom text-green-400" />
-                                                </span>
-                                            </div>
-                                        </div>
-                                    )
-                                })}
-
-                            {itemFail && (
-                                <div className="mb-4 grid grid-cols-3 gap-6 border-b pb-8">
-                                    <div>
-                                        <div className="flex justify-between border border-red-500 p-2 text-base font-medium">
-                                            Testcase
-                                            <span className="ml-2">
-                                                <CloseCircleOutlined className="anticon-custom text-red-500" />
-                                            </span>
-                                        </div>
-                                    </div>
-
-                                    <div className="col-span-2">
-                                        <span>Compiler Message</span>
-                                        <pre className="mt-2 mb-5 w-full bg-gray-100 p-3 ">{itemFail?.data}</pre>
-
-                                        <span>Input </span>
-                                        <pre className="mt-2 mb-5 w-full bg-gray-100 p-2 font-semibold">
-                                            {itemFail?.testCaseInput}
-                                        </pre>
-
-                                        <span>Your Output</span>
-                                        <pre className="mt-2 mb-5 w-full bg-gray-100 p-2 font-semibold">
-                                            {itemFail?.data}
-                                        </pre>
-
-                                        <span>Expected Output</span>
-                                        <pre className="mt-2 w-full bg-gray-100 p-2 font-semibold">
-                                            {itemFail?.expectedOutput}
-                                        </pre>
-                                    </div>
-                                </div>
-                            )} */}
                             <Tabs
                                 defaultActiveKey="1"
                                 tabPosition={'left'}

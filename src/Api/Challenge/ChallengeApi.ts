@@ -36,6 +36,9 @@ class ChallengeApi {
     getNewestChallenge = () => {
         return Api.get('/challenge/all/newest', {})
     }
+    getRankingChallenge = () => {
+        return Api.get('/challenge/all/ranking', {})
+    }
 
     changeRealtime = (challengeId: string, data: any) => {
         return Api.post(`/challenge/${challengeId}/change-realtime`, data)
@@ -54,7 +57,11 @@ class ChallengeApi {
     }
 
     getOneDoingChallenge = (challengeId: string) => {
-        return Api.post(`/challenge/${challengeId}/get-doing-challenge`, {})
+        return Api.get(`/challenge/${challengeId}/get-doing-challenge`, {})
+    }
+
+    getRandomChallenge = () => {
+        return Api.get(`/challenge/user/get-random`, {})
     }
 }
 

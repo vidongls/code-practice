@@ -1,21 +1,28 @@
-import { Button, Dropdown, Input, Menu, notification, Table } from 'antd'
+import { CheckOutlined, RedoOutlined, SearchOutlined } from '@ant-design/icons'
+import { Badge, Button, Form, Input, Menu, notification, Select, Table } from 'antd'
 import React, { useEffect, useState } from 'react'
-import Box from '../../../../components/Box'
-import { DownOutlined, SearchOutlined, RedoOutlined } from '@ant-design/icons'
-import { ColumnsType } from 'antd/lib/table'
 import { Link } from 'react-router-dom'
+
 import ChallengeApi from '../../../../Api/Challenge/ChallengeApi'
-import { CHALLENGE_LEVEL, CHALLENGE_LEVEL_COLOR, TChallengeLevel } from '../../../Challenge/constants/constants'
+import Box from '../../../../components/Box'
 import { classNames } from '../../../../helper/helper'
+import { useAuthStore } from '../../../../store/useAuthStore'
+import useParams from '../../../../utils/useParams'
+import { CHALLENGE_LEVEL, CHALLENGE_LEVEL_COLOR, TChallengeLevel } from '../../../Challenge/constants/constants'
 
 interface IExerciseListProps {}
 
 const ExerciseList: React.FC<IExerciseListProps> = props => {
+    const [form] = Form.useForm()
+    const { user } = useAuthStore()
+    const { params, addParams } = useParams()
+
     const [data, setData] = useState([])
+
     useEffect(() => {
         const getChallenge = async () => {
             try {
-                const res = await ChallengeApi.getAll()
+                const res = await ChallengeApi.getAll(params)
                 setData(res.data?.challenge)
             } catch (error) {
                 notification.error({ message: 'Có lỗi xảy ra!' })
@@ -23,22 +30,41 @@ const ExerciseList: React.FC<IExerciseListProps> = props => {
         }
 
         getChallenge()
-    }, [])
+    }, [params])
 
     const columns = [
         {
-            title: <p className="font-semibold">Tiêu đề</p>,
-            dataIndex: 'title',
-            render: (title: string, record: any) => {
+            title: '',
+            dataIndex: 'countDoChallenge',
+            key: 'countDoChallenge',
+            render: (text: string, record: any) => {
+                const doChallengeIds = record?.countDoChallenge?.map((item: any) => item.user)
+                return <>{doChallengeIds.includes(user.id) && <CheckOutlined className="text-green-500" />}</>
+            },
+        },
+        {
+            title: <p className="font-semibold">Mã</p>,
+            dataIndex: 'code',
+            key: 'code',
+            render: (code: string, record: any) => {
                 const id = record?._id
+                const isRealtime = record?.isRealtime
+
                 return (
                     <Link
                         to={`/challenge/${id}`}
                         className="font-semibold text-blue-600"
                     >
-                        {title}
+                        {code}
                     </Link>
                 )
+            },
+        },
+        {
+            title: <p className="font-semibold">Tiêu đề</p>,
+            dataIndex: 'title',
+            render: (title: string) => {
+                return <span className="font-medium">{title}</span>
             },
         },
         {
@@ -75,55 +101,87 @@ const ExerciseList: React.FC<IExerciseListProps> = props => {
                 return <span>{countResolve?.length ? countResolve.length : 0}</span>
             },
         },
+        {
+            title: <p className="font-semibold">Loại</p>,
+            dataIndex: 'isRealtime',
+            key: 'isRealtime',
+            render: (text: any) => {
+                return (
+                    <>
+                        <Badge
+                            status={!text ? 'default' : 'processing'}
+                            text={!text ? 'Thường' : 'Kiểm tra'}
+                        />
+                    </>
+                )
+            },
+        },
     ]
 
-    const menu = (
-        <Menu
-            items={[
-                {
-                    label: <p>Tất cả</p>,
-                    key: '0',
-                },
-                {
-                    label: <p>Dễ</p>,
-                    key: '1',
-                },
-                {
-                    label: <p>Trung bình</p>,
-                    key: '2',
-                },
-                {
-                    label: <p>Khó</p>,
-                    key: '3',
-                },
-            ]}
-        />
-    )
+    const resetFilter = () => {
+        addParams({})
+        form.resetFields()
+    }
 
     return (
         <Box className="rounded-md p-6">
-            <div className="mb-4 flex items-center justify-between">
+            <div className="mb-4 flex items-center justify-between border-b border-b-gray-200 pb-3">
                 <h3 className="text-medium text-lg">Danh sách bài tập</h3>
                 <div className="flex items-center gap-4">
-                    <Dropdown overlay={menu}>
-                        <div className="flex cursor-pointer items-center whitespace-nowrap">
-                            <span> Tất cả</span> <DownOutlined className="ml-2" />
-                        </div>
-                    </Dropdown>
-                    <Input
-                        placeholder="Từ khóa"
-                        suffix={<SearchOutlined />}
-                        className="rounded-sm"
-                    />
+                    <Form
+                        form={form}
+                        layout="inline"
+                    >
+                        <Form.Item
+                            name="level"
+                            className="mr-2"
+                        >
+                            <Select
+                                placeholder="Chọn độ khó"
+                                allowClear
+                                options={[
+                                    {
+                                        value: 'EASY',
+                                        label: 'Dễ',
+                                    },
+                                    {
+                                        value: 'MEDIUM',
+                                        label: 'Thường',
+                                    },
+                                    {
+                                        value: 'HARD',
+                                        label: 'Khó',
+                                    },
+                                    {
+                                        value: 'EXPERT',
+                                        label: 'Chuyên gia',
+                                    },
+                                ]}
+                                onChange={value => addParams({ level: value })}
+                                value={params?.level ? params?.level : undefined}
+                            />
+                        </Form.Item>
+                        <Form.Item name="title">
+                            <Input
+                                placeholder="Từ khóa"
+                                suffix={<SearchOutlined />}
+                                className="rounded-sm"
+                                onBlur={e => addParams({ title: e.target.value })}
+                            />
+                        </Form.Item>
+                    </Form>
+
                     <Button
-                        icon={<RedoOutlined />}
+                        icon={<RedoOutlined className="mt-1" />}
                         type="primary"
+                        onClick={resetFilter}
                         className="flex items-center bg-primary "
                     >
-                        Làm mới
+                        Reset
                     </Button>
                 </div>
             </div>
+
             <Table
                 rowKey={record => record._id}
                 columns={columns}

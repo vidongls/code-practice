@@ -2,7 +2,9 @@
     &.layout {
         min-height: 100vh;
     }
-
+    .ant-layout {
+        background-color: theme('colors.slate.200');
+    }
     .header {
         background-color: #fff;
         padding: 0 16px;

@@ -18,6 +18,7 @@ import ChallengeStatics from '../Admin/pages/Challange/Statics'
 import ChallengeEdit from '../Admin/pages/Challange/Edit'
 import AdminChallengeDetail from '../Admin/pages/Challange/Detail'
 import PrivateAdminRoute from './PrivateAdminRoute'
+import AdminClass from '../Admin/pages/Class'
 
 const Router = () => {
     return (
@@ -100,6 +101,10 @@ const Router = () => {
                 <Route
                     path="students"
                     element={<Student />}
+                />
+                <Route
+                    path="class"
+                    element={<AdminClass />}
                 />
             </Route>
         </Routes>

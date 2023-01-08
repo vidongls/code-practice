@@ -90,7 +90,7 @@ const SearchStudent: React.FC<ISearchStudentProps> = ({ selectedItems, setSelect
                 children={
                     <Input
                         size="large"
-                        placeholder="Nhập mã hoặc tên sinh viên"
+                        placeholder="Nhập mã sinh viên"
                         prefix={loading ? <LoadingOutlined /> : <SearchOutlined />}
                         disabled={loading}
                         allowClear={true}

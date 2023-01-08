@@ -56,8 +56,13 @@ const ModalAddStudents: React.FC<IModalAddStudentsProps> = ({ classId, getStuden
         },
         {
             title: 'Họ và tên',
-            dataIndex: 'userName',
-            key: 'userName',
+            dataIndex: 'fistName',
+            key: 'fistName',
+            render: (fistName: string, record: any) => {
+                const lastName = record?.lastName
+
+                return <span>{fistName && lastName ? `${fistName} ${lastName}` : '---'} </span>
+            },
         },
         {
             title: 'Email',
@@ -90,6 +95,7 @@ const ModalAddStudents: React.FC<IModalAddStudentsProps> = ({ classId, getStuden
 
         try {
             const data = selectedItems.map((item: any) => item._id)
+
             const res = await ClassApi.addMemberToClass(classId, { student: data })
             handleHideModal()
             getStudent()
@@ -107,14 +113,16 @@ const ModalAddStudents: React.FC<IModalAddStudentsProps> = ({ classId, getStuden
 
     return (
         <>
-            <Button
-                type="primary"
-                className="rounded bg-primary font-medium"
-                onClick={handleShowModal}
-            >
-                <PlusOutlined className="anticon-custom" />
-                Thêm sinh viên
-            </Button>
+            {classId && (
+                <Button
+                    type="primary"
+                    className="rounded bg-primary font-medium"
+                    onClick={handleShowModal}
+                >
+                    <PlusOutlined className="anticon-custom" />
+                    Thêm sinh viên
+                </Button>
+            )}
             {visible && (
                 <Modal
                     title="Thêm sinh viên"

@@ -36,7 +36,7 @@ const Filter: React.FC<IFilterProps> = ({ params, addParams }) => {
                         lg={{ span: 6 }}
                     >
                         <Form.Item
-                            label="Tiêu đề"
+                            label={<span className="text-slate-800">Tiêu đề</span>}
                             name="title"
                         >
                             <Input placeholder="Nhập tiêu đề" />

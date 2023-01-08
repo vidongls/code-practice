@@ -10,7 +10,7 @@ interface IToken {
 }
 
 interface IUser {
-    _id: string
+    id: string
     email: string
     userName: string
     token: string
@@ -26,7 +26,7 @@ interface IAuthState {
     getUser: () => IUser
 }
 
-const initUser = { _id: '', email: '', userName: '', token: '', role: '' }
+const initUser = { id: '', email: '', userName: '', token: '', role: '' }
 
 export const useAuthStore = create<IAuthState>()(
     devtools(

@@ -19,41 +19,32 @@ const NewExercise: React.FC = () => {
 
     return (
         <Box
-            className="col-span-1 p-3"
+            className="col-span-1 p-5"
             headerContent={
                 <>
                     <div className="flex items-center text-lg font-medium">
                         <FileFilled className="mr-2" /> Bài tập mới
                     </div>
-                    <div className="btn bg-secondary hover:bg-tertiary ">Tải lại</div>
+                    {/* <div className="btn bg-secondary hover:bg-tertiary ">Tải lại</div> */}
                 </>
             }
         >
-            <ul className="list-disc">
-                <li className="ml-8 mb-3">
-                    <Link to="#">TIMUOC - Tìm ước của 1 số</Link>
-                </li>
-                <li className="ml-8 mb-3">
-                    <Link to="#">TIMUOC - Tìm ước của 1 số</Link>
-                </li>
-                <li className="ml-8 mb-3">
-                    <Link to="#">TIMUOC - Tìm ước của 1 số</Link>
-                </li>
-                <li className="ml-8 mb-3">
-                    <Link to="#">TIMUOC - Tìm ước của 1 số</Link>
-                </li>
-                <li className="ml-8 mb-3">
-                    <Link to="#">TIMUOC - Tìm ước của 1 số</Link>
-                </li>
-                <li className="ml-8 mb-3">
-                    <Link to="#">TIMUOC - Tìm ước của 1 số</Link>
-                </li>
-                <li className="ml-8 mb-3">
-                    <Link to="#">TIMUOC - Tìm ước của 1 số</Link>
-                </li>
-                <li className="ml-8 mb-3">
-                    <Link to="#">TIMUOC - Tìm ước của 1 số</Link>
-                </li>
+            <ul className="min-h-[300px] list-disc">
+                {data.map((item: any) => {
+                    return (
+                        <li
+                            className="ml-8 mb-3"
+                            key={item.id}
+                        >
+                            <Link
+                                to={`/challenge/${item.id}`}
+                                className="text-base"
+                            >
+                                {item.title}
+                            </Link>
+                        </li>
+                    )
+                })}
             </ul>
         </Box>
     )

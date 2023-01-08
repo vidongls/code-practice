@@ -51,5 +51,5 @@ export const isManager = (role: string) => {
     return userEnum.includes(role)
 }
 
-// first name, last name
+// Thêm profile
 //

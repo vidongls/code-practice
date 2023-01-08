@@ -1,8 +1,8 @@
-import { Button, Form, Input, notification } from 'antd'
+import { Avatar, Button, Form, Input, notification } from 'antd'
 import React, { useState } from 'react'
 import CommentApi from '../../../../Api/Comment/CommentApi'
 import { formatDate } from '../../../../helper/helper'
-
+import { UserOutlined } from '@ant-design/icons'
 export interface IComment {
     _id: string
     author: {
@@ -85,13 +85,18 @@ const Comment: React.FC<ICommentProps> = ({ challengeId, comments, refetch }) =>
                     >
                         <div className="flex items-center">
                             <p className="mr-3 inline-flex items-center text-sm text-gray-900 dark:text-white">
-                                <img
+                                {/* <img
                                     className="mr-2 h-6 w-6 rounded-full"
                                     src={
                                         comment?.author?.avatar ||
                                         'https://flowbite.com/docs/images/people/profile-picture-2.jpg'
                                     }
                                     alt="Michael Gough"
+                                /> */}
+                                <Avatar
+                                    icon={<UserOutlined />}
+                                    size={24}
+                                    className="mr-2"
                                 />
                                 {comment?.author?.userName}
                             </p>

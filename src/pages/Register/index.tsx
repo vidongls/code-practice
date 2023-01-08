@@ -1,5 +1,5 @@
 /* eslint-disable no-useless-escape */
-import { Button, Form, Input, notification } from 'antd'
+import { Button, Col, Form, Input, notification, Row } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import UserApi from '../../Api/User/UserApi'
@@ -52,20 +52,62 @@ const Register: React.FC = () => {
                         layout="vertical"
                         form={form}
                     >
+                        <Row gutter={10}>
+                            <Col span={12}>
+                                <Form.Item
+                                    name="firstName"
+                                    label={<span className="font-medium">Họ và tên đệm</span>}
+                                    rules={[
+                                        {
+                                            required: true,
+                                            message: 'Họ không được bỏ trống',
+                                            whitespace: false,
+                                        },
+                                    ]}
+                                >
+                                    <Input
+                                        className="rounded-lg border-[#F2F2F2] bg-[#F2F2F2] p-4 "
+                                        placeholder="Nhập họ và tên đệm..."
+                                        size="middle"
+                                    />
+                                </Form.Item>
+                            </Col>
+
+                            <Col span={12}>
+                                <Form.Item
+                                    name="lastName"
+                                    label={<span className="font-medium">Tên</span>}
+                                    rules={[
+                                        {
+                                            required: true,
+                                            message: 'Tên không được bỏ trống',
+                                            whitespace: false,
+                                        },
+                                    ]}
+                                >
+                                    <Input
+                                        className="rounded-lg border-[#F2F2F2] bg-[#F2F2F2] p-4"
+                                        placeholder="Nhập tên..."
+                                        size="middle"
+                                    />
+                                </Form.Item>
+                            </Col>
+                        </Row>
+
                         <Form.Item
                             name="userName"
-                            label={<span className="font-medium">Họ và tên</span>}
+                            label={<span className="font-medium">Tên tài khoản</span>}
                             rules={[
                                 {
                                     required: true,
-                                    message: 'Họ và tên không được bỏ trống',
+                                    message: 'Tên tài khoản không được bỏ trống',
                                     whitespace: false,
                                 },
                             ]}
                         >
                             <Input
                                 className="rounded-lg border-[#F2F2F2] bg-[#F2F2F2] p-4 lg:w-[450px]"
-                                placeholder="Nhập họ và tên..."
+                                placeholder="Nhập tên tài khoản..."
                                 size="middle"
                             />
                         </Form.Item>

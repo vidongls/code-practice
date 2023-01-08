@@ -1,96 +1,52 @@
-import { Button } from 'antd'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+
+import ChallengeApi from '../../../../Api/Challenge/ChallengeApi'
 import Box from '../../../../components/Box'
-import { ClockCircleOutlined } from '@ant-design/icons'
-import { ColumnsType } from 'antd/lib/table'
-import { Table } from 'antd'
-
-interface DataType {
-    userName: string
-
-    challengeResolve: number
-}
-
-interface EditableRowProps {
-    index: number
-    children: any
-}
+import { classNames } from '../../../../helper/helper'
 
 interface IRankingProps {}
 
 const Ranking: React.FC<IRankingProps> = props => {
-    const [data, setData] = useState([
-        {
-            userName: 'hihi',
-            challengeResolve: 12,
-        },
-        {
-            userName: 'hihiaaa',
-            challengeResolve: 12,
-        },
-    ])
+    const [data, setData] = useState([])
+    console.log('🧙 ~ data', data)
 
-    const columns: ColumnsType<DataType> = [
-        {
-            title: 'Xếp hạng',
-            dataIndex: '',
-            key: '',
-            render: (text, record, index) => <a>{index}</a>,
-        },
-        {
-            title: 'Tài khoản',
-            dataIndex: 'userName',
-            key: 'userName',
-        },
-        {
-            title: 'Bài hoàn thành',
-            dataIndex: 'challengeResolve',
-            key: 'challengeResolve',
-        },
-    ]
+    useEffect(() => {
+        const getNewestChallenge = async () => {
+            const res = await ChallengeApi.getRankingChallenge()
+            setData(res.data?.data)
+        }
 
-    // const EditableRow: React.FC<EditableRowProps> = props => {
-    //     console.log('🧙 ~ record', props)
-    //     return (
-    //         <>
-    //         <tr>
-    //             {props.children &&
-    //                 props.children.map((item: any, index: number) => (
-    //                     <>
-    //                         {/* <td className='w-fit'> */}
-    //                            {item.record}
-    //                             {/* <td><div>sadasaaaaaaaaaasadasddddddddddsaaaaaaaaaa</div></td>  */}
-    //                         {/* </td> */}
-    //
-    //                     </>
-    //                 ))}
-    //
-    //         </tr>
-    //          <tr> <div>sadasaaaaaaaaaasadasddddddddddsaaaaaaaaaasadasaaaaaaaaaasadasddddddddddsaaaaaaaaaa</div></tr>
-    //         </>
-    //
-    //     )
-    // }
-    //
-    // const components = {
-    //     body: {
-    //         row: EditableRow,
-    //     },
-    // }
+        getNewestChallenge()
+    }, [])
 
     return (
-        <Box className="mt-4 flex flex-col justify-between p-4 text-center lg:mt-0">
-            {data && (
-                <Table
-                    columns={columns}
-                    dataSource={data}
-                    rowKey={record => record?.userName}
-                    pagination={false}
-                    className="table-ranking bg-transparent"
-                    locale={{ emptyText: <></> }}
-                    // components={components}
-                />
-            )}
+        <Box
+            className="p-5 lg:mt-0"
+            headerContent={
+                <>
+                    <div className="text-lg font-medium">Xếp hạng</div>
+                    {/* <div className="btn bg-secondary hover:bg-tertiary ">Tải lại</div> */}
+                </>
+            }
+        >
+            <div>
+                {data.map((item: any, index: number) => {
+                    return (
+                        <div className="mb-1">
+                            <span>{index + 1}.</span>
+                            <span
+                                className={classNames('font-semibold', {
+                                    'text-orange-500': index === 0,
+                                    'text-purple-600': index !== 0,
+                                })}
+                            >
+                                {item?.user?.userName}
+                            </span>
+                            <span>- {item.count} bài</span>
+                        </div>
+                    )
+                })}
+            </div>
         </Box>
     )
 }

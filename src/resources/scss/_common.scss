@@ -1,23 +1,23 @@
 .btn {
-	cursor: pointer;
-	color: #fff;
-	font-weight: 400;
-	font-size: 14px;
-	padding: 5.5px 15px;
-	border-radius: 4px;
-	line-height: 1.5;
-	transition: all 0.2s ease;
+    cursor: pointer;
+    color: #fff;
+    font-weight: 400;
+    font-size: 14px;
+    padding: 5.5px 15px;
+    border-radius: 4px;
+    line-height: 1.5;
+    transition: all 0.2s ease;
 }
 
 .box {
-	background-color: #ffffffb3;
-	box-shadow: 0 1px 1px 0 #0000001a;
-	border-radius: 4px;
+    background-color: #ffffff;
+    box-shadow: 0 2px 5px 0 #0000001a;
+    border-radius: 4px;
     color: #515a6e;
 }
 
 .pagination {
-	.ant-pagination-item{
+    .ant-pagination-item {
         border-radius: 4px !important;
         &.ant-pagination-item-1.ant-pagination-item-active {
             background-color: #2d8cf0 !important;
@@ -28,5 +28,3 @@
         }
     }
 }
-
-

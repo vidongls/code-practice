@@ -5,60 +5,37 @@ import { Link } from 'react-router-dom'
 
 import ClassApi from '../../../Api/Class/ClassApi'
 import Avatar from '../../../components/Avatar'
-import ModalAddStudents from './components/ModalAddStudents'
 
 interface IListProps {
     data: any
     loading: boolean
     params: any
-    getStudent: () => void
+    getClass: () => void
 }
-const List: React.FC<IListProps> = ({ data, loading, params, getStudent }) => {
+const List: React.FC<IListProps> = ({ data, loading, params, getClass }) => {
     const [loadingDelete, setLoadingDelete] = useState(false)
 
     const columns = [
         {
-            title: 'Avatar',
-            dataIndex: 'avatar',
-            key: 'avatar',
-            render: (text: string, record: any) => {
-                return (
-                    <div className="w-fit">
-                        <Avatar src={text} />
-                    </div>
-                )
-            },
-        },
-        {
-            title: 'Mã sinh viên',
+            title: 'Mã lớp',
             dataIndex: 'code',
             key: 'code',
             render: (text: string, record: any) => {
-                const id = record?._id
-                return (
-                    <Link
-                        to={id}
-                        className="font-semibold text-blue-600"
-                    >
-                        {text}
-                    </Link>
-                )
+                return <span className="font-semibold">{text}</span>
             },
         },
         {
-            title: 'Họ và tên',
-            dataIndex: 'fistName',
-            key: 'fistName',
-            render: (fistName: string, record: any) => {
-                const lastName = record?.lastName
-
-                return <span>{fistName && lastName ? `${fistName} ${lastName}` : '---'} </span>
-            },
+            title: 'Tên lớp',
+            dataIndex: 'name',
+            key: 'name',
         },
         {
-            title: 'Email',
-            dataIndex: 'email',
-            key: 'email',
+            title: 'Tổng số sinh viên',
+            dataIndex: 'students',
+            key: 'students',
+            render: (students: any) => {
+                return <span>{students?.length} Sinh viên</span>
+            },
         },
         {
             title: '',
@@ -114,7 +91,7 @@ const List: React.FC<IListProps> = ({ data, loading, params, getStudent }) => {
             onOk() {
                 return ClassApi.removeMember(params?.class, { student: id })
                     .then(result => {
-                        getStudent()
+                        getClass()
                         notification.success({ message: 'Xoá sinh viên thành công' })
                     })
                     .catch(err => {
@@ -130,16 +107,12 @@ const List: React.FC<IListProps> = ({ data, loading, params, getStudent }) => {
             <div className="rounded-md bg-white p-6 ">
                 <div className="my-6 mt-0 flex items-center justify-between">
                     <div className="flex items-center">
-                        <h3 className="text-base font-semibold">Danh sách sinh viên</h3>
+                        <h3 className="text-base font-semibold">Danh sách lớp</h3>
 
                         <span className="text-gray-900y ml-2 inline-flex h-5 w-5 items-center justify-center rounded-full bg-blue-200 text-xs font-semibold ">
                             {data?.length || 0}
                         </span>
                     </div>
-                    <ModalAddStudents
-                        classId={params?.class}
-                        getStudent={getStudent}
-                    />
                 </div>
                 <Table
                     columns={columns}

@@ -34,7 +34,7 @@ const AdminChallenge: React.FC<IAdminChallengeProps> = props => {
         <div className="h-full w-full py-8 px-7">
             <div className="my-6 mt-0 flex items-center justify-between">
                 <h3 className="text-lg font-semibold">Challenge</h3>
-                <Link to="create">
+                <Link to="challenge/create">
                     <Button
                         type="primary"
                         className="rounded bg-primary font-medium"

@@ -1,8 +1,9 @@
-import { CloseOutlined, UserOutlined, NodeIndexOutlined, ApartmentOutlined } from '@ant-design/icons'
+import { CloseOutlined, TeamOutlined, NodeIndexOutlined, ApartmentOutlined } from '@ant-design/icons'
 import { Layout, Menu, MenuProps } from 'antd'
 import useBreakpoint from 'antd/lib/grid/hooks/useBreakpoint'
 import React, { useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
+import logo from '../../resources/img/logo-main.png'
 
 interface Props {
     collapsed: boolean
@@ -44,9 +45,14 @@ const Sidebar = ({ collapsed, setCollapsed, handleCloseSidebar }: Props) => {
             icon: <NodeIndexOutlined />,
         },
         {
-            label: <Link to={'students'}>Student</Link>,
+            label: <Link to={'students'}>Sinh viên</Link>,
             key: 'students',
             icon: <ApartmentOutlined />,
+        },
+        {
+            label: <Link to={'class'}>Lớp</Link>,
+            key: 'class',
+            icon: <TeamOutlined />,
         },
     ]
 
@@ -70,7 +76,17 @@ const Sidebar = ({ collapsed, setCollapsed, handleCloseSidebar }: Props) => {
                     </div>
                 </div>
             )}
-            {sm && <div className="logo">{/* <img src={logo} alt="logo" /> */}</div>}
+            {sm && (
+                <div className="mx-auto max-w-[90px] ">
+                    <Link to="/">
+                        <img
+                            src={logo}
+                            className="h-full w-full object-cover"
+                            alt="logo"
+                        />
+                    </Link>
+                </div>
+            )}
 
             <Menu
                 theme="light"

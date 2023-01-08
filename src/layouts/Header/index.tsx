@@ -3,9 +3,9 @@ import { Avatar, Button, Dropdown, Layout, Menu } from 'antd'
 import { UserOutlined } from '@ant-design/icons'
 
 import Navbar from './Navbar'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useAuthStore } from '../../store/useAuthStore'
-
+import logo from '../../resources/img/logo-main.png'
 const { Header: HeaderAntd } = Layout
 
 const Header: React.FC = props => {
@@ -35,7 +35,17 @@ const Header: React.FC = props => {
     return (
         <HeaderAntd className="header sticky top-0 z-50 mb-5 bg-white">
             <div className=" flex items-center justify-between px-9">
-                <Navbar />
+                <div className="logo flex items-center justify-center">
+                    <div className="mx-auto w-20 ">
+                        <Link to="/">
+                            <img
+                                src={logo}
+                                className="h-full w-full object-cover"
+                                alt="logo"
+                            />
+                        </Link>
+                    </div>
+                </div>
 
                 {!isLogin() ? (
                     <div className="header-right flex items-center">
@@ -53,16 +63,19 @@ const Header: React.FC = props => {
                         </Button>
                     </div>
                 ) : (
-                    <Dropdown
-                        overlay={menu}
-                        trigger={['click']}
-                    >
-                        <div>
-                            <Avatar icon={<UserOutlined />} />
+                    <div className="header-right flex items-center">
+                        <Navbar />
+                        <Dropdown
+                            overlay={menu}
+                            className="ml-10 cursor-pointer hover:text-blue-400"
+                        >
+                            <div>
+                                <Avatar icon={<UserOutlined />} />
 
-                            <span className="ml-2"> {user?.userName}</span>
-                        </div>
-                    </Dropdown>
+                                <span className="ml-2"> {user?.userName}</span>
+                            </div>
+                        </Dropdown>
+                    </div>
                 )}
             </div>
         </HeaderAntd>
