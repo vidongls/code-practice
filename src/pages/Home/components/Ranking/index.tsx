@@ -33,7 +33,7 @@ const Ranking: React.FC<IRankingProps> = props => {
                 {data.map((item: any, index: number) => {
                     return (
                         <div className="mb-1">
-                            <span>{index + 1}.</span>
+                            <span>{index + 1}. </span>
                             <span
                                 className={classNames('font-semibold', {
                                     'text-orange-500': index === 0,
@@ -42,7 +42,7 @@ const Ranking: React.FC<IRankingProps> = props => {
                             >
                                 {item?.user?.userName}
                             </span>
-                            <span>- {item.count} bài</span>
+                            <span> - {item.count} bài</span>
                         </div>
                     )
                 })}

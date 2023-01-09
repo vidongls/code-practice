@@ -20,6 +20,14 @@ class ClassApi {
     removeMember = (classId: string, data: any) => {
         return Api.post(`/class/${classId}/remove-user`, data)
     }
+
+    deleteClass = (classId: string) => {
+        return Api.delete(`/class/${classId}`, {})
+    }
+
+    updateClass = (classId: string, data: any) => {
+        return Api.put(`/class/${classId}`, data)
+    }
 }
 
 export default new ClassApi()

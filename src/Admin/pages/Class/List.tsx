@@ -1,10 +1,10 @@
-import { DeleteOutlined, ExclamationCircleOutlined } from '@ant-design/icons'
+import { DeleteOutlined, EditOutlined, ExclamationCircleOutlined } from '@ant-design/icons'
 import { Modal, notification, Spin, Table, Tooltip } from 'antd'
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
 
 import ClassApi from '../../../Api/Class/ClassApi'
-import Avatar from '../../../components/Avatar'
+import AddClass from './AddClass'
+import EditClass from './EditClass'
 
 interface IListProps {
     data: any
@@ -13,7 +13,9 @@ interface IListProps {
     getClass: () => void
 }
 const List: React.FC<IListProps> = ({ data, loading, params, getClass }) => {
-    const [loadingDelete, setLoadingDelete] = useState(false)
+    const [loadingBtn, setLoadingBtn] = useState(false)
+    const [isVisible, setIsVisible] = useState(false)
+    const [dataEdit, setDataEdit] = useState({})
 
     const columns = [
         {
@@ -38,19 +40,32 @@ const List: React.FC<IListProps> = ({ data, loading, params, getClass }) => {
             },
         },
         {
-            title: '',
+            title: 'Chức năng',
             key: '_id',
             dataIndex: '_id',
-            render: (text: string) => (
-                <div>
-                    {' '}
-                    <Spin spinning={loadingDelete}>
+            render: (text: string, record: any) => (
+                <div className="flex items-center">
+                    <Spin spinning={loadingBtn}>
+                        <Tooltip title="Chỉnh sửa">
+                            <div
+                                // to={`/admin/challenge/edit/${id}`}
+                                className="leading-3"
+                            >
+                                <EditOutlined
+                                    className="cursor-pointer p-3 hover:text-blue-500"
+                                    onClick={() => handleVisibleModal(record)}
+                                />
+                            </div>
+                        </Tooltip>
+                    </Spin>
+
+                    <Spin spinning={loadingBtn}>
                         <Tooltip title="Xóa">
                             <DeleteOutlined
                                 className="cursor-pointer p-3 hover:text-red-500"
                                 onClick={() => onDeleteChallenge(text)}
                             />
-                        </Tooltip>{' '}
+                        </Tooltip>
                     </Spin>
                 </div>
             ),
@@ -85,23 +100,32 @@ const List: React.FC<IListProps> = ({ data, loading, params, getClass }) => {
 
     const onDeleteChallenge = (id: string) => {
         Modal.confirm({
-            title: 'Bạn thực sự muốn xóa sinh viên này?',
+            title: 'Bạn thực sự muốn xóa lớp này?',
             icon: <ExclamationCircleOutlined />,
             content: '',
             onOk() {
-                return ClassApi.removeMember(params?.class, { student: id })
+                setLoadingBtn(true)
+                return ClassApi.deleteClass(id)
                     .then(result => {
                         getClass()
-                        notification.success({ message: 'Xoá sinh viên thành công' })
+                        notification.success({ message: 'Xoá lớp thành công' })
                     })
                     .catch(err => {
-                        notification.error({ message: 'Xoá sinh viên thất bại' })
+                        notification.error({ message: 'Xoá lớp thất bại' })
                     })
+                    .finally(() => setLoadingBtn(false))
             },
             onCancel() {},
         })
     }
-
+    const handleHideModal = () => {
+        setIsVisible(false)
+        setDataEdit({})
+    }
+    const handleVisibleModal = (data: any) => {
+        setIsVisible(true)
+        setDataEdit(data)
+    }
     return (
         <>
             <div className="rounded-md bg-white p-6 ">
@@ -113,6 +137,7 @@ const List: React.FC<IListProps> = ({ data, loading, params, getClass }) => {
                             {data?.length || 0}
                         </span>
                     </div>
+                    <AddClass getClass={getClass} />
                 </div>
                 <Table
                     columns={columns}
@@ -124,6 +149,13 @@ const List: React.FC<IListProps> = ({ data, loading, params, getClass }) => {
                     }}
                 />
             </div>
+            {isVisible && (
+                <EditClass
+                    handleHideModal={handleHideModal}
+                    getClass={getClass}
+                    data={dataEdit}
+                />
+            )}
         </>
     )
 }

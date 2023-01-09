@@ -5,9 +5,10 @@ import SelectClass from './components/SelectClass'
 interface IFilterProps {
     params: object
     addParams: (filter?: object) => void
+    resetData: () => void
 }
 
-const Filter: React.FC<IFilterProps> = ({ params, addParams }) => {
+const Filter: React.FC<IFilterProps> = ({ params, addParams, resetData }) => {
     const [form] = Form.useForm()
 
     useEffect(() => {
@@ -16,6 +17,7 @@ const Filter: React.FC<IFilterProps> = ({ params, addParams }) => {
 
     const handleClear = () => {
         addParams({})
+        resetData()
         form.resetFields()
     }
 
@@ -24,6 +26,10 @@ const Filter: React.FC<IFilterProps> = ({ params, addParams }) => {
     }
 
     const onChangeSelect = (key: string, value: any) => {
+        if (!value) {
+            resetData()
+        }
+
         addParams({ [key]: value })
     }
     return (

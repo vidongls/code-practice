@@ -9,7 +9,7 @@ interface IStudentsProps {}
 
 const Students: React.FC<IStudentsProps> = props => {
     const { params, addParams } = useParams()
-    const [data, setData] = useState()
+    const [data, setData] = useState([])
     const [loading, setLoading] = useState(false)
 
     const getStudent = useCallback(() => {
@@ -30,6 +30,10 @@ const Students: React.FC<IStudentsProps> = props => {
         }
     }, [getStudent, params.class])
 
+    const resetData = () => {
+        setData([])
+    }
+
     return (
         <div className="h-full w-full py-8 px-7">
             <div className="my-6 mt-0 flex items-center justify-between">
@@ -47,6 +51,7 @@ const Students: React.FC<IStudentsProps> = props => {
             <Filter
                 params={params}
                 addParams={addParams}
+                resetData={resetData}
             />
             <List
                 data={data}
