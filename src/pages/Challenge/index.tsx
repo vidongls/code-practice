@@ -88,7 +88,6 @@ const Challenge: React.FC<IChallengeProps> = props => {
 
             fireGetOne(`challenge-${id}`).then((data: any) => {
                 if (data) {
-                    console.log('🧙 ~ data', data)
                     const duration = detail.time
                     const isEnded = data.startTime + duration < Date.now()
                     console.log('🧙 ~ isEnded', isEnded)

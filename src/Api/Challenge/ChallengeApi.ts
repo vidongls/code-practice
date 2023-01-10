@@ -63,6 +63,10 @@ class ChallengeApi {
     getRandomChallenge = () => {
         return Api.get(`/challenge/user/get-random`, {})
     }
+
+    addClassToChallenge = (classId: string, data: any) => {
+        return Api.post(`/challenge/${classId}/add-class-to-challenge`, data)
+    }
 }
 
 export default new ChallengeApi()

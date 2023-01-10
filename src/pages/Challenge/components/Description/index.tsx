@@ -37,14 +37,14 @@ const Description: React.FC<IDescriptionProps> = ({ loading, detail, isEnded, da
             <div className="flex items-center justify-between">
                 <h2 className="mb-5 text-2xl font-medium">{detail.title}</h2>
 
-                {Object.keys(detail).length && Object.keys(dataRealtime).length && detail.isRealtime && (
+                {Object.keys(detail).length && Object.keys(dataRealtime).length ? detail.isRealtime && (
                     <CountDown
                         startTime={dataRealtime?.startTime}
                         duration={detail.time}
                         className="text-xl"
                         onComplete={onComplete}
                     />
-                )}
+                ) : null}
             </div>
 
             <div dangerouslySetInnerHTML={{ __html: detail.describe }}></div>

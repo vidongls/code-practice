@@ -1,19 +1,20 @@
-import { Modal, notification, Spin, Switch, Table, Tooltip } from 'antd'
-import React, { useEffect, useState } from 'react'
-import { Link, useSearchParams } from 'react-router-dom'
 import {
+    BarChartOutlined,
     DeleteOutlined,
+    EditOutlined,
     ExclamationCircleOutlined,
     PlayCircleOutlined,
-    EditOutlined,
-    BarChartOutlined,
 } from '@ant-design/icons'
+import { Modal, notification, Spin, Switch, Table, Tooltip } from 'antd'
+import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 
+import ChallengeApi from '../../../Api/Challenge/ChallengeApi'
 import { classNames, formatDate, truncateString } from '../../../helper/helper'
 import { CHALLENGE_LEVEL, CHALLENGE_LEVEL_COLOR, TChallengeLevel } from '../../../pages/Challenge/constants/constants'
-import ChallengeApi from '../../../Api/Challenge/ChallengeApi'
-import { fireGet, fireGetOne } from '../../../utils/firebaseUtil'
-import moment from 'moment'
+import { fireGetOne } from '../../../utils/firebaseUtil'
+import { isEmpty, set } from 'lodash'
+import ModalUpdateClasses from './components/ModalUpdateClasses'
 
 export interface IRealtimeData {
     id: string
@@ -29,8 +30,10 @@ interface IListProps {
 }
 
 const List: React.FC<IListProps> = ({ data, loading, getChallenge }) => {
+    const [isVisibleClasses, setIsVisibleClasses] = useState(false)
     const [loadingDelete, setLoadingDelete] = useState(false)
     const [dataRealtime, setDataRealtime] = useState<IRealtimeData[]>([])
+    const [dataUpdateClasses, setDataUpdateClasses] = useState({})
 
     useEffect(() => {
         const getDataFire = async () => {
@@ -119,24 +122,24 @@ const List: React.FC<IListProps> = ({ data, loading, getChallenge }) => {
             dataIndex: 'createdAt',
             render: (text: string) => <span>{formatDate(text)}</span>,
         },
-        // {
-        //     title: 'Realtime',
-        //     key: 'isRealtime',
-        //     dataIndex: 'isRealtime',
-        //     render: (status: boolean, record: any) => {
-        //         const id = record?._id
-
-        //         return (
-        //             <Switch
-        //                 className="ant-switch"
-        //                 checked={status}
-        //                 onChange={(value: boolean) => onChangeRealtime(id, value)}
-        //             />
-        //         )
-        //     },
-        // },
         {
-            title: '',
+            title: 'Lớp được thi',
+            key: 'classes',
+            dataIndex: 'classes',
+            render: (data: any, record: any) => {
+                return (
+                    <div className="flex items-center">
+                        {!isEmpty(data) ? '' : '---'}
+                        <EditOutlined
+                            className="cursor-pointer p-3 hover:text-blue-500"
+                            onClick={() => handleVisibleModal(record)}
+                        />
+                    </div>
+                )
+            },
+        },
+        {
+            title: 'Chức năng',
             key: '_id',
             dataIndex: '_id',
             render: (id: string, record: any) => {
@@ -266,6 +269,16 @@ const List: React.FC<IListProps> = ({ data, loading, getChallenge }) => {
             onCancel() {},
         })
     }
+
+    const handleVisibleModal = (data: any) => {
+        setIsVisibleClasses(true)
+        setDataUpdateClasses(data)
+    }
+
+    const handleHideModal = () => {
+        setIsVisibleClasses(false)
+    }
+
     return (
         <>
             <div className="rounded-md bg-white p-6 ">
@@ -286,15 +299,12 @@ const List: React.FC<IListProps> = ({ data, loading, getChallenge }) => {
                     }}
                 />
             </div>
-            <Modal
-                title="Title"
-                // open={open}
-                // onOk={handleOk}
-                // confirmLoading={confirmLoading}
-                // onCancel={handleCancel}
-            >
-                {/* <p>{modalText}</p> */}
-            </Modal>
+            {isVisibleClasses && (
+                <ModalUpdateClasses
+                    onCancel={handleHideModal}
+                    dataClass={dataUpdateClasses}
+                />
+            )}
         </>
     )
 }

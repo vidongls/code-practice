@@ -41,18 +41,6 @@ const Filter: React.FC<IFilterProps> = ({ params, addParams, resetData }) => {
                 onFinish={handleSearch}
             >
                 <Row gutter={20}>
-                    {/* <Col
-                        xs={{ span: 12 }}
-                        lg={{ span: 6 }}
-                    >
-                        <Form.Item
-                            label="Tiêu đề"
-                            name="title"
-                        >
-                            <Input placeholder="Nhập tiêu đề" />
-                        </Form.Item>
-                    </Col> */}
-
                     <Col
                         xs={{ span: 12 }}
                         lg={{ span: 5 }}
@@ -66,11 +54,11 @@ const Filter: React.FC<IFilterProps> = ({ params, addParams, resetData }) => {
                     </Col>
 
                     <Col
-                        span={24}
-                        className="flex justify-end"
+                        span={19}
+                        className="flex items-center"
                     >
                         <Button
-                            className="mr-2 rounded"
+                            className="mr-2 mt-1 rounded"
                             onClick={handleClear}
                         >
                             <UndoOutlined className="anticon-custom" />
@@ -79,7 +67,7 @@ const Filter: React.FC<IFilterProps> = ({ params, addParams, resetData }) => {
 
                         <Button
                             type="primary"
-                            className="rounded bg-primary font-medium"
+                            className="mt-1 rounded bg-primary font-medium "
                             htmlType="submit"
                         >
                             <SearchOutlined className="anticon-custom" />

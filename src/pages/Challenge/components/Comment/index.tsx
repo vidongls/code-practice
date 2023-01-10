@@ -32,7 +32,7 @@ const Comment: React.FC<ICommentProps> = ({ challengeId, comments, refetch }) =>
                 .then(res => {
                     form.resetFields()
                     refetch()
-                    notification.success({ message: 'Gửi bình luận thành công!' })
+                    // notification.success({ message: 'Gửi bình luận thành công!' })
                 })
                 .catch(() => {
                     notification.error({ message: 'Có lỗi xảy ra!' })

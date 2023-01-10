@@ -2,6 +2,7 @@ import { PlusOutlined } from '@ant-design/icons'
 import { Button, Form, Input, Modal, notification } from 'antd'
 import React, { useEffect, useState } from 'react'
 import ClassApi from '../../../Api/Class/ClassApi'
+import { get } from 'lodash'
 
 interface IEditClass {
     getClass: () => void
@@ -47,7 +48,7 @@ const EditClass: React.FC<IEditClass> = ({ getClass, handleHideModal, data }) =>
             >
                 <Modal
                     open={true}
-                    title="Tạo lớp"
+                    title={`Chỉnh sửa lớp - ${get(data, 'name')}`}
                     onOk={onCreateClass}
                     onCancel={handleHideModal}
                     footer={
