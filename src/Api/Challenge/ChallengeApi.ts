@@ -67,6 +67,10 @@ class ChallengeApi {
     addClassToChallenge = (classId: string, data: any) => {
         return Api.post(`/challenge/${classId}/add-class-to-challenge`, data)
     }
+
+    userSearchChallenge = (params?: any) => {
+        return Api.get('/challenge/user/search', { params })
+    }
 }
 
 export default new ChallengeApi()

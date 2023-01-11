@@ -82,7 +82,7 @@ const AdminChallengeDetail: React.FC<IAdminChallengeDetailProps> = props => {
                                     <h3 className="mb-5 text-2xl font-medium">{data?.title}</h3>
                                     <Paragraph
                                         copyable={{
-                                            tooltips: ['Copy', 'Đã!'],
+                                            tooltips: ['Copy', 'Đã Copy!'],
                                             text: `${data?.title} ${data?.describe}`,
                                         }}
                                     />

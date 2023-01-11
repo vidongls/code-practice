@@ -6,6 +6,7 @@ import Navbar from './Navbar'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuthStore } from '../../store/useAuthStore'
 import logo from '../../resources/img/logo-main.png'
+import SearchInput from './SearchInput'
 const { Header: HeaderAntd } = Layout
 
 const Header: React.FC = props => {
@@ -64,13 +65,7 @@ const Header: React.FC = props => {
                     </div>
                 ) : (
                     <div className="header-right flex items-center">
-                        <div>
-                            <Input
-                                suffix={<SearchOutlined className="text-base" />}
-                                placeholder="Tìm kiếm"
-                                className="min-w-[300px] rounded-lg py-2 "
-                            />
-                        </div>
+                        <SearchInput />
                         <Navbar />
                         <Dropdown
                             overlay={menu}
