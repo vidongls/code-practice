@@ -1,14 +1,19 @@
 import { EditOutlined, ArrowLeftOutlined } from '@ant-design/icons'
-import { Button, Form, Spin, Tabs } from 'antd'
+import { Button, Form, Spin, Tabs, Typography } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { CopyBlock, dracula } from 'react-code-blocks'
 import 'react-quill/dist/quill.snow.css'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import ChallengeApi from '../../../../Api/Challenge/ChallengeApi'
+import { setDocumentTitle } from '../../../../helper/helper'
+import { useNavigatorStore } from '../../../../store/useNavigatorStore'
 
 interface IAdminChallengeDetailProps {}
 
+const { Paragraph } = Typography
+
 const AdminChallengeDetail: React.FC<IAdminChallengeDetailProps> = props => {
+    const { setNavigator } = useNavigatorStore()
     const navigate = useNavigate()
     let { id } = useParams()
 
@@ -29,6 +34,22 @@ const AdminChallengeDetail: React.FC<IAdminChallengeDetailProps> = props => {
         }
         getDetail()
     }, [id])
+
+    useEffect(() => {
+        setDocumentTitle('Chi tiết bài tập')
+        setNavigator({
+            title: 'Challenge',
+            navigator: [
+                {
+                    name: 'Bài tập',
+                    to: '/admin/challenge',
+                },
+                {
+                    name: 'Chi tiết bài tập',
+                },
+            ],
+        })
+    }, [])
 
     return (
         <Spin spinning={loadingPage}>
@@ -57,7 +78,15 @@ const AdminChallengeDetail: React.FC<IAdminChallengeDetailProps> = props => {
                     <div className="grid max-h-[800px] min-h-[750px] grid-cols-2 overflow-y-auto bg-white p-3">
                         <div className="col-span-1 overflow-y-auto">
                             <div className="mt-4 mr-2 border-gray-200 bg-white p-4">
-                                <h3 className="mb-5 text-2xl font-medium">{data?.title}</h3>
+                                <div className="flex items-center justify-between">
+                                    <h3 className="mb-5 text-2xl font-medium">{data?.title}</h3>
+                                    <Paragraph
+                                        copyable={{
+                                            tooltips: ['Copy', 'Đã!'],
+                                            text: `${data?.title} ${data?.describe}`,
+                                        }}
+                                    />
+                                </div>
                                 <div dangerouslySetInnerHTML={{ __html: data?.describe }}></div>
                             </div>
                         </div>

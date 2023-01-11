@@ -50,29 +50,29 @@ const AddClass: React.FC<IAddClass> = ({ getClass }) => {
                 Thêm lớp
             </Button>
             {isVisible && (
-                <Form
-                    form={form}
-                    layout="vertical"
-                    onFinish={onCreateClass}
+                <Modal
+                    open={true}
+                    title="Tạo lớp"
+                    onOk={onCreateClass}
+                    onCancel={handleHideModal}
+                    footer={
+                        <>
+                            <Button onClick={handleHideModal}>Đóng</Button>
+                            <Button
+                                className="bg-primary"
+                                type="primary"
+                                onClick={onCreateClass}
+                                loading={loading}
+                            >
+                                Thêm
+                            </Button>
+                        </>
+                    }
                 >
-                    <Modal
-                        open={true}
-                        title="Tạo lớp"
-                        onOk={onCreateClass}
-                        onCancel={handleHideModal}
-                        footer={
-                            <>
-                                <Button onClick={handleHideModal}>Đóng</Button>
-                                <Button
-                                    className="bg-primary"
-                                    type="primary"
-                                    onClick={onCreateClass}
-                                    loading={loading}
-                                >
-                                    Thêm
-                                </Button>
-                            </>
-                        }
+                    <Form
+                        form={form}
+                        layout="vertical"
+                        onFinish={onCreateClass}
                     >
                         <Form.Item
                             name="name"
@@ -81,8 +81,8 @@ const AddClass: React.FC<IAddClass> = ({ getClass }) => {
                         >
                             <Input placeholder="Nhập tên lớp..." />
                         </Form.Item>
-                    </Modal>
-                </Form>
+                    </Form>
+                </Modal>
             )}
         </>
     )

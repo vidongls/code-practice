@@ -3,11 +3,16 @@ import React, { useCallback, useEffect, useState } from 'react'
 import ClassApi from '../../../Api/Class/ClassApi'
 import useParams from '../../../utils/useParams'
 import List from './List'
+import { setDocumentTitle } from '../../../helper/helper'
 
 const AdminClass = () => {
     const { params, addParams } = useParams()
     const [data, setData] = useState()
     const [loading, setLoading] = useState(false)
+
+    useEffect(() => {
+        setDocumentTitle('Lớp')
+    }, [])
 
     const getClass = useCallback(async () => {
         setLoading(true)

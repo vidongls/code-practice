@@ -1,5 +1,6 @@
 import { PageHeader } from 'antd'
 import moment from 'moment'
+import { ReactElement } from 'react'
 
 export const classNames = (currentClass = '', restClass = {}) => {
     if (!restClass) return currentClass
@@ -23,7 +24,7 @@ export const formatDate = (date: string) => {
     return dFormat
 }
 
-export const truncateString = (str: string, num: number) => {
+export const truncateString = (str: string, num: number, element?: ReactElement) => {
     if (str.length > num) {
         return str.slice(0, num) + '...'
     } else {
@@ -52,17 +53,14 @@ export const isManager = (role: string) => {
     return userEnum.includes(role)
 }
 
-// Thêm profile
-// breadrum
-// màu icon chức năng
-// remove PageHeader border table
+export const setDocumentTitle = (title: string) => (document.title = `Code Practice ${title ? '-' + title : ''}`)
+
 // thêm chức năng copy
-// Đổi text lưu ý * Lưu ý: Nếu hàm có nhiều tham số các tham số sẽ cách nhau bằng dấu ","
-// Đổi icon thùng rác
+
 // Thêm modal sinh viên page classs
-// Modal lớp 2 hàng
-// Border nave == chữ
+
 // Thêm search trên header
-// Lấy thống kê
-// Đợi icon
+// Lấy thống kê casc kieu
+
+// Đổi icon
 // Add challenge vào lớp ngược lại

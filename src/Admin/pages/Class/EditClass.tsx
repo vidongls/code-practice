@@ -41,39 +41,40 @@ const EditClass: React.FC<IEditClass> = ({ getClass, handleHideModal, data }) =>
 
     return (
         <>
-            <Form
-                form={form}
-                layout="vertical"
-                onFinish={onCreateClass}
+            <Modal
+                open={true}
+                title={`Chỉnh sửa lớp - ${get(data, 'name')}`}
+                onOk={onCreateClass}
+                onCancel={handleHideModal}
+                footer={
+                    <>
+                        <Button onClick={handleHideModal}>Đóng</Button>
+                        <Button
+                            className="bg-primary"
+                            type="primary"
+                            onClick={onCreateClass}
+                            loading={loading}
+                        >
+                            Sửa
+                        </Button>
+                    </>
+                }
             >
-                <Modal
-                    open={true}
-                    title={`Chỉnh sửa lớp - ${get(data, 'name')}`}
-                    onOk={onCreateClass}
-                    onCancel={handleHideModal}
-                    footer={
-                        <>
-                            <Button onClick={handleHideModal}>Đóng</Button>
-                            <Button
-                                className="bg-primary"
-                                type="primary"
-                                onClick={onCreateClass}
-                                loading={loading}
-                            >
-                                Sửa
-                            </Button>
-                        </>
-                    }
+                <Form
+                    form={form}
+                    layout="vertical"
+                    onFinish={onCreateClass}
                 >
                     <Form.Item
                         name="name"
                         label="Tên lớp"
                         rules={[{ required: true, message: 'Không được để trống' }]}
+                        className="mb-0"
                     >
                         <Input placeholder="Nhập tên lớp..." />
                     </Form.Item>
-                </Modal>
-            </Form>
+                </Form>
+            </Modal>
         </>
     )
 }

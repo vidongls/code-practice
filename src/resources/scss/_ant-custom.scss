@@ -88,3 +88,11 @@
 .ant-input-affix-wrapper-status-error:not(.ant-input-affix-wrapper-disabled):not(.ant-input-affix-wrapper-borderless).ant-input-affix-wrapper:hover {
     background: #f2f2f2;
 }
+
+.ant-table-thead > tr > th {
+    border-bottom: unset !important;
+}
+
+.ant-modal-footer {
+    padding: 16px 24px;
+}

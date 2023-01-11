@@ -1,23 +1,41 @@
 import { Button, Form, Input, InputNumber, notification, Select, Switch } from 'antd'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import ReactQuill from 'react-quill'
 import 'react-quill/dist/quill.snow.css'
 import { Link, useNavigate } from 'react-router-dom'
-import { ArrowLeftOutlined, PlusOutlined, MinusCircleOutlined } from '@ant-design/icons'
+import { ArrowLeftOutlined, PlusOutlined, DeleteOutlined } from '@ant-design/icons'
 import ChallengeApi from '../../../../Api/Challenge/ChallengeApi'
 
 import Editor from '@monaco-editor/react'
+import { setDocumentTitle } from '../../../../helper/helper'
+import { useNavigatorStore } from '../../../../store/useNavigatorStore'
 interface IChallengeCreateProps {}
 
 const ChallengeCreate: React.FC<IChallengeCreateProps> = props => {
+    const { setNavigator } = useNavigatorStore()
     const [form] = Form.useForm()
     const isRealtime = Form.useWatch('isRealtime', form)
 
     const [value, setValue] = useState('')
     const [loading, setLoading] = useState(false)
     const [time, setTime] = useState(15)
-
     const navigate = useNavigate()
+
+    useEffect(() => {
+        setDocumentTitle('Tạo bài tập')
+        setNavigator({
+            title: 'Challenge',
+            navigator: [
+                {
+                    name: 'Bài tập',
+                    to: '/admin/challenge',
+                },
+                {
+                    name: 'Tạo mới bài tập',
+                },
+            ],
+        })
+    }, [])
 
     const handleCreate = () => {
         form.validateFields().then(values => {
@@ -180,7 +198,10 @@ const ChallengeCreate: React.FC<IChallengeCreateProps> = props => {
                     >
                         <div>
                             <span className="text-red-500">*</span>{' '}
-                            <span>Lưu ý: Nếu hàm có nhiều tham số các tham số sẽ cách nhau bằng dấu ","</span>
+                            <span>
+                                Lưu ý: Tham số của hàm, nếu có từ 2 tham số trở lên mỗi tham số cách nhau bởi dấu ",".
+                                VD: [3, 5],[41, 9]
+                            </span>
                         </div>
                     </Form.Item>
 
@@ -223,8 +244,12 @@ const ChallengeCreate: React.FC<IChallengeCreateProps> = props => {
                                                 placeholder="Đầu ra"
                                             />
                                         </Form.Item>
+
                                         {index !== 0 ? (
-                                            <MinusCircleOutlined onClick={() => remove(name)} />
+                                            <DeleteOutlined
+                                                onClick={() => remove(name)}
+                                                className=" text-red-600 hover:text-red-400"
+                                            />
                                         ) : (
                                             <div className="h-3 w-3"></div>
                                         )}

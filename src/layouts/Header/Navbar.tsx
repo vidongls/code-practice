@@ -48,13 +48,15 @@ const Navbar: React.FC<INavbarProps> = props => {
             <ul className="navigation ml-3 flex items-center">
                 {navList.map((nav, idx) => (
                     <li key={idx}>
-                        <NavLink
-                            to={nav.to}
-                            className={({ isActive }) => (isActive ? 'active' : undefined)}
-                            end
-                        >
-                            {nav.label}
-                        </NavLink>
+                        <div>
+                            <NavLink
+                                to={nav.to}
+                                className={({ isActive }) => (isActive ? 'active' : undefined)}
+                                end
+                            >
+                                {nav.label}
+                            </NavLink>
+                        </div>
                     </li>
                 ))}
             </ul>

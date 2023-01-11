@@ -98,11 +98,15 @@ const List: React.FC<IListProps> = ({ data, loading, getChallenge }) => {
             dataIndex: 'describe',
             key: 'describe',
             width: '25%',
+            ellipsis: true,
             render: (text: string) => {
                 return (
                     <div>
-                        <span dangerouslySetInnerHTML={{ __html: truncateString(text, 100) }}></span>
-                        {text.length >= 100 && (
+                        <div
+                            dangerouslySetInnerHTML={{ __html: truncateString(text, 70) }}
+                            className="truncate"
+                        ></div>
+                        {text.length >= 70 && (
                             <span
                                 onClick={() => onViewDescribe(text)}
                                 className="ml-2 cursor-pointer whitespace-nowrap text-blue-500 hover:text-blue-400"
@@ -157,13 +161,13 @@ const List: React.FC<IListProps> = ({ data, loading, getChallenge }) => {
                                 to={`/admin/challenge/edit/${id}`}
                                 className="leading-3"
                             >
-                                <EditOutlined className="cursor-pointer p-3 hover:text-blue-500" />
+                                <EditOutlined className="cursor-pointer p-3 text-blue-600 hover:text-blue-400" />
                             </Link>
                         </Tooltip>
                         <Tooltip title="Xóa">
                             <Spin spinning={loadingDelete}>
                                 <DeleteOutlined
-                                    className="cursor-pointer p-3 hover:text-red-500"
+                                    className="cursor-pointer p-3 text-red-600 hover:text-red-400"
                                     onClick={() => onDeleteChallenge(id)}
                                 />
                             </Spin>
@@ -174,7 +178,7 @@ const List: React.FC<IListProps> = ({ data, loading, getChallenge }) => {
                                 {(realtimeData?.startTime || 0) + time < Date.now() && (
                                     // <Tooltip title={`Bắt đầu (${moment(startedAt).startOf('minutes').fromNow()})`}>
                                     <PlayCircleOutlined
-                                        className="cursor-pointer p-3 hover:text-blue-500"
+                                        className="cursor-pointer p-3 text-yellow-600 hover:text-yellow-400"
                                         onClick={() => onStartChallenge(id)}
                                     />
                                     // </Tooltip>
@@ -186,7 +190,7 @@ const List: React.FC<IListProps> = ({ data, loading, getChallenge }) => {
                                         }`}
                                         className="leading-3"
                                     >
-                                        <BarChartOutlined className="cursor-pointer p-3 hover:text-blue-500" />
+                                        <BarChartOutlined className="cursor-pointer p-3 text-green-600 hover:text-green-400" />
                                     </Link>
                                 </Tooltip>
                             </>

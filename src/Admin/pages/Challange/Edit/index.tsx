@@ -6,6 +6,8 @@ import { Link, useNavigate, useParams } from 'react-router-dom'
 import { ArrowLeftOutlined, PlusOutlined, MinusCircleOutlined, EditOutlined } from '@ant-design/icons'
 import ChallengeApi from '../../../../Api/Challenge/ChallengeApi'
 import Editor from '@monaco-editor/react'
+import { setDocumentTitle } from '../../../../helper/helper'
+import { useNavigatorStore } from '../../../../store/useNavigatorStore'
 
 interface IData {
     isRealtime: boolean
@@ -15,6 +17,7 @@ interface IData {
 interface IChallengeEditProps {}
 
 const ChallengeEdit: React.FC<IChallengeEditProps> = props => {
+    const { setNavigator } = useNavigatorStore()
     const [form] = Form.useForm()
     const [value, setValue] = useState('')
     const [data, setData] = useState<IData>({} as IData)
@@ -25,6 +28,22 @@ const ChallengeEdit: React.FC<IChallengeEditProps> = props => {
     const navigate = useNavigate()
     let { id } = useParams()
     const isRealtime = Form.useWatch('isRealtime', form)
+
+    useEffect(() => {
+        setDocumentTitle('Chỉnh sửa bài tập')
+        setNavigator({
+            title: 'Challenge',
+            navigator: [
+                {
+                    name: 'Bài tập',
+                    to: '/admin/challenge',
+                },
+                {
+                    name: 'Chỉnh sửa bài tập',
+                },
+            ],
+        })
+    }, [])
 
     useEffect(() => {
         const getDetail = () => {
@@ -208,7 +227,10 @@ const ChallengeEdit: React.FC<IChallengeEditProps> = props => {
                         >
                             <div>
                                 <span className="text-red-500">*</span>{' '}
-                                <span>Lưu ý: Nếu hàm có nhiều tham số các tham số sẽ cách nhau bằng dấu ","</span>
+                                <span>
+                                    Lưu ý: Tham số của hàm, nếu có từ 2 tham số trở lên mỗi tham số cách nhau bởi dấu
+                                    ",". VD: [3, 5],[41, 9]
+                                </span>
                             </div>
                         </Form.Item>
                         <Form.List

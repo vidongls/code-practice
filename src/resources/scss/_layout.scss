@@ -9,43 +9,52 @@
         }
     }
 
+    // &__input-search {
+    //     // input {
+    //     padding: 10px 20px !important;
+    //     // }
+    // }
+
     .navigation {
         height: 60px;
         li {
-            a {
-                display: block;
-                color: #515a6e;
-                transition: all 0.2s ease-in-out;
-                font-size: 14px;
+            > div {
                 padding: 2px 20px;
-                cursor: pointer;
-                position: relative;
-                &::after {
-                    content: '';
-                    width: 100%;
-                    position: absolute;
-                    height: 2px;
-                    background-color: #2d8cf0;
-                    bottom: 0;
-                    left: 0;
-                    visibility: hidden;
-                    opacity: 0;
+                a {
+                    display: block;
+                    color: #515a6e;
                     transition: all 0.2s ease-in-out;
-                }
-                &:hover {
-                    color: #2d8cf0;
+                    font-size: 14px;
+
+                    cursor: pointer;
+                    position: relative;
                     &::after {
-                        visibility: visible;
-                        opacity: 1;
+                        content: '';
+                        width: 100%;
+                        position: absolute;
+                        height: 2px;
+                        background-color: #2d8cf0;
+                        bottom: 0;
+                        left: 0;
+                        visibility: hidden;
+                        opacity: 0;
+                        transition: all 0.2s ease-in-out;
                     }
-                    //
-                    // border-bottom: 2px solid #2d8cf0;
-                }
-                &.active {
-                    color: #2d8cf0;
-                    &::after {
-                        visibility: visible;
-                        opacity: 1;
+                    &:hover {
+                        color: #2d8cf0;
+                        &::after {
+                            visibility: visible;
+                            opacity: 1;
+                        }
+                        //
+                        // border-bottom: 2px solid #2d8cf0;
+                    }
+                    &.active {
+                        color: #2d8cf0;
+                        &::after {
+                            visibility: visible;
+                            opacity: 1;
+                        }
                     }
                 }
             }

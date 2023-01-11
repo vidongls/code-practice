@@ -52,7 +52,7 @@ const List: React.FC<IListProps> = ({ data, loading, params, getClass }) => {
                                 className="leading-3"
                             >
                                 <EditOutlined
-                                    className="cursor-pointer p-3 hover:text-blue-500"
+                                    className="cursor-pointer p-3 text-blue-600 hover:text-blue-400"
                                     onClick={() => handleVisibleModal(record)}
                                 />
                             </div>
@@ -62,7 +62,7 @@ const List: React.FC<IListProps> = ({ data, loading, params, getClass }) => {
                     <Spin spinning={loadingBtn}>
                         <Tooltip title="Xóa">
                             <DeleteOutlined
-                                className="cursor-pointer p-3 hover:text-red-500"
+                                className="cursor-pointer p-3 text-red-600 hover:text-red-400"
                                 onClick={() => onDeleteChallenge(text)}
                             />
                         </Tooltip>

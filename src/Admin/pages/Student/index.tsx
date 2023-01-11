@@ -4,6 +4,7 @@ import ClassApi from '../../../Api/Class/ClassApi'
 import useParams from '../../../utils/useParams'
 import Filter from './Filter'
 import List from './List'
+import { setDocumentTitle } from '../../../helper/helper'
 
 interface IStudentsProps {}
 
@@ -11,6 +12,10 @@ const Students: React.FC<IStudentsProps> = props => {
     const { params, addParams } = useParams()
     const [data, setData] = useState([])
     const [loading, setLoading] = useState(false)
+
+    useEffect(() => {
+        setDocumentTitle('Sinh viên')
+    }, [])
 
     const getStudent = useCallback(() => {
         setLoading(true)

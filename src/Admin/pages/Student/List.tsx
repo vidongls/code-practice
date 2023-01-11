@@ -76,7 +76,7 @@ const List: React.FC<IListProps> = ({ data, loading, params, getStudent }) => {
                     <Spin spinning={loadingDelete}>
                         <Tooltip title="Xóa">
                             <DeleteOutlined
-                                className="cursor-pointer p-3 hover:text-red-500"
+                                className="cursor-pointer p-3 text-red-600 hover:text-red-400"
                                 onClick={() => onDeleteChallenge(text)}
                             />
                         </Tooltip>

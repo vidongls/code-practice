@@ -3,6 +3,7 @@ import React from 'react'
 import { MenuUnfoldOutlined, MenuFoldOutlined, UserOutlined } from '@ant-design/icons'
 import { useNavigate } from 'react-router-dom'
 import { useAuthStore } from '../../store/useAuthStore'
+import Navigator from './Navigator'
 interface Props {
     handleOpenSidebar: () => void
     handleCloseSidebar: () => void
@@ -33,11 +34,16 @@ const Header: React.FC<Props> = ({ handleOpenSidebar, handleCloseSidebar, collap
 
     return (
         <HeaderAntd className="header flex items-center justify-between">
-            {collapsed ? (
-                <MenuUnfoldOutlined onClick={handleOpenSidebar} />
-            ) : (
-                <MenuFoldOutlined onClick={handleCloseSidebar} />
-            )}
+            <div className="flex items-center gap-3">
+                {collapsed ? (
+                    <MenuUnfoldOutlined onClick={handleOpenSidebar} />
+                ) : (
+                    <MenuFoldOutlined onClick={handleCloseSidebar} />
+                )}
+                <div>
+                    <Navigator />
+                </div>
+            </div>
 
             <Dropdown
                 overlay={menu}

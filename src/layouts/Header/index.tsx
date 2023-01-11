@@ -1,6 +1,6 @@
 import React from 'react'
-import { Avatar, Button, Dropdown, Layout, Menu } from 'antd'
-import { UserOutlined } from '@ant-design/icons'
+import { Avatar, Button, Dropdown, Input, Layout, Menu } from 'antd'
+import { UserOutlined, SearchOutlined } from '@ant-design/icons'
 
 import Navbar from './Navbar'
 import { Link, useNavigate } from 'react-router-dom'
@@ -64,6 +64,13 @@ const Header: React.FC = props => {
                     </div>
                 ) : (
                     <div className="header-right flex items-center">
+                        <div>
+                            <Input
+                                suffix={<SearchOutlined className="text-base" />}
+                                placeholder="Tìm kiếm"
+                                className="min-w-[300px] rounded-lg py-2 "
+                            />
+                        </div>
                         <Navbar />
                         <Dropdown
                             overlay={menu}
