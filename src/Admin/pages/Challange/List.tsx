@@ -4,9 +4,10 @@ import {
     EditOutlined,
     ExclamationCircleOutlined,
     PlayCircleOutlined,
+    SearchOutlined,
 } from '@ant-design/icons'
-import { Modal, notification, Spin, Switch, Table, Tooltip } from 'antd'
-import React, { useEffect, useState } from 'react'
+import { Button, Input, Modal, notification, Space, Spin, Switch, Table, Tooltip } from 'antd'
+import React, { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import ChallengeApi from '../../../Api/Challenge/ChallengeApi'
@@ -262,6 +263,8 @@ const List: React.FC<IListProps> = ({ data, loading, getChallenge }) => {
             icon: <ExclamationCircleOutlined />,
             content: '',
             onOk() {
+                setLoadingDelete(true)
+
                 return ChallengeApi.remove(id)
                     .then(result => {
                         notification.success({ message: 'Xoá challenge thành công' })
@@ -269,6 +272,7 @@ const List: React.FC<IListProps> = ({ data, loading, getChallenge }) => {
                     .catch(err => {
                         notification.error({ message: 'Xoá challenge thất bại' })
                     })
+                    .finally(() => setLoadingDelete(false))
             },
             onCancel() {},
         })

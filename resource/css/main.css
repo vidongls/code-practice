@@ -1,0 +1,13 @@
+@import url("https://fonts.googleapis.com/css2?family=Lexend:wght@100;200;300;400;500;600;700;800;900&display=swap");
+* {
+  font-family: "Lexend", sans-serif;
+}
+
+body {
+  background-color: theme("colors.slate.200");
+}
+
+.container {
+  width: 1250px;
+  margin: 0 auto;
+}/*# sourceMappingURL=main.css.map */

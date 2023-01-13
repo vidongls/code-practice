@@ -1,10 +1,11 @@
-import { DeleteOutlined, EditOutlined, ExclamationCircleOutlined } from '@ant-design/icons'
+import { DeleteOutlined, EditOutlined, ExclamationCircleOutlined, InfoCircleOutlined } from '@ant-design/icons'
 import { Modal, notification, Spin, Table, Tooltip } from 'antd'
 import React, { useState } from 'react'
 
 import ClassApi from '../../../Api/Class/ClassApi'
 import AddClass from './AddClass'
 import EditClass from './EditClass'
+import ModalListStudent from './components/ModalListStudent'
 
 interface IListProps {
     data: any
@@ -16,6 +17,8 @@ const List: React.FC<IListProps> = ({ data, loading, params, getClass }) => {
     const [loadingBtn, setLoadingBtn] = useState(false)
     const [isVisible, setIsVisible] = useState(false)
     const [dataEdit, setDataEdit] = useState({})
+    const [isVisibleModalStudent, setIsVisibleModalStudent] = useState(false)
+    const [dataStudents, setDataStudents] = useState([])
 
     const columns = [
         {
@@ -36,7 +39,15 @@ const List: React.FC<IListProps> = ({ data, loading, params, getClass }) => {
             dataIndex: 'students',
             key: 'students',
             render: (students: any) => {
-                return <span>{students?.length} Sinh viên</span>
+                return (
+                    <div
+                        className="flex w-fit cursor-pointer items-center gap-1  hover:text-blue-500"
+                        onClick={() => handleVisibleModalStudent(students)}
+                    >
+                        <span>{students?.length} Sinh viên</span>
+                        <InfoCircleOutlined className="text-blue-700" />
+                    </div>
+                )
             },
         },
         {
@@ -126,6 +137,16 @@ const List: React.FC<IListProps> = ({ data, loading, params, getClass }) => {
         setIsVisible(true)
         setDataEdit(data)
     }
+
+    const handleHideModalStudent = () => {
+        setIsVisibleModalStudent(false)
+        setDataStudents([])
+    }
+    const handleVisibleModalStudent = (data: any) => {
+        setIsVisibleModalStudent(true)
+        setDataStudents(data)
+    }
+
     return (
         <>
             <div className="rounded-md bg-white p-6 ">
@@ -154,6 +175,12 @@ const List: React.FC<IListProps> = ({ data, loading, params, getClass }) => {
                     handleHideModal={handleHideModal}
                     getClass={getClass}
                     data={dataEdit}
+                />
+            )}
+            {isVisibleModalStudent && (
+                <ModalListStudent
+                    handleHideModal={handleHideModalStudent}
+                    data={dataStudents}
                 />
             )}
         </>

@@ -21,7 +21,7 @@ const Ranking: React.FC<IRankingProps> = props => {
 
     return (
         <Box
-            className="p-5 lg:mt-0"
+            className="h-full p-5 lg:mt-0"
             headerContent={
                 <>
                     <div className="text-lg font-medium">Xếp hạng</div>
