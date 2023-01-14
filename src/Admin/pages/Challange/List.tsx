@@ -134,7 +134,6 @@ const List: React.FC<IListProps> = ({ data, loading, getChallenge }) => {
             render: (data: any, record: any) => {
                 return (
                     <div className="flex items-center">
-                        {!isEmpty(data) ? '' : '---'}
                         <EditOutlined
                             className="cursor-pointer p-3 hover:text-blue-500"
                             onClick={() => handleVisibleModal(record)}
@@ -311,6 +310,7 @@ const List: React.FC<IListProps> = ({ data, loading, getChallenge }) => {
                 <ModalUpdateClasses
                     onCancel={handleHideModal}
                     dataClass={dataUpdateClasses}
+                    getChallenge={getChallenge}
                 />
             )}
         </>
