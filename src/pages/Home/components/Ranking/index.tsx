@@ -8,7 +8,6 @@ interface IRankingProps {}
 
 const Ranking: React.FC<IRankingProps> = props => {
     const [data, setData] = useState([])
-    console.log('🧙 ~ data', data)
 
     useEffect(() => {
         const getNewestChallenge = async () => {
@@ -32,7 +31,10 @@ const Ranking: React.FC<IRankingProps> = props => {
             <div>
                 {data.map((item: any, index: number) => {
                     return (
-                        <div className="mb-1">
+                        <div
+                            className="mb-1"
+                            key={index}
+                        >
                             <span>{index + 1}. </span>
                             <span
                                 className={classNames('font-semibold', {

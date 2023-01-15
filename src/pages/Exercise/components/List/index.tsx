@@ -9,6 +9,7 @@ import { classNames } from '../../../../helper/helper'
 import { useAuthStore } from '../../../../store/useAuthStore'
 import useParams from '../../../../utils/useParams'
 import { CHALLENGE_LEVEL, CHALLENGE_LEVEL_COLOR, TChallengeLevel } from '../../../Challenge/constants/constants'
+import { get, map } from 'lodash'
 
 interface IExerciseListProps {}
 
@@ -22,7 +23,7 @@ const ExerciseList: React.FC<IExerciseListProps> = props => {
     useEffect(() => {
         const getChallenge = async () => {
             try {
-                const res = await ChallengeApi.getAll(params)
+                const res = await ChallengeApi.userGetAllChallenge(params)
                 setData(res.data?.challenge)
             } catch (error) {
                 notification.error({ message: 'Có lỗi xảy ra!' })
@@ -38,7 +39,7 @@ const ExerciseList: React.FC<IExerciseListProps> = props => {
             dataIndex: 'countDoChallenge',
             key: 'countDoChallenge',
             render: (text: string, record: any) => {
-                const doChallengeIds = record?.countDoChallenge?.map((item: any) => item.user)
+                const doChallengeIds = map(get(record, 'countDoChallenge'), 'user')
                 return <>{doChallengeIds.includes(user.id) && <CheckOutlined className="text-green-500" />}</>
             },
         },
@@ -96,7 +97,7 @@ const ExerciseList: React.FC<IExerciseListProps> = props => {
             dataIndex: 'countDoChallenge',
             key: 'submit',
             render: (text: any) => {
-                const countResolve = text.filter((item: any) => item.isResolved)
+                const countResolve = text?.filter((item: any) => item.isResolved)
 
                 return <span>{countResolve?.length ? countResolve.length : 0}</span>
             },

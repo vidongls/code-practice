@@ -4,9 +4,8 @@ import {
     EditOutlined,
     ExclamationCircleOutlined,
     PlayCircleOutlined,
-    SearchOutlined,
 } from '@ant-design/icons'
-import { Button, Input, Modal, notification, Space, Spin, Switch, Table, Tooltip } from 'antd'
+import { Modal, notification, Spin, Table, Tooltip } from 'antd'
 import React, { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 
@@ -14,7 +13,6 @@ import ChallengeApi from '../../../Api/Challenge/ChallengeApi'
 import { classNames, formatDate, truncateString } from '../../../helper/helper'
 import { CHALLENGE_LEVEL, CHALLENGE_LEVEL_COLOR, TChallengeLevel } from '../../../pages/Challenge/constants/constants'
 import { fireGetOne } from '../../../utils/firebaseUtil'
-import { isEmpty, set } from 'lodash'
 import ModalUpdateClasses from './components/ModalUpdateClasses'
 
 export interface IRealtimeData {
@@ -132,13 +130,16 @@ const List: React.FC<IListProps> = ({ data, loading, getChallenge }) => {
             key: 'classes',
             dataIndex: 'classes',
             render: (data: any, record: any) => {
+                const isRealtime = record?.isRealtime
                 return (
-                    <div className="flex items-center">
-                        <EditOutlined
-                            className="cursor-pointer p-3 hover:text-blue-500"
-                            onClick={() => handleVisibleModal(record)}
-                        />
-                    </div>
+                    isRealtime && (
+                        <div className="flex items-center">
+                            <EditOutlined
+                                className="cursor-pointer p-3 hover:text-blue-500"
+                                onClick={() => handleVisibleModal(record)}
+                            />
+                        </div>
+                    )
                 )
             },
         },

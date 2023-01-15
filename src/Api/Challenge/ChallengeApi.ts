@@ -37,7 +37,7 @@ class ChallengeApi {
         return Api.get('/challenge/all/newest', {})
     }
     getRankingChallenge = () => {
-        return Api.get('/challenge/all/ranking', {})
+        return Api.get('/user-api/challenge/all/ranking', {})
     }
 
     changeRealtime = (challengeId: string, data: any) => {
@@ -70,6 +70,14 @@ class ChallengeApi {
 
     userSearchChallenge = (params?: any) => {
         return Api.get('/challenge/user/search', { params })
+    }
+
+    userGetAllChallenge = (params?: any) => {
+        return Api.get('/user-api/challenge', { params })
+    }
+
+    userGetDetail = (id: string) => {
+        return Api.get(`/user-api/challenge/${id}`, {})
     }
 }
 

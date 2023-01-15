@@ -42,7 +42,7 @@ const Challenge: React.FC<IChallengeProps> = props => {
     const getDetailChallenge = useCallback(async () => {
         setLoading(true)
         try {
-            const res = await ChallengeApi.getOne(id!)
+            const res = await ChallengeApi.userGetDetail(id!)
             setDetail(res.data)
         } catch (error: any) {
             const { response } = error
