@@ -47,7 +47,7 @@ const Challenge: React.FC<IChallengeProps> = props => {
         } catch (error: any) {
             const { response } = error
             setErrors(response)
-            notification.error({ message: 'Có lỗi xảy ra!' })
+            // notification.error({ message: 'Có lỗi xảy ra!' })
         } finally {
             setLoading(false)
         }
@@ -90,7 +90,6 @@ const Challenge: React.FC<IChallengeProps> = props => {
                 if (data) {
                     const duration = detail.time
                     const isEnded = data.startTime + duration < Date.now()
-                    console.log('🧙 ~ isEnded', isEnded)
 
                     if (!isEnded) {
                         startDoingChallenge()

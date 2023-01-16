@@ -53,7 +53,7 @@ export const isManager = (role: string) => {
     return userEnum.includes(role)
 }
 
-export const setDocumentTitle = (title: string) => (document.title = `Code Practice ${title ? '-' + title : ''}`)
+export const setDocumentTitle = (title: string) => (document.title = `Code Practice${title ? ' - ' + title : ''}`)
 
 //Active bai tap khi vao chi tiet
 // CRUD lịch sử

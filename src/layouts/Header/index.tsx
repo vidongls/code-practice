@@ -1,12 +1,13 @@
+import { UserOutlined } from '@ant-design/icons'
+import { Avatar, Button, Dropdown, Layout, Menu } from 'antd'
 import React from 'react'
-import { Avatar, Button, Dropdown, Input, Layout, Menu } from 'antd'
-import { UserOutlined, SearchOutlined } from '@ant-design/icons'
-
-import Navbar from './Navbar'
 import { Link, useNavigate } from 'react-router-dom'
-import { useAuthStore } from '../../store/useAuthStore'
+
 import logo from '../../resources/img/logo-main.png'
+import { useAuthStore } from '../../store/useAuthStore'
+import Navbar from './Navbar'
 import SearchInput from './SearchInput'
+
 const { Header: HeaderAntd } = Layout
 
 const Header: React.FC = props => {

@@ -19,6 +19,7 @@ import ChallengeEdit from '../Admin/pages/Challange/Edit'
 import AdminChallengeDetail from '../Admin/pages/Challange/Detail'
 import PrivateAdminRoute from './PrivateAdminRoute'
 import AdminClass from '../Admin/pages/Class'
+import LiveCode from '../pages/LiveCode'
 
 const Router = () => {
     return (
@@ -58,6 +59,10 @@ const Router = () => {
                 <Route
                     path="challenge/:id"
                     element={<Challenge />}
+                />
+                <Route
+                    path="live-code"
+                    element={<LiveCode />}
                 />
             </Route>
             {/* 

@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 
 import { IDetail } from '../..'
 import CountDown from '../../../../components/CountDown/CountDown'
+import { isEmpty } from 'lodash'
 
 interface IDescriptionProps {
     loading: boolean
@@ -28,23 +29,27 @@ const Description: React.FC<IDescriptionProps> = ({ loading, detail, isEnded, da
     }
 
     const onComplete = () => {
-        console.log('âsas')
+        console.log('sadas')
         showModal()
     }
+    console.log(dataRealtime)
+    console.log('detail', detail)
 
     return Object.keys(detail).length ? (
         <Spin spinning={loading}>
             <div className="flex items-center justify-between">
                 <h2 className="mb-5 text-2xl font-medium">{detail.title}</h2>
 
-                {Object.keys(detail).length && Object.keys(dataRealtime).length ? detail.isRealtime && (
-                    <CountDown
-                        startTime={dataRealtime?.startTime}
-                        duration={detail.time}
-                        className="text-xl"
-                        onComplete={onComplete}
-                    />
-                ) : null}
+                {!isEmpty(detail) && !isEmpty(dataRealtime)
+                    ? detail.isRealtime && (
+                          <CountDown
+                              startTime={dataRealtime?.startTime}
+                              duration={detail.time}
+                              className="text-xl"
+                              onComplete={onComplete}
+                          />
+                      )
+                    : null}
             </div>
 
             <div dangerouslySetInnerHTML={{ __html: detail.describe }}></div>

@@ -28,10 +28,10 @@ const Navbar: React.FC<INavbarProps> = props => {
         //     label: 'Xếp hạng',
         //     to: 'rank',
         // },
-        // {
-        //     label: 'Live IDE',
-        //     to: 'live-code',
-        // },
+        {
+            label: 'Live code',
+            to: 'live-code',
+        },
         user.role !== 'USER'
             ? {
                   label: 'Quản lý',
