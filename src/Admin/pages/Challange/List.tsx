@@ -291,7 +291,7 @@ const List: React.FC<IListProps> = ({ data, loading, getChallenge }) => {
         <>
             <div className="rounded-md bg-white p-6 ">
                 <div className="my-6 mt-0 flex items-center">
-                    <h3 className="text-base font-semibold">Danh sách challenge</h3>
+                    <h3 className="text-base font-semibold">Danh sách bài tập</h3>
 
                     <span className="text-gray-900y ml-2 inline-flex h-5 w-5 items-center justify-center rounded-full bg-blue-200 text-xs font-semibold ">
                         {data?.length}

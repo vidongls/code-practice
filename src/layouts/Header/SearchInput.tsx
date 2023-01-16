@@ -3,7 +3,7 @@ import { Divider, Input, Select, Spin } from 'antd'
 import { UserOutlined, SearchOutlined } from '@ant-design/icons'
 import { Link } from 'react-router-dom'
 import ChallengeApi from '../../Api/Challenge/ChallengeApi'
-import { get, isEmpty } from 'lodash'
+import { get, isEmpty, trim } from 'lodash'
 import useOutsideAlerter from '../../hooks/useOutsideAlerter'
 import { classNames } from '../../helper/helper'
 
@@ -37,7 +37,7 @@ const SearchInput: React.FC<ISelectInput> = props => {
         const getDataNe = () => {
             setLoading(true)
 
-            ChallengeApi.userSearchChallenge({ title: value })
+            ChallengeApi.userSearchChallenge({ title: trim(value) ? trim(value) : undefined })
                 .then(res => {
                     setData(get(res, 'data.challenge'))
                 })
@@ -94,7 +94,7 @@ const SearchInput: React.FC<ISelectInput> = props => {
                         ))}
                     </ul>
                 ) : (
-                    <div className="p-2 leading-4 text-gray-400 text-center">Không có dữ liệu</div>
+                    <div className="p-2 text-center leading-4 text-gray-400">Không có dữ liệu</div>
                 )}
             </div>
         </div>

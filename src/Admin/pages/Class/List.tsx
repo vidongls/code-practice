@@ -1,11 +1,12 @@
 import { DeleteOutlined, EditOutlined, ExclamationCircleOutlined, InfoCircleOutlined } from '@ant-design/icons'
-import { Modal, notification, Spin, Table, Tooltip } from 'antd'
+import { Button, Modal, notification, Spin, Table, Tooltip } from 'antd'
 import React, { useState } from 'react'
 
 import ClassApi from '../../../Api/Class/ClassApi'
 import AddClass from './AddClass'
 import EditClass from './EditClass'
 import ModalListStudent from './components/ModalListStudent'
+import { get } from 'lodash'
 
 interface IListProps {
     data: any
@@ -74,7 +75,7 @@ const List: React.FC<IListProps> = ({ data, loading, params, getClass }) => {
                         <Tooltip title="Xóa">
                             <DeleteOutlined
                                 className="cursor-pointer p-3 text-red-600 hover:text-red-400"
-                                onClick={() => onDeleteChallenge(text)}
+                                onClick={() => onDeleteChallenge(record)}
                             />
                         </Tooltip>
                     </Spin>
@@ -109,14 +110,15 @@ const List: React.FC<IListProps> = ({ data, loading, params, getClass }) => {
     //     })
     // }
 
-    const onDeleteChallenge = (id: string) => {
+    const onDeleteChallenge = (record: any) => {
         Modal.confirm({
-            title: 'Bạn thực sự muốn xóa lớp này?',
+            title: `Bạn thực sự muốn xóa lớp ${get(record, 'name')}?`,
             icon: <ExclamationCircleOutlined />,
             content: '',
+
             onOk() {
                 setLoadingBtn(true)
-                return ClassApi.deleteClass(id)
+                return ClassApi.deleteClass(get(record, '_id'))
                     .then(result => {
                         getClass()
                         notification.success({ message: 'Xoá lớp thành công' })
@@ -127,6 +129,7 @@ const List: React.FC<IListProps> = ({ data, loading, params, getClass }) => {
                     .finally(() => setLoadingBtn(false))
             },
             onCancel() {},
+            okButtonProps: { className: 'bg-primary', type: 'primary' },
         })
     }
     const handleHideModal = () => {

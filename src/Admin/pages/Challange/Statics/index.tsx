@@ -105,12 +105,12 @@ const ChallengeStatics = () => {
                 className="mb-5 flex w-fit items-center"
             >
                 <ArrowLeftOutlined className="mr-2" />
-                Trở về Danh Sách Challenge
+                Trở về Danh Sách bài tập
             </Link>
             <div className="rounded-md bg-white p-6 ">
                 <div className="my-6 mt-0 flex items-center">
                     <h3 className="text-base font-semibold">
-                        Thống kê challenge
+                        Thống kê bài tập
                         {params?.title ? ` - ${params?.title}` : null}
                     </h3>
 

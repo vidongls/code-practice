@@ -17,18 +17,18 @@ const List: React.FC<IListProps> = ({ data, loading, params, getStudent }) => {
     const [loadingDelete, setLoadingDelete] = useState(false)
 
     const columns = [
-        // {
-        //     title: 'Avatar',
-        //     dataIndex: 'avatar',
-        //     key: 'avatar',
-        //     render: (text: string, record: any) => {
-        //         return (
-        //             <div className="w-fit">
-        //                 <Avatar src={text} />
-        //             </div>
-        //         )
-        //     },
-        // },
+        {
+            title: 'Avatar',
+            dataIndex: 'avatar',
+            key: 'avatar',
+            render: (text: string, record: any) => {
+                return (
+                    <div className="w-fit">
+                        <Avatar src={text} />
+                    </div>
+                )
+            },
+        },
         {
             title: 'Mã sinh viên',
             dataIndex: 'code',
@@ -38,17 +38,12 @@ const List: React.FC<IListProps> = ({ data, loading, params, getStudent }) => {
                 const avatar = record?.avatar
 
                 return (
-                    <div>
-                        <Link
-                            to={id}
-                            className="flex w-fit flex-col items-center font-semibold text-blue-600"
-                        >
-                            <div className="w-fit">
-                                <Avatar src={avatar} />
-                            </div>
-                            {text}
-                        </Link>
-                    </div>
+                    <Link
+                        to={id}
+                        className="flex w-fit flex-col items-center font-semibold text-blue-600"
+                    >
+                        {text}
+                    </Link>
                 )
             },
         },

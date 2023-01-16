@@ -55,11 +55,5 @@ export const isManager = (role: string) => {
 
 export const setDocumentTitle = (title: string) => (document.title = `Code Practice ${title ? '-' + title : ''}`)
 
-// Add challenge vào lớp ngược lại
-
 //Active bai tap khi vao chi tiet
 // CRUD lịch sử
-// Phân quyền cho author class
-// bắt con trim() input
-// Thêm tên lớp khi xóa lớp
-// Tách avatar ra cột riêng student

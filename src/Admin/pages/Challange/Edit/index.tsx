@@ -96,7 +96,7 @@ const ChallengeEdit: React.FC<IChallengeEditProps> = props => {
                             className="flex w-fit items-center"
                         >
                             <ArrowLeftOutlined className="mr-2" />
-                            Trở về Danh Sách Challenge
+                            Trở về Danh Sách bài tập
                         </Link>
 
                         <Button

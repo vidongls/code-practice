@@ -62,7 +62,7 @@ const AdminChallengeDetail: React.FC<IAdminChallengeDetailProps> = props => {
                                 className="mb-2 flex w-fit items-center"
                             >
                                 <ArrowLeftOutlined className="mr-2" />
-                                Trở về Danh Sách Challenge
+                                Trở về Danh Sách bài tập
                             </Link>
                         </div>
                         <Link to={`/admin/challenge/edit/${id}`}>
@@ -71,7 +71,7 @@ const AdminChallengeDetail: React.FC<IAdminChallengeDetailProps> = props => {
                                 className="rounded bg-primary font-medium"
                             >
                                 <EditOutlined className="anticon-custom" />
-                                Chỉnh sửa challenge
+                                Chỉnh sửa bài tập
                             </Button>
                         </Link>
                     </div>

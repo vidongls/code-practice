@@ -65,7 +65,7 @@ const ChallengeDetail: React.FC<IChallengeDetailProps> = props => {
                             className="flex w-fit items-center"
                         >
                             <ArrowLeftOutlined className="mr-2" />
-                            Trở về Danh Sách Challenge
+                            Trở về Danh Sách bài tập
                         </Link>
 
                         <Button
@@ -77,7 +77,7 @@ const ChallengeDetail: React.FC<IChallengeDetailProps> = props => {
                             <PlusOutlined className="anticon-custom" /> Chỉnh sửa
                         </Button>
                     </div>
-                    <h3 className="my-5 text-lg font-semibold">Tạo Challenge</h3>
+                    <h3 className="my-5 text-lg font-semibold">Tạo bài tập</h3>
                     <Form
                         name="basic"
                         labelCol={{ span: 3 }}
