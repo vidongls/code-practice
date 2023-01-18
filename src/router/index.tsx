@@ -20,6 +20,8 @@ import AdminChallengeDetail from '../Admin/pages/Challange/Detail'
 import PrivateAdminRoute from './PrivateAdminRoute'
 import AdminClass from '../Admin/pages/Class'
 import LiveCode from '../pages/LiveCode'
+import AdminLiveCode from '../Admin/pages/LiveCode'
+import ExamClass from '../Admin/pages/ExamClass'
 
 const Router = () => {
     return (
@@ -110,6 +112,14 @@ const Router = () => {
                 <Route
                     path="class"
                     element={<AdminClass />}
+                />
+                <Route
+                    path="live-code/:userId"
+                    element={<AdminLiveCode />}
+                />
+                 <Route
+                    path="exam-class"
+                    element={<ExamClass />}
                 />
             </Route>
         </Routes>

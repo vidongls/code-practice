@@ -1,4 +1,4 @@
-import { CloseOutlined, TeamOutlined, NodeIndexOutlined, ApartmentOutlined } from '@ant-design/icons'
+import { CloseOutlined, TeamOutlined, NodeIndexOutlined, ApartmentOutlined, FileSyncOutlined } from '@ant-design/icons'
 import { Layout, Menu, MenuProps } from 'antd'
 import useBreakpoint from 'antd/lib/grid/hooks/useBreakpoint'
 import React, { useEffect, useState } from 'react'
@@ -40,7 +40,7 @@ const Sidebar = ({ collapsed, setCollapsed, handleCloseSidebar }: Props) => {
 
     const items: MenuProps['items'] = [
         {
-            label: <Link to={'challenge'}>Challenge</Link>,
+            label: <Link to={'challenge'}>Bài tập</Link>,
             key: 'challenge',
             icon: <NodeIndexOutlined />,
         },
@@ -53,6 +53,11 @@ const Sidebar = ({ collapsed, setCollapsed, handleCloseSidebar }: Props) => {
             label: <Link to={'class'}>Lớp</Link>,
             key: 'class',
             icon: <TeamOutlined />,
+        },
+        {
+            label: <Link to={'exam-class'}>Lớp thi</Link>,
+            key: 'exam-class',
+            icon: <FileSyncOutlined />,
         },
     ]
 

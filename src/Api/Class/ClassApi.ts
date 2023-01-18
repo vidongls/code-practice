@@ -28,6 +28,10 @@ class ClassApi {
     updateClass = (classId: string, data: any) => {
         return Api.put(`/class/${classId}`, data)
     }
+
+    getClassesDoing = () => {
+        return Api.get(`/class/get-all/exam-doing`, {})
+    }
 }
 
 export default new ClassApi()
