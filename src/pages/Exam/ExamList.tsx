@@ -1,0 +1,137 @@
+import { SearchOutlined, CheckOutlined } from '@ant-design/icons'
+import { Badge, Form, Input, Table, notification } from 'antd'
+import React, { useEffect, useState } from 'react'
+
+import Box from '../../components/Box'
+import useParams from '../../utils/useParams'
+import { get, map } from 'lodash'
+import { useAuthStore } from '../../store/useAuthStore'
+import { Link } from 'react-router-dom'
+import ChallengeApi from '../../Api/Challenge/ChallengeApi'
+import { useParams as useParamRouter } from 'react-router-dom'
+
+const ExamList = () => {
+    const { params, addParams } = useParams()
+    const { classId } = useParamRouter()
+    const [form] = Form.useForm()
+    const { user } = useAuthStore()
+
+    const [data, setData] = useState([])
+
+    useEffect(() => {
+        const getChallenge = async () => {
+            try {
+                const res = await ChallengeApi.getAllChallengeByClass(classId, params)
+                setData(res.data?.challenge)
+            } catch (error) {
+                notification.error({ message: 'Có lỗi xảy ra!' })
+            }
+        }
+
+        getChallenge()
+    }, [params, classId])
+
+    const columns = [
+        {
+            title: '',
+            dataIndex: 'countDoChallenge',
+            key: 'countDoChallenge',
+            render: (text: string, record: any) => {
+                const doChallengeIds = map(get(record, 'countDoChallenge'), 'user')
+                return <>{doChallengeIds.includes(user.id) && <CheckOutlined className="text-green-500" />}</>
+            },
+        },
+        {
+            title: <p className="font-semibold">Mã</p>,
+            dataIndex: 'code',
+            key: 'code',
+            render: (code: string, record: any) => {
+                const id = record?._id
+                const isRealtime = record?.isRealtime
+
+                return (
+                    <Link
+                        to={`${id}`}
+                        className="font-semibold text-blue-600"
+                    >
+                        {code}
+                    </Link>
+                )
+            },
+        },
+        {
+            title: <p className="font-semibold">Tiêu đề</p>,
+            dataIndex: 'title',
+            render: (title: string) => {
+                return <span className="font-medium">{title}</span>
+            },
+        },
+        {
+            title: <p className="font-semibold">Đã nộp</p>,
+            dataIndex: 'countDoChallenge',
+            key: 'resolved',
+            render: (text: any) => {
+                return <span>{text?.length ? text.length : 0}</span>
+            },
+        },
+        {
+            title: <p className="font-semibold">Bài đạt</p>,
+            dataIndex: 'countDoChallenge',
+            key: 'submit',
+            render: (text: any) => {
+                const countResolve = text?.filter((item: any) => item.isResolved)
+
+                return <span>{countResolve?.length ? countResolve.length : 0}</span>
+            },
+        },
+        {
+            title: <p className="font-semibold">Loại</p>,
+            dataIndex: 'isRealtime',
+            key: 'isRealtime',
+            render: (text: any) => {
+                return (
+                    <>
+                        <Badge
+                            status={'processing'}
+                            text={'Kiểm tra'}
+                        />
+                    </>
+                )
+            },
+        },
+    ]
+
+    const resetFilter = () => {
+        addParams({})
+        form.resetFields()
+    }
+    return (
+        <div className="p-8 pt-2  lg:p-24 lg:pt-2">
+            <Box className="p-6">
+                <div className="mb-4 flex items-center justify-between border-b border-b-gray-200 pb-3">
+                    <h3 className="text-medium text-lg">Bài thi</h3>
+                    <Form
+                        form={form}
+                        layout="inline"
+                    >
+                        <Form.Item name="title">
+                            <Input
+                                placeholder="Từ khóa"
+                                suffix={<SearchOutlined />}
+                                className="rounded-sm"
+                                onBlur={e => addParams({ title: e.target.value })}
+                            />
+                        </Form.Item>
+                    </Form>
+                </div>
+                <Table
+                    rowKey={record => record._id}
+                    columns={columns}
+                    dataSource={data}
+                />
+            </Box>
+        </div>
+    )
+}
+
+export default ExamList

@@ -31,7 +31,7 @@ export interface IDetail {
 interface IChallengeProps {}
 
 const Challenge: React.FC<IChallengeProps> = props => {
-    const { id } = useParams()
+    const { challengeId: id } = useParams()
     const [loading, setLoading] = useState(false)
     const [detail, setDetail] = useState<IDetail>({} as IDetail)
     const [isStarted, setIsStarted] = useState(false)

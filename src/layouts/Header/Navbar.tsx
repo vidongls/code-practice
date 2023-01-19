@@ -16,10 +16,10 @@ const Navbar: React.FC<INavbarProps> = props => {
             label: 'Bài tập',
             to: 'exercise',
         },
-        // {
-        //     label: 'Kỳ thi',
-        //     to: 'exam',
-        // },
+        {
+            label: 'Kỳ thi',
+            to: 'exam',
+        },
         // {
         //     label: 'Bài nộp',
         //     to: 'submissions',

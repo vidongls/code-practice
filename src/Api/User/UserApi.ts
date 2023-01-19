@@ -16,6 +16,10 @@ class UserApi {
     getAll = (params?: any) => {
         return Api.get('/user', { params })
     }
+
+    getInfo = () => {
+        return Api.get('/user/me', {})
+    }
 }
 
 export default new UserApi()

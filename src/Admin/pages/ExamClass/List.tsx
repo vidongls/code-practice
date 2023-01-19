@@ -1,8 +1,8 @@
-import { DeleteOutlined, EditOutlined, UserOutlined, InfoCircleOutlined, MoreOutlined } from '@ant-design/icons'
-import { Avatar, Button, Modal, notification, Spin, Table, Tooltip } from 'antd'
-import React, { useEffect, useState } from 'react'
-
+import { Avatar, Spin } from 'antd'
 import { get, isEmpty } from 'lodash'
+import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
+
 import ClassApi from '../../../Api/Class/ClassApi'
 
 interface IListProps {}
@@ -23,18 +23,25 @@ const List: React.FC<IListProps> = () => {
 
         getListDoing()
     }, [])
-    console.log(data)
     return (
         <Spin spinning={loading}>
             <div className="rounded-md bg-white p-6 ">
                 <div className="flex flex-wrap gap-4">
                     {!isEmpty(data) &&
-                        data.map((item: any) => {
+                        data.map((item: any, index: number) => {
                             return (
-                                <div className="w-72 overflow-hidden rounded-md border border-gray-200 text-white shadow">
+                                <div
+                                    className="w-72 overflow-hidden rounded-md border border-gray-200 text-white shadow"
+                                    key={index}
+                                >
                                     <div className="flex flex-col gap-4 bg-amber-600 p-4">
                                         <h3 className="flex items-center gap-4 text-xl font-medium text-white">
-                                            <p className="max-w-[250px] truncate ">{get(item, 'data.name')}</p>
+                                            <Link
+                                                to={get(item, 'data._id')}
+                                                className="max-w-[250px] truncate "
+                                            >
+                                                {get(item, 'data.name')}
+                                            </Link>
                                             {/* <MoreOutlined className="cursor-pointer hover:text-blue-400" /> */}
                                             <div></div>
                                         </h3>
@@ -46,7 +53,7 @@ const List: React.FC<IListProps> = () => {
                                     <div className="relative h-24">
                                         <div className="absolute right-4 h-16 w-16 -translate-y-1/2  overflow-hidden rounded-full">
                                             <img
-                                                src="https://lh3.googleusercontent.com/a-/AD5-WClSLMtj1oFVbRmsBKN-95mcgUsBn3sNHdhDl5hK=s75-c"
+                                                src="https://cdn-icons-png.flaticon.com/512/488/488925.png?w=826&t=st=1674057786~exp=1674058386~hmac=d534517b9024693a8f722416344c93d253b18bedc3de67d0c47113faa4b94e32"
                                                 alt=""
                                                 className="h-full w-full object-cover"
                                             />
@@ -59,6 +66,7 @@ const List: React.FC<IListProps> = () => {
                                                     <></>
                                                 ) : (
                                                     <Avatar
+                                                        key={index}
                                                         src={
                                                             student.avatar
                                                                 ? student.avatar

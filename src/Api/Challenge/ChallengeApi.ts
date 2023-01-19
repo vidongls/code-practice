@@ -79,6 +79,9 @@ class ChallengeApi {
     userGetDetail = (id: string) => {
         return Api.get(`/user-api/challenge/${id}`, {})
     }
+    getAllChallengeByClass = (id: any, params: any) => {
+        return Api.get(`/user-api/challenge/${id}/get-exam`, { params })
+    }
 }
 
 export default new ChallengeApi()

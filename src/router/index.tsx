@@ -22,6 +22,8 @@ import AdminClass from '../Admin/pages/Class'
 import LiveCode from '../pages/LiveCode'
 import AdminLiveCode from '../Admin/pages/LiveCode'
 import ExamClass from '../Admin/pages/ExamClass'
+import StudentsDoing from '../Admin/pages/ExamClass/StudentsDoing'
+import ExamList from '../pages/Exam/ExamList'
 
 const Router = () => {
     return (
@@ -46,10 +48,20 @@ const Router = () => {
                     path="exercise"
                     element={<Exercise />}
                 />
-                <Route
-                    path="exam"
-                    element={<Exam />}
-                />
+                <Route path="exam">
+                    <Route
+                        element={<Exam />}
+                        index
+                    />
+                    <Route
+                        element={<ExamList />}
+                        path=":classId"
+                    ></Route>
+                    <Route
+                        element={<Challenge />}
+                        path=":classId/:challengeId"
+                    />
+                </Route>
                 <Route
                     path="submissions"
                     element={<Submission />}
@@ -117,10 +129,17 @@ const Router = () => {
                     path="live-code/:userId"
                     element={<AdminLiveCode />}
                 />
-                 <Route
-                    path="exam-class"
-                    element={<ExamClass />}
-                />
+                <Route path="exam-class">
+                    <Route
+                        element={<ExamClass />}
+                        index
+                    />
+
+                    <Route
+                        path=":id"
+                        element={<StudentsDoing />}
+                    />
+                </Route>
             </Route>
         </Routes>
     )
