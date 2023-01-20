@@ -3,13 +3,16 @@ import { Modal, Tabs } from 'antd'
 import React, { useEffect, useState } from 'react'
 
 import { classNames } from '../../../../helper/helper'
+import { get, isEmpty } from 'lodash'
 
 interface IModalShowResultProps {
     compileResult: any
     handleHideSubmitModal: () => void
+    dataSubmit: any
 }
 
-const ModalShowResult: React.FC<IModalShowResultProps> = ({ compileResult, handleHideSubmitModal }) => {
+const ModalShowResult: React.FC<IModalShowResultProps> = ({ compileResult, handleHideSubmitModal, dataSubmit }) => {
+    console.log('🧙 ~ compileResult', compileResult.err)
     const [countResolve, setCountResolve] = useState(0)
 
     useEffect(() => {
@@ -32,7 +35,9 @@ const ModalShowResult: React.FC<IModalShowResultProps> = ({ compileResult, handl
         >
             <span className="block text-lg">
                 Bạn đã vượt qua
-                <span className="text-xl font-semibold">{` ${countResolve} /${compileResult?.result?.length}`}</span>{' '}
+                <span className="text-xl font-semibold">{` ${countResolve}/${
+                    get(dataSubmit, 'challengeTestCase', []).length
+                }`}</span>{' '}
                 TestCase
             </span>
 
@@ -72,7 +77,9 @@ const ModalShowResult: React.FC<IModalShowResultProps> = ({ compileResult, handl
                             children: (
                                 <div className="mb-4 py-8 pr-4">
                                     <span>Compiler Message</span>
-                                    <pre className="mt-2 mb-5 w-full bg-gray-100 p-3 ">{item?.data}</pre>
+                                    <pre className="mt-2 mb-5 w-full bg-gray-100 p-3 ">
+                                        {compileResult?.err ? compileResult.err : item?.data}
+                                    </pre>
 
                                     <span>Input </span>
                                     <pre className="mt-2 mb-5 w-full bg-gray-100 p-2 font-semibold">

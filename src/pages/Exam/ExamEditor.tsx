@@ -7,8 +7,10 @@ import ChallengeApi from '../../Api/Challenge/ChallengeApi'
 import { classNames } from '../../helper/helper'
 import { IDetail } from '../../pages/Challenge'
 import ModalShowResult from '../../pages/Challenge/components/ModalShowResult'
-
-import { defineTheme, monacoThemes, TThemes } from './defineTheme'
+import { defineTheme, monacoThemes, TThemes } from '../../components/CodeEditor/defineTheme'
+import { fireSet } from '../../utils/firebaseUtil'
+import { useAuthStore } from '../../store/useAuthStore'
+import { useDebounce } from '../../hooks/useDebounce'
 
 interface IResult {
     data: string
@@ -22,7 +24,7 @@ interface IResult {
     }[]
 }
 
-interface ICodeEditorProps {
+interface IExamCodeEditorProps {
     detail: IDetail
     isEnded: boolean
 }
@@ -33,8 +35,9 @@ const options = {
     minimap: { enabled: false },
     selectOnLineNumbers: true,
 }
-const CodeEditor: React.FC<ICodeEditorProps> = ({ detail, isEnded }) => {
-    const { id: challengeId } = useParams()
+const ExamCodeEditor: React.FC<IExamCodeEditorProps> = ({ detail, isEnded }) => {
+    const { challengeId, classId } = useParams()
+    const { user } = useAuthStore()
 
     const [content, setContent] = useState('')
     const [theme, setTheme] = useState<any>('light')
@@ -48,6 +51,24 @@ const CodeEditor: React.FC<ICodeEditorProps> = ({ detail, isEnded }) => {
     useEffect(() => {
         setContent(detail?.content)
     }, [detail.content])
+
+    const debouncedSearchTerm = useDebounce(content, 1500)
+
+    // Effect for API call
+    useEffect(
+        () => {
+            if (debouncedSearchTerm) {
+                setLoading(true)
+                const path = `classes/${classId}/challenge-${challengeId}/students/${user.id}`
+                fireSet(path, {
+                    status: 'PROCESSING',
+                    content: debouncedSearchTerm,
+                    id: user.id,
+                })
+            }
+        },
+        [challengeId, classId, debouncedSearchTerm, user.id] // Only call effect if debounced search term changes
+    )
 
     const handleChangeEditor = (value: string) => {
         setContent(value)
@@ -262,4 +283,4 @@ const CodeEditor: React.FC<ICodeEditorProps> = ({ detail, isEnded }) => {
     )
 }
 
-export default CodeEditor
+export default ExamCodeEditor

@@ -9,6 +9,7 @@ import { useAuthStore } from '../../store/useAuthStore'
 import { Link } from 'react-router-dom'
 import ChallengeApi from '../../Api/Challenge/ChallengeApi'
 import { useParams as useParamRouter } from 'react-router-dom'
+import ClassApi from '../../Api/Class/ClassApi'
 
 const ExamList = () => {
     const { params, addParams } = useParams()
@@ -17,6 +18,8 @@ const ExamList = () => {
     const { user } = useAuthStore()
 
     const [data, setData] = useState([])
+    const [classes, setClasses] = useState({} as any)
+    console.log('🧙 ~ classes', classes)
 
     useEffect(() => {
         const getChallenge = async () => {
@@ -30,6 +33,15 @@ const ExamList = () => {
 
         getChallenge()
     }, [params, classId])
+
+    useEffect(() => {
+        const getClassById = () => {
+            ClassApi.getOne(classId as string).then(res => {
+                setClasses(get(res, 'data.data'))
+            })
+        }
+        getClassById()
+    }, [classId])
 
     const columns = [
         {
@@ -109,7 +121,7 @@ const ExamList = () => {
         <div className="p-8 pt-2  lg:p-24 lg:pt-2">
             <Box className="p-6">
                 <div className="mb-4 flex items-center justify-between border-b border-b-gray-200 pb-3">
-                    <h3 className="text-medium text-lg">Bài thi</h3>
+                    <h3 className="text-medium text-lg">{`Bài thi ${classes?.name ? '- ' + classes?.name : ''}`}</h3>
                     <Form
                         form={form}
                         layout="inline"

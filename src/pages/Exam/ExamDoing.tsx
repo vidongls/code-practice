@@ -3,15 +3,15 @@ import React, { useCallback, useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { IRealtimeData } from '../../Admin/pages/Challange/List'
 import ChallengeApi from '../../Api/Challenge/ChallengeApi'
-import CodeEditor from '../../components/CodeEditor'
 
 import Tabs from '../../components/Tabs'
 import { fireGet, fireGetOne } from '../../utils/firebaseUtil'
-import Comment, { IComment } from './components/Comment'
 
-import Description from './components/Description'
-import Header from './components/Header'
-import ChallengeLobby from './components/Lobby'
+import ChallengeLobby from '../Challenge/components/Lobby'
+import Description from '../Challenge/components/Description'
+import { IComment } from '../Challenge/components/Comment'
+import ExamCodeEditor from './ExamEditor'
+
 export interface IDetail {
     _id: string
     title: string
@@ -28,10 +28,10 @@ export interface IDetail {
     startTime: number
 }
 
-interface IChallengeProps {}
+interface IExamDoingProps {}
 
-const Challenge: React.FC<IChallengeProps> = props => {
-    const { id } = useParams()
+const ExamDoing: React.FC<IExamDoingProps> = props => {
+    const { classId, challengeId: id } = useParams()
     const [loading, setLoading] = useState(false)
     const [detail, setDetail] = useState<IDetail>({} as IDetail)
     const [isStarted, setIsStarted] = useState(false)
@@ -39,7 +39,7 @@ const Challenge: React.FC<IChallengeProps> = props => {
     const [errors, setErrors] = useState({} as any)
     const [dataRealtime, setDataRealtime] = useState({} as IRealtimeData)
 
-    const getDetailChallenge = useCallback(async () => {
+    const getDetailExamDoing = useCallback(async () => {
         setLoading(true)
         try {
             const res = await ChallengeApi.userGetDetail(id!)
@@ -54,8 +54,8 @@ const Challenge: React.FC<IChallengeProps> = props => {
     }, [id])
 
     useEffect(() => {
-        getDetailChallenge()
-    }, [getDetailChallenge])
+        getDetailExamDoing()
+    }, [getDetailExamDoing])
 
     useEffect(() => {
         if (detail.isRealtime) {
@@ -86,7 +86,7 @@ const Challenge: React.FC<IChallengeProps> = props => {
                 return
             }
 
-            fireGetOne(`challenge-${id}`).then((data: any) => {
+            fireGetOne(`/classes/${classId}/challenge-${id}`).then((data: any) => {
                 if (data) {
                     const duration = detail.time
                     const isEnded = data.startTime + duration < Date.now()
@@ -109,18 +109,18 @@ const Challenge: React.FC<IChallengeProps> = props => {
                 } catch (error) {}
             }
         }
-    }, [detail, id])
+    }, [detail, id, classId])
 
     useEffect(() => {
-        fireGet(`challenge-${id}`, (data: any) => {
+        fireGet(`/classes/${classId}/challenge-${id}`, (data: any) => {
             if (data?.started) {
-                getDetailChallenge()
+                getDetailExamDoing()
                 setIsStarted(true)
             } else {
                 setIsStarted(false)
             }
         })
-    }, [id, getDetailChallenge])
+    }, [id, getDetailExamDoing, classId])
 
     const items = [
         {
@@ -135,17 +135,7 @@ const Challenge: React.FC<IChallengeProps> = props => {
                 />
             ),
         },
-        {
-            label: 'Thảo luận',
-            key: 'discussion',
-            content: (
-                <Comment
-                    challengeId={detail._id}
-                    comments={detail.comments}
-                    refetch={getDetailChallenge}
-                />
-            ),
-        },
+
         // { label: 'Bảng xếp hạng', key: 'ranking', content: 'bxh' },
     ]
 
@@ -177,7 +167,7 @@ const Challenge: React.FC<IChallengeProps> = props => {
 
                     <div className="col-span-3">
                         <Spin spinning={loading}>
-                            <CodeEditor
+                            <ExamCodeEditor
                                 detail={detail}
                                 isEnded={isEnded}
                             />
@@ -191,4 +181,4 @@ const Challenge: React.FC<IChallengeProps> = props => {
     )
 }
 
-export default Challenge
+export default ExamDoing
