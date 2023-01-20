@@ -1,4 +1,4 @@
-import { RedoOutlined, CheckOutlined, CloseCircleOutlined, ExclamationCircleOutlined } from '@ant-design/icons'
+import { CheckOutlined, CloseCircleOutlined, ExclamationCircleOutlined } from '@ant-design/icons'
 import Editor from '@monaco-editor/react'
 import { Button, Modal, notification, Select, Tabs } from 'antd'
 import React, { useEffect, useState } from 'react'
@@ -11,6 +11,7 @@ import { defineTheme, monacoThemes, TThemes } from '../../components/CodeEditor/
 import { fireSet } from '../../utils/firebaseUtil'
 import { useAuthStore } from '../../store/useAuthStore'
 import { useDebounce } from '../../hooks/useDebounce'
+import ExamModalShowResult from './ExamModalShowResult'
 
 interface IResult {
     data: string
@@ -52,13 +53,12 @@ const ExamCodeEditor: React.FC<IExamCodeEditorProps> = ({ detail, isEnded }) => 
         setContent(detail?.content)
     }, [detail.content])
 
-    const debouncedSearchTerm = useDebounce(content, 1500)
+    const debouncedSearchTerm = useDebounce(content, 100)
 
     // Effect for API call
     useEffect(
         () => {
             if (debouncedSearchTerm) {
-                setLoading(true)
                 const path = `classes/${classId}/challenge-${challengeId}/students/${user.id}`
                 fireSet(path, {
                     status: 'PROCESSING',
@@ -125,6 +125,13 @@ const ExamCodeEditor: React.FC<IExamCodeEditorProps> = ({ detail, isEnded }) => 
                         setDataSubmit(res.data)
                         setCompileResult(res.data?.dataCompile)
                         handleVisibleSubmitModal()
+                        const path = `classes/${classId}/challenge-${challengeId}/students/${user.id}`
+                        fireSet(path, {
+                            status: 'SUCCESS',
+                            content: debouncedSearchTerm,
+                            id: user.id,
+                            compileResult: res.data?.dataCompile,
+                        })
                     })
                     .catch(error => {
                         console.log('🧙 ~ error', error)
@@ -134,12 +141,9 @@ const ExamCodeEditor: React.FC<IExamCodeEditorProps> = ({ detail, isEnded }) => 
 
             cancelText: 'Quay lại',
             okText: 'Nộp',
+            okButtonProps: { className: 'bg-blue-400' },
         })
     }
-
-    const itemFail = compileResult?.result?.find(item => !item.status)
-
-    const listSuccess = compileResult?.result?.filter(item => item.status)
 
     return (
         <>
@@ -273,7 +277,7 @@ const ExamCodeEditor: React.FC<IExamCodeEditorProps> = ({ detail, isEnded }) => 
             </div>
 
             {isVisible && (
-                <ModalShowResult
+                <ExamModalShowResult
                     compileResult={compileResult}
                     handleHideSubmitModal={handleHideSubmitModal}
                     dataSubmit={dataSubmit}

@@ -5,12 +5,13 @@ import { IRealtimeData } from '../../Admin/pages/Challange/List'
 import ChallengeApi from '../../Api/Challenge/ChallengeApi'
 
 import Tabs from '../../components/Tabs'
-import { fireGet, fireGetOne } from '../../utils/firebaseUtil'
+import { fireGet, fireGetOne, fireGetUnsubscribe } from '../../utils/firebaseUtil'
 
 import ChallengeLobby from '../Challenge/components/Lobby'
 import Description from '../Challenge/components/Description'
 import { IComment } from '../Challenge/components/Comment'
 import ExamCodeEditor from './ExamEditor'
+import { off } from 'firebase/database'
 
 export interface IDetail {
     _id: string
@@ -112,10 +113,11 @@ const ExamDoing: React.FC<IExamDoingProps> = props => {
     }, [detail, id, classId])
 
     useEffect(() => {
-        fireGet(`/classes/${classId}/challenge-${id}`, (data: any) => {
+        fireGetUnsubscribe(`/classes/${classId}/challenge-${id}`, (data: any, unsubscribe: any) => {
             if (data?.started) {
                 getDetailExamDoing()
                 setIsStarted(true)
+                unsubscribe()
             } else {
                 setIsStarted(false)
             }
@@ -128,7 +130,7 @@ const ExamDoing: React.FC<IExamDoingProps> = props => {
             key: 'info',
             content: (
                 <Description
-                    loading={loading}
+                    loading={false}
                     detail={detail}
                     isEnded={isEnded}
                     dataRealtime={dataRealtime}
@@ -166,12 +168,10 @@ const ExamDoing: React.FC<IExamDoingProps> = props => {
                     </div>
 
                     <div className="col-span-3">
-                        <Spin spinning={loading}>
-                            <ExamCodeEditor
-                                detail={detail}
-                                isEnded={isEnded}
-                            />
-                        </Spin>
+                        <ExamCodeEditor
+                            detail={detail}
+                            isEnded={isEnded}
+                        />
                     </div>
                 </div>
             ) : (

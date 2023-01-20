@@ -35,6 +35,10 @@ class ClassApi {
     getOneClassesDoing = (params: any) => {
         return Api.get(`/class/get-one/exam-doing`, { params })
     }
+
+    getStudentsInfo = (params: any) => {
+        return Api.get(`/class/get-one/student-info`, { params })
+    }
 }
 
 export default new ClassApi()

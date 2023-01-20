@@ -2,7 +2,7 @@ import { ref, get, set, push, remove, update, onValue } from 'firebase/database'
 import { firebaseDb } from '../firebase.js'
 
 export const fireGet = (path: string, cb: (data: unknown) => void) => {
-    onValue(
+    return onValue(
         ref(firebaseDb, path),
         snapshot => {
             const data = snapshot.val()
@@ -12,6 +12,21 @@ export const fireGet = (path: string, cb: (data: unknown) => void) => {
             console.log(error)
         }
     )
+}
+
+export const fireGetUnsubscribe = (path: string, cb: (data: unknown, unsubscribe: any) => void) => {
+    const unsubscribe = onValue(
+        ref(firebaseDb, path),
+        snapshot => {
+            const data = snapshot.val()
+            cb(data, unsubscribe)
+        },
+        error => {
+            console.log(error)
+        }
+    )
+
+    return
 }
 
 export const fireGetOne = (path: string) => {

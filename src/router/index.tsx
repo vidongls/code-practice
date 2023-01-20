@@ -141,6 +141,10 @@ const Router = () => {
                         path=":id"
                         element={<StudentsDoing />}
                     />
+                    <Route
+                        path=":classId/:studentId"
+                        element={<AdminLiveCode />}
+                    />
                 </Route>
             </Route>
         </Routes>
