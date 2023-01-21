@@ -118,7 +118,7 @@ const ExamCodeEditor: React.FC<IExamCodeEditorProps> = ({ detail, isEnded }) => 
         Modal.confirm({
             title: 'Bạn chắc chắn muốn nộp bài?',
             icon: <ExclamationCircleOutlined />,
-            content: 'Some descriptions',
+            content: '',
             onOk() {
                 return ChallengeApi.submitExerciseChallenge({ challengeId, answerContent: content })
                     .then(res => {

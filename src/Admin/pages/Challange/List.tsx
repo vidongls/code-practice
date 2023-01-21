@@ -149,7 +149,7 @@ const List: React.FC<IListProps> = ({ data, loading, getChallenge }) => {
             dataIndex: '_id',
             render: (id: string, record: any) => {
                 const isRealtime = record?.isRealtime
-                const startedAt = record?.startedAt
+                const isExamStarted = record?.isExamStarted
                 const time = record?.time
                 const title = record?.title
 
@@ -176,13 +176,13 @@ const List: React.FC<IListProps> = ({ data, loading, getChallenge }) => {
 
                         {isRealtime && (
                             <>
-                                {(realtimeData?.startTime || 0) + time < Date.now() && (
-                                    // <Tooltip title={`Bắt đầu (${moment(startedAt).startOf('minutes').fromNow()})`}>
-                                    <PlayCircleOutlined
-                                        className="cursor-pointer p-3 text-yellow-600 hover:text-yellow-400"
-                                        onClick={() => onStartChallenge(id)}
-                                    />
-                                    // </Tooltip>
+                                {!isExamStarted && (
+                                    <Tooltip title={`Bắt đầu`}>
+                                        <PlayCircleOutlined
+                                            className="cursor-pointer p-3 text-yellow-600 hover:text-yellow-400"
+                                            onClick={() => onStartChallenge(id)}
+                                        />
+                                    </Tooltip>
                                 )}
                                 <Tooltip title="Thống kê">
                                     <Link

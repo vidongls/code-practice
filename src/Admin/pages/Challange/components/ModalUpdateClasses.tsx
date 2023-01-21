@@ -177,6 +177,9 @@ const ModalUpdateClasses: React.FC<IModalUpdateClassesProps> = ({ dataClass, onC
     const rowSelection = {
         selectedRowKeys,
         onChange: onSelectChange,
+        getCheckboxProps: (record: any) => ({
+            disabled: get(dataClass, 'isExamStarted', false),
+        }),
     }
 
     const onUpdateClassesToChallenge = () => {
@@ -213,6 +216,7 @@ const ModalUpdateClasses: React.FC<IModalUpdateClassesProps> = ({ dataClass, onC
                             type="primary"
                             onClick={onUpdateClassesToChallenge}
                             loading={loading}
+                            disabled={get(dataClass, 'isExamStarted', false)}
                         >
                             Cập nhật
                         </Button>

@@ -97,7 +97,7 @@ const CodeEditor: React.FC<ICodeEditorProps> = ({ detail, isEnded }) => {
         Modal.confirm({
             title: 'Bạn chắc chắn muốn nộp bài?',
             icon: <ExclamationCircleOutlined />,
-            content: 'Some descriptions',
+            content: '',
             onOk() {
                 return ChallengeApi.submitExerciseChallenge({ challengeId, answerContent: content })
                     .then(res => {
@@ -107,12 +107,13 @@ const CodeEditor: React.FC<ICodeEditorProps> = ({ detail, isEnded }) => {
                     })
                     .catch(error => {
                         console.log('🧙 ~ error', error)
-                        notification.error({ message: 'Nộp bài thất bại' })
+                        // notification.error({ message: 'Nộp bài thất bại' })
                     })
             },
 
             cancelText: 'Quay lại',
             okText: 'Nộp',
+            okButtonProps: { className: 'bg-primary' },
         })
     }
 
