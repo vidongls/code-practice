@@ -25,6 +25,11 @@ import ExamClass from '../Admin/pages/ExamClass'
 import StudentsDoing from '../Admin/pages/ExamClass/StudentsDoing/StudentsDoing'
 import ExamList from '../pages/Exam/ExamList'
 import ExamDoing from '../pages/Exam/ExamDoing'
+import AdminExam from '../Admin/pages/AdminExam'
+import AdminExamCreate from '../Admin/pages/AdminExam/Create'
+import AdminExamDetail from '../Admin/pages/AdminExam/Detail'
+import AdminExamEdit from '../Admin/pages/AdminExam/Edit'
+import AdminExamStatistic from '../Admin/pages/AdminExam/Statics'
 
 const Router = () => {
     return (
@@ -118,7 +123,29 @@ const Router = () => {
                         element={<ChallengeStatics />}
                     />
                 </Route>
+                <Route path="exam">
+                    <Route
+                        index
+                        element={<AdminExam />}
+                    />
+                    <Route
+                        path="create"
+                        element={<AdminExamCreate />}
+                    />
+                    <Route
+                        path=":id"
+                        element={<AdminExamDetail />}
+                    />
+                    <Route
+                        path="edit/:id"
+                        element={<AdminExamEdit />}
+                    />
 
+                    <Route
+                        path="statics/:id"
+                        element={<AdminExamStatistic />}
+                    />
+                </Route>
                 <Route
                     path="students"
                     element={<Student />}

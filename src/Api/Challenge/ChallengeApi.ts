@@ -4,6 +4,9 @@ class ChallengeApi {
     getAll = (params?: any) => {
         return Api.get('/challenge', { params })
     }
+    getAllExam = (params?: any) => {
+        return Api.get('/challenge/all/exam', { params })
+    }
 
     getOne = (id: string) => {
         return Api.get(`/challenge/${id}`, {})

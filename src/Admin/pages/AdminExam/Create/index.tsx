@@ -9,11 +9,12 @@ import ChallengeApi from '../../../../Api/Challenge/ChallengeApi'
 import Editor from '@monaco-editor/react'
 import { setDocumentTitle } from '../../../../helper/helper'
 import { useNavigatorStore } from '../../../../store/useNavigatorStore'
-interface IChallengeCreateProps {}
+interface IAdminExamCreateProps {}
 
-const ChallengeCreate: React.FC<IChallengeCreateProps> = props => {
+const AdminExamCreate: React.FC<IAdminExamCreateProps> = props => {
     const { setNavigator } = useNavigatorStore()
     const [form] = Form.useForm()
+    const isRealtime = Form.useWatch('isRealtime', form)
 
     const [value, setValue] = useState('')
     const [loading, setLoading] = useState(false)
@@ -39,7 +40,7 @@ const ChallengeCreate: React.FC<IChallengeCreateProps> = props => {
     const handleCreate = () => {
         form.validateFields().then(values => {
             setLoading(true)
-            ChallengeApi.create({ ...values, isRealtime: false, time: (time || 15) * 1000 * 60 })
+            ChallengeApi.create({ ...values, time: (time || 15) * 1000 * 60 })
                 .then(res => {
                     notification.success({ message: 'Tạo mới thành công' })
                     navigate('/admin/challenge')
@@ -123,7 +124,34 @@ const ChallengeCreate: React.FC<IChallengeCreateProps> = props => {
                             ]}
                         />
                     </Form.Item>
-
+                    <Form.Item
+                        label={<span>Realtime</span>}
+                        name="isRealtime"
+                        className="form-item-editor pr-5"
+                        wrapperCol={{ span: 24 }}
+                        valuePropName="checked"
+                    >
+                        <Switch />
+                    </Form.Item>
+                    {isRealtime && (
+                        <Form.Item
+                            label={<span>Thời gian (phút)</span>}
+                            // name="time"
+                            className="form-item-editor pr-5"
+                            wrapperCol={{ span: 24 }}
+                            help={!time ? 'Không được bỏ trống' : false}
+                            required
+                            validateStatus={!time ? 'error' : undefined}
+                        >
+                            <InputNumber
+                                min={15}
+                                className="w-full"
+                                defaultValue={15}
+                                value={time}
+                                onChange={onChangeTime}
+                            />
+                        </Form.Item>
+                    )}
                     <Form.Item
                         label={<span>Mô tả</span>}
                         name="describe"
@@ -249,4 +277,4 @@ const ChallengeCreate: React.FC<IChallengeCreateProps> = props => {
     )
 }
 
-export default ChallengeCreate
+export default AdminExamCreate

@@ -77,7 +77,7 @@ const Filter: React.FC<IFilterProps> = ({ params, addParams }) => {
                             />
                         </Form.Item>
                     </Col>
-                    {/* 
+
                     <Col
                         xs={{ span: 12 }}
                         lg={{ span: 5 }}
@@ -101,7 +101,7 @@ const Filter: React.FC<IFilterProps> = ({ params, addParams }) => {
                                 ]}
                             />
                         </Form.Item>
-                    </Col> */}
+                    </Col>
 
                     <Col
                         span={24}

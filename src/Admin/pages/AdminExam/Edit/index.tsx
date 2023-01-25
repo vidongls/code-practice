@@ -14,9 +14,9 @@ interface IData {
     time: number
 }
 
-interface IChallengeEditProps {}
+interface IAdminExamEditProps {}
 
-const ChallengeEdit: React.FC<IChallengeEditProps> = props => {
+const AdminExamEdit: React.FC<IAdminExamEditProps> = props => {
     const { setNavigator } = useNavigatorStore()
     const [form] = Form.useForm()
     const [value, setValue] = useState('')
@@ -155,7 +155,33 @@ const ChallengeEdit: React.FC<IChallengeEditProps> = props => {
                                 ]}
                             />
                         </Form.Item>
-
+                        <Form.Item
+                            label={<span>Realtime</span>}
+                            name="isRealtime"
+                            className="form-item-editor pr-5"
+                            wrapperCol={{ span: 24 }}
+                            valuePropName="checked"
+                        >
+                            <Switch />
+                        </Form.Item>
+                        {isRealtime && (
+                            <Form.Item
+                                label={<span>Thời gian (phút)</span>}
+                                className="form-item-editor pr-5"
+                                wrapperCol={{ span: 24 }}
+                                help={!time ? 'Không được bỏ trống' : false}
+                                required
+                                validateStatus={!time ? 'error' : undefined}
+                            >
+                                <InputNumber
+                                    min={15}
+                                    className="w-full"
+                                    defaultValue={15}
+                                    value={time}
+                                    onChange={onChangeTime}
+                                />
+                            </Form.Item>
+                        )}
                         <Form.Item
                             label={<span>Mô tả</span>}
                             name="describe"
@@ -180,7 +206,7 @@ const ChallengeEdit: React.FC<IChallengeEditProps> = props => {
                             <Editor
                                 theme={'light'}
                                 language={'javascript'}
-                                className="code-editor h-[500px] w-full border py-4"
+                                className="code-editor h-[500px] w-full border"
                                 saveViewState={false}
                                 // onChange={(value: any) => handleChangeEditor(value ?? '')}
                             />
@@ -276,4 +302,4 @@ const ChallengeEdit: React.FC<IChallengeEditProps> = props => {
     )
 }
 
-export default ChallengeEdit
+export default AdminExamEdit

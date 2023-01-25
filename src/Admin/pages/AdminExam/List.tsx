@@ -31,7 +31,28 @@ interface IListProps {
 const List: React.FC<IListProps> = ({ data, loading, getChallenge }) => {
     const [isVisibleClasses, setIsVisibleClasses] = useState(false)
     const [loadingDelete, setLoadingDelete] = useState(false)
+    const [dataRealtime, setDataRealtime] = useState<IRealtimeData[]>([])
     const [dataUpdateClasses, setDataUpdateClasses] = useState({})
+
+    useEffect(() => {
+        const getDataFire = async () => {
+            const listIsRealtime = data.filter((item: any) => item.isRealtime)
+
+            const ids = listIsRealtime.map((item: any) => item._id)
+
+            const listChallengeFire: any = []
+            ids.forEach((id: string) => {
+                fireGetOne(`challenge-${id}`).then(data => {
+                    if (data) {
+                        listChallengeFire.push({ id, ...data })
+                        setDataRealtime(listChallengeFire)
+                    }
+                })
+            })
+        }
+
+        getDataFire()
+    }, [data])
 
     const columns = [
         {
@@ -105,10 +126,35 @@ const List: React.FC<IListProps> = ({ data, loading, getChallenge }) => {
             render: (text: string) => <span>{formatDate(text)}</span>,
         },
         {
+            title: 'Lớp được thi',
+            key: 'classes',
+            dataIndex: 'classes',
+            render: (data: any, record: any) => {
+                const isRealtime = record?.isRealtime
+                return (
+                    isRealtime && (
+                        <div className="flex items-center">
+                            <EditOutlined
+                                className="cursor-pointer p-3 hover:text-blue-500"
+                                onClick={() => handleVisibleModal(record)}
+                            />
+                        </div>
+                    )
+                )
+            },
+        },
+        {
             title: 'Chức năng',
             key: '_id',
             dataIndex: '_id',
             render: (id: string, record: any) => {
+                const isRealtime = record?.isRealtime
+                const isExamStarted = record?.isExamStarted
+                const time = record?.time
+                const title = record?.title
+
+                const realtimeData = dataRealtime.find((element: any) => element.id === id)
+
                 return (
                     <div className="flex items-center">
                         <Tooltip title="Chỉnh sửa">
@@ -127,6 +173,29 @@ const List: React.FC<IListProps> = ({ data, loading, getChallenge }) => {
                                 />
                             </Spin>
                         </Tooltip>
+
+                        {isRealtime && (
+                            <>
+                                {!isExamStarted && (
+                                    <Tooltip title={`Bắt đầu`}>
+                                        <PlayCircleOutlined
+                                            className="cursor-pointer p-3 text-yellow-600 hover:text-yellow-400"
+                                            onClick={() => onStartChallenge(id)}
+                                        />
+                                    </Tooltip>
+                                )}
+                                <Tooltip title="Thống kê">
+                                    <Link
+                                        to={`/admin/challenge/statics/${id}?title=${
+                                            title ? title.replaceAll(' ', '+') : ''
+                                        }`}
+                                        className="leading-3"
+                                    >
+                                        <BarChartOutlined className="cursor-pointer p-3 text-green-600 hover:text-green-400" />
+                                    </Link>
+                                </Tooltip>
+                            </>
+                        )}
                     </div>
                 )
             },
