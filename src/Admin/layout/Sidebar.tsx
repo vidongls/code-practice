@@ -55,7 +55,7 @@ const Sidebar = ({ collapsed, setCollapsed, handleCloseSidebar }: Props) => {
             icon: <NodeIndexOutlined />,
         },
         {
-            label: <Link to={'exam'}>Bài kiểm tra</Link>,
+            label: <Link to={'exam'}>Bài thi</Link>,
             key: 'exam',
             icon: <ProfileOutlined />,
         },

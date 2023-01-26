@@ -79,31 +79,6 @@ const Filter: React.FC<IFilterProps> = ({ params, addParams }) => {
                     </Col>
 
                     <Col
-                        xs={{ span: 12 }}
-                        lg={{ span: 5 }}
-                    >
-                        <Form.Item
-                            label="Trạng thái"
-                            name="status"
-                        >
-                            <Select
-                                placeholder="Chọn trạng thái"
-                                allowClear
-                                options={[
-                                    {
-                                        value: 'ACTIVE',
-                                        label: 'Đang hoạt động',
-                                    },
-                                    {
-                                        value: 'INACTIVE',
-                                        label: 'Dừng hoạt động',
-                                    },
-                                ]}
-                            />
-                        </Form.Item>
-                    </Col>
-
-                    <Col
                         span={24}
                         className="flex justify-end"
                     >

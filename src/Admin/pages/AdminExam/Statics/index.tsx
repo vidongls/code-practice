@@ -101,16 +101,16 @@ const AdminExamStatistic = () => {
     return (
         <div className="h-full w-full py-8 px-7">
             <Link
-                to={'/admin/challenge'}
+                to={'/admin/exam'}
                 className="mb-5 flex w-fit items-center"
             >
                 <ArrowLeftOutlined className="mr-2" />
-                Trở về Danh Sách bài tập
+                Trở về Danh Sách bài thi
             </Link>
             <div className="rounded-md bg-white p-6 ">
                 <div className="my-6 mt-0 flex items-center">
                     <h3 className="text-base font-semibold">
-                        Thống kê bài tập
+                        Thống kê bài thi
                         {params?.title ? ` - ${params?.title}` : null}
                     </h3>
 
@@ -200,47 +200,6 @@ const AdminExamStatistic = () => {
                                         }
                                     })}
                                 />
-                                {/* {contentAnswer?.compileResult?.map((item: any, idx: number) => {
-                                    return (
-                                        <div
-                                            className="mb-6 gap-3 border-b pb-5"
-                                            key={idx}
-                                        >
-                                            <div className="mb-3">
-                                                <div
-                                                    className={classNames(
-                                                        'flex w-fit justify-between border p-1 px-2 text-base font-medium',
-                                                        {
-                                                            'border-green-400': item?.status,
-                                                            'border-red-400': !item?.status,
-                                                        }
-                                                    )}
-                                                >
-                                                    Testcase {idx}
-                                                    <span className="ml-5">
-                                                        {item?.status ? (
-                                                            <CheckOutlined className="anticon-custom text-green-500" />
-                                                        ) : (
-                                                            <CloseCircleOutlined className="anticon-custom text-red-500" />
-                                                        )}
-                                                    </span>
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <span>Input </span>
-                                                <pre className="mt-2 mb-4 w-full bg-gray-100 p-2">
-                                                    {item.testCaseInput}
-                                                </pre>
-
-                                                <span>Your Output</span>
-                                                <pre className="mt-2 mb-4 w-full bg-gray-100 p-2 ">{item.data}</pre>
-
-                                                <span>Expected Output</span>
-                                                <pre className="mt-2 w-full bg-gray-100 p-2">{item.expectedOutput}</pre>
-                                            </div>
-                                        </div>
-                                    )
-                                })} */}
                             </div>
                         </div>
 
@@ -249,7 +208,7 @@ const AdminExamStatistic = () => {
                                 <div>
                                     <CopyBlock
                                         language={'javascript'}
-                                        text={contentAnswer?.answerContent}
+                                        text={contentAnswer?.answerContent ?? ''}
                                         showLineNumbers={true}
                                         theme={dracula}
                                         wrapLines={true}

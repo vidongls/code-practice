@@ -36,16 +36,16 @@ const AdminExamDetail: React.FC<IAdminExamDetailProps> = props => {
     }, [id])
 
     useEffect(() => {
-        setDocumentTitle('Chi tiết bài tập')
+        setDocumentTitle('Chi tiết bài thi')
         setNavigator({
             title: 'Challenge',
             navigator: [
                 {
-                    name: 'Bài tập',
-                    to: '/admin/challenge',
+                    name: 'Bài thi',
+                    to: '/admin/exam',
                 },
                 {
-                    name: 'Chi tiết bài tập',
+                    name: 'Chi tiết bài thi',
                 },
             ],
         })
@@ -58,20 +58,20 @@ const AdminExamDetail: React.FC<IAdminExamDetailProps> = props => {
                     <div className="my-6 mt-0 flex items-center justify-between">
                         <div>
                             <Link
-                                to={'/admin/challenge'}
+                                to={'/admin/exam'}
                                 className="mb-2 flex w-fit items-center"
                             >
                                 <ArrowLeftOutlined className="mr-2" />
-                                Trở về Danh Sách bài tập
+                                Trở về Danh Sách bài thi
                             </Link>
                         </div>
-                        <Link to={`/admin/challenge/edit/${id}`}>
+                        <Link to={`/admin/exam/edit/${id}`}>
                             <Button
                                 type="primary"
                                 className="rounded bg-primary font-medium"
                             >
                                 <EditOutlined className="anticon-custom" />
-                                Chỉnh sửa bài tập
+                                Chỉnh sửa bài thi
                             </Button>
                         </Link>
                     </div>

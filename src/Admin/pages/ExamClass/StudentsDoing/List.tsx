@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 
 import ClassApi from '../../../../Api/Class/ClassApi'
 
-import { DOING_TYPE, TBADGE_DOING, TDOING } from '../constanst'
+import { DOING_TYPE, TDOING } from '../constanst'
 
 interface IListProps {
     data: any
@@ -29,7 +29,7 @@ const List: React.FC<IListProps> = ({ data, loading }) => {
                                     className="w-64 overflow-hidden rounded-md border border-gray-200 text-white shadow"
                                     key={index}
                                 >
-                                    <div className="flex flex-col gap-4 bg-purple-500 p-4">
+                                    <div className="flex flex-col bg-purple-500 p-4">
                                         <h3 className="flex items-center gap-4 text-xl font-medium text-white">
                                             <Link
                                                 to={get(item, 'data._id')}
@@ -44,6 +44,7 @@ const List: React.FC<IListProps> = ({ data, loading }) => {
                                             {/* <MoreOutlined className="cursor-pointer hover:text-blue-400" /> */}
                                             <div></div>
                                         </h3>
+                                        <div>{get(item, 'data.code')}</div>
                                     </div>
                                     <div className="relative h-12">
                                         <div className="absolute right-4 h-16 w-16 -translate-y-1/2  overflow-hidden rounded-full">

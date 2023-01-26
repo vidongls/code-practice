@@ -22,16 +22,16 @@ const AdminExamCreate: React.FC<IAdminExamCreateProps> = props => {
     const navigate = useNavigate()
 
     useEffect(() => {
-        setDocumentTitle('Tạo bài tập')
+        setDocumentTitle('Tạo bài thi')
         setNavigator({
             title: 'Challenge',
             navigator: [
                 {
-                    name: 'Bài tập',
-                    to: '/admin/challenge',
+                    name: 'Bài thi',
+                    to: '/admin/exam',
                 },
                 {
-                    name: 'Tạo mới bài tập',
+                    name: 'Tạo mới bài thi',
                 },
             ],
         })
@@ -40,10 +40,10 @@ const AdminExamCreate: React.FC<IAdminExamCreateProps> = props => {
     const handleCreate = () => {
         form.validateFields().then(values => {
             setLoading(true)
-            ChallengeApi.create({ ...values, time: (time || 15) * 1000 * 60 })
+            ChallengeApi.create({ ...values, isRealtime: true, time: (time || 15) * 1000 * 60 })
                 .then(res => {
                     notification.success({ message: 'Tạo mới thành công' })
-                    navigate('/admin/challenge')
+                    navigate('/admin/exam')
                 })
                 .catch(err => {
                     notification.error({ message: 'Tạo mới thất bại' })
@@ -61,11 +61,11 @@ const AdminExamCreate: React.FC<IAdminExamCreateProps> = props => {
             <div className="w-3/4 rounded-md bg-white px-6 py-4">
                 <div className="flex items-center justify-between">
                     <Link
-                        to={'/admin/challenge'}
+                        to={'/admin/exam'}
                         className="flex w-fit items-center"
                     >
                         <ArrowLeftOutlined className="mr-2" />
-                        Trở về Danh Sách bài tập
+                        Trở về Danh Sách bài thi
                     </Link>
 
                     <Button
@@ -77,7 +77,7 @@ const AdminExamCreate: React.FC<IAdminExamCreateProps> = props => {
                         <PlusOutlined className="anticon-custom" /> Tạo mới
                     </Button>
                 </div>
-                <h3 className="my-5 text-lg font-semibold">Tạo Challenge</h3>
+                <h3 className="my-5 text-lg font-semibold">Tạo bài thi</h3>
                 <Form
                     name="basic"
                     labelCol={{ span: 4 }}
@@ -124,34 +124,26 @@ const AdminExamCreate: React.FC<IAdminExamCreateProps> = props => {
                             ]}
                         />
                     </Form.Item>
+
                     <Form.Item
-                        label={<span>Realtime</span>}
-                        name="isRealtime"
+                        label={<span>Thời gian (phút)</span>}
+                        // name="time"
                         className="form-item-editor pr-5"
                         wrapperCol={{ span: 24 }}
-                        valuePropName="checked"
+                        help={!time ? 'Không được bỏ trống' : false}
+                        required
+                        validateStatus={!time ? 'error' : undefined}
                     >
-                        <Switch />
+                        <InputNumber
+                            min={15}
+                            className="w-full"
+                            defaultValue={15}
+                            value={time}
+                            max={200}
+                            onChange={onChangeTime}
+                        />
                     </Form.Item>
-                    {isRealtime && (
-                        <Form.Item
-                            label={<span>Thời gian (phút)</span>}
-                            // name="time"
-                            className="form-item-editor pr-5"
-                            wrapperCol={{ span: 24 }}
-                            help={!time ? 'Không được bỏ trống' : false}
-                            required
-                            validateStatus={!time ? 'error' : undefined}
-                        >
-                            <InputNumber
-                                min={15}
-                                className="w-full"
-                                defaultValue={15}
-                                value={time}
-                                onChange={onChangeTime}
-                            />
-                        </Form.Item>
-                    )}
+
                     <Form.Item
                         label={<span>Mô tả</span>}
                         name="describe"
@@ -177,7 +169,7 @@ const AdminExamCreate: React.FC<IAdminExamCreateProps> = props => {
                         <Editor
                             theme={'light'}
                             language={'javascript'}
-                            className="code-editor h-[500px] w-full border"
+                            className="code-editor h-[500px] w-full border py-4"
                             saveViewState={false}
                             // onChange={(value: any) => handleChangeEditor(value ?? '')}
                         />

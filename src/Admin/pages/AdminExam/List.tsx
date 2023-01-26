@@ -4,6 +4,7 @@ import {
     EditOutlined,
     ExclamationCircleOutlined,
     PlayCircleOutlined,
+    CheckOutlined,
 } from '@ant-design/icons'
 import { Modal, notification, Spin, Table, Tooltip } from 'antd'
 import React, { useEffect, useRef, useState } from 'react'
@@ -56,18 +57,22 @@ const List: React.FC<IListProps> = ({ data, loading, getChallenge }) => {
 
     const columns = [
         {
-            title: 'Mã challenge',
+            title: 'Mã',
             dataIndex: 'code',
             key: 'code',
             render: (text: string, record: any) => {
                 const id = record?._id
+                const isExamStarted = record?.isExamStarted
                 return (
-                    <Link
-                        to={`/admin/challenge/${id}`}
-                        className="font-semibold text-blue-600"
-                    >
-                        {text}
-                    </Link>
+                    <div>
+                        <Link
+                            to={`/admin/exam/${id}`}
+                            className="font-semibold text-blue-600"
+                        >
+                            {text}
+                        </Link>{' '}
+                        {isExamStarted && <CheckOutlined className="anticon-custom ml-3 text-green-500" />}
+                    </div>
                 )
             },
         },
@@ -149,72 +154,57 @@ const List: React.FC<IListProps> = ({ data, loading, getChallenge }) => {
             dataIndex: '_id',
             render: (id: string, record: any) => {
                 const isRealtime = record?.isRealtime
-                const isExamStarted = record?.isExamStarted
-                const time = record?.time
                 const title = record?.title
-
-                const realtimeData = dataRealtime.find((element: any) => element.id === id)
+                const isExamStarted = record?.isExamStarted
 
                 return (
                     <div className="flex items-center">
-                        <Tooltip title="Chỉnh sửa">
-                            <Link
-                                to={`/admin/challenge/edit/${id}`}
-                                className="leading-3"
-                            >
-                                <EditOutlined className="cursor-pointer p-3 text-blue-600 hover:text-blue-400" />
-                            </Link>
-                        </Tooltip>
-                        <Tooltip title="Xóa">
-                            <Spin spinning={loadingDelete}>
-                                <DeleteOutlined
-                                    className="cursor-pointer p-3 text-red-600 hover:text-red-400"
-                                    onClick={() => onDeleteChallenge(id)}
-                                />
-                            </Spin>
-                        </Tooltip>
-
-                        {isRealtime && (
+                        {!isExamStarted && (
                             <>
-                                {!isExamStarted && (
-                                    <Tooltip title={`Bắt đầu`}>
-                                        <PlayCircleOutlined
-                                            className="cursor-pointer p-3 text-yellow-600 hover:text-yellow-400"
-                                            onClick={() => onStartChallenge(id)}
-                                        />
-                                    </Tooltip>
-                                )}
-                                <Tooltip title="Thống kê">
+                                <Tooltip title="Chỉnh sửa">
                                     <Link
-                                        to={`/admin/challenge/statics/${id}?title=${
-                                            title ? title.replaceAll(' ', '+') : ''
-                                        }`}
+                                        to={`/admin/exam/edit/${id}`}
                                         className="leading-3"
                                     >
-                                        <BarChartOutlined className="cursor-pointer p-3 text-green-600 hover:text-green-400" />
+                                        <EditOutlined className="cursor-pointer p-3 text-blue-600 hover:text-blue-400" />
                                     </Link>
+                                </Tooltip>
+                                <Tooltip title="Xóa">
+                                    <Spin spinning={loadingDelete}>
+                                        <DeleteOutlined
+                                            className="cursor-pointer p-3 text-red-600 hover:text-red-400"
+                                            onClick={() => onDeleteChallenge(id)}
+                                        />
+                                    </Spin>
                                 </Tooltip>
                             </>
                         )}
+
+                        {/* {!isExamStarted && ( */}
+                        <Tooltip title={`Bắt đầu`}>
+                            <PlayCircleOutlined
+                                className="cursor-pointer p-3 text-yellow-600 hover:text-yellow-400"
+                                onClick={() => onStartChallenge(id)}
+                            />
+                        </Tooltip>
+                        {/* )} */}
+                        <Tooltip title="Thống kê">
+                            <Link
+                                to={`/admin/exam/statics/${id}?title=${title ? title.replaceAll(' ', '+') : ''}`}
+                                className="leading-3"
+                            >
+                                <BarChartOutlined className="cursor-pointer p-3 text-green-600 hover:text-green-400" />
+                            </Link>
+                        </Tooltip>
                     </div>
                 )
             },
         },
     ]
 
-    const onChangeRealtime = async (id: string, status: boolean) => {
-        try {
-            await ChallengeApi.changeRealtime(id, { isRealtime: status })
-            getChallenge()
-            notification.success({ message: 'Đổi trạng thái thành công' })
-        } catch (error) {
-            notification.error({ message: 'Đổi trạng thái thất bại' })
-        }
-    }
-
     const onStartChallenge = (id: string) => {
         Modal.confirm({
-            title: 'Bạn thực sự muốn bắt đầu challenge?',
+            title: 'Bạn thực sự muốn bắt đầu bài thi?',
             icon: <ExclamationCircleOutlined />,
             content: '',
             onOk() {
@@ -227,6 +217,9 @@ const List: React.FC<IListProps> = ({ data, loading, getChallenge }) => {
                         notification.error({ message: 'Bắt đầu thất bại' })
                     })
             },
+            okButtonProps: { className: 'bg-primary' },
+            okText: 'Bắt đầu',
+            cancelText: 'Đóng',
             onCancel() {},
         })
     }
@@ -259,7 +252,7 @@ const List: React.FC<IListProps> = ({ data, loading, getChallenge }) => {
 
     const onDeleteChallenge = (id: string) => {
         Modal.confirm({
-            title: 'Bạn thực sự muốn xóa challenge này?',
+            title: 'Bạn thực sự muốn xóa bài thi này?',
             icon: <ExclamationCircleOutlined />,
             content: '',
             onOk() {
@@ -267,10 +260,10 @@ const List: React.FC<IListProps> = ({ data, loading, getChallenge }) => {
 
                 return ChallengeApi.remove(id)
                     .then(result => {
-                        notification.success({ message: 'Xoá challenge thành công' })
+                        notification.success({ message: 'Xoá bài thi thành công' })
                     })
                     .catch(err => {
-                        notification.error({ message: 'Xoá challenge thất bại' })
+                        notification.error({ message: 'Xoá bài thi thất bại' })
                     })
                     .finally(() => setLoadingDelete(false))
             },
@@ -291,7 +284,7 @@ const List: React.FC<IListProps> = ({ data, loading, getChallenge }) => {
         <>
             <div className="rounded-md bg-white p-6 ">
                 <div className="my-6 mt-0 flex items-center">
-                    <h3 className="text-base font-semibold">Danh sách bài tập</h3>
+                    <h3 className="text-base font-semibold">Danh sách bài thi</h3>
 
                     <span className="text-gray-900y ml-2 inline-flex h-5 w-5 items-center justify-center rounded-full bg-blue-200 text-xs font-semibold ">
                         {data?.length}

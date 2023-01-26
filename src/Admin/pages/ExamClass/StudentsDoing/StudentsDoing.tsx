@@ -14,7 +14,6 @@ const StudentsDoing = () => {
             setLoading(true)
             ClassApi.getOneClassesDoing({ classId: id })
                 .then(res => {
-                    console.log('🧙 ~ res', res.data)
                     setData(get(res, 'data', []))
                 })
                 .catch(() => {})

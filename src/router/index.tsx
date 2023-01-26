@@ -117,11 +117,6 @@ const Router = () => {
                         path="edit/:id"
                         element={<ChallengeEdit />}
                     />
-
-                    <Route
-                        path="statics/:id"
-                        element={<ChallengeStatics />}
-                    />
                 </Route>
                 <Route path="exam">
                     <Route

@@ -27,19 +27,18 @@ const AdminExamEdit: React.FC<IAdminExamEditProps> = props => {
 
     const navigate = useNavigate()
     let { id } = useParams()
-    const isRealtime = Form.useWatch('isRealtime', form)
 
     useEffect(() => {
-        setDocumentTitle('Chỉnh sửa bài tập')
+        setDocumentTitle('Chỉnh sửa bài thi')
         setNavigator({
             title: 'Challenge',
             navigator: [
                 {
-                    name: 'Bài tập',
+                    name: 'Bài thi',
                     to: '/admin/challenge',
                 },
                 {
-                    name: 'Chỉnh sửa bài tập',
+                    name: 'Chỉnh sửa bài thi',
                 },
             ],
         })
@@ -70,7 +69,7 @@ const AdminExamEdit: React.FC<IAdminExamEditProps> = props => {
     const handleCreate = () => {
         form.validateFields().then((values: any) => {
             setLoading(true)
-            ChallengeApi.update(id!, { ...values, time: (time || 15) * 1000 * 60 })
+            ChallengeApi.update(id!, { ...values, isRealtime: true, time: (time || 15) * 1000 * 60 })
                 .then(res => {
                     notification.success({ message: 'Chỉnh sửa thành công' })
                     navigate(`/admin/challenge/${id}`)
@@ -96,7 +95,7 @@ const AdminExamEdit: React.FC<IAdminExamEditProps> = props => {
                             className="flex w-fit items-center"
                         >
                             <ArrowLeftOutlined className="mr-2" />
-                            Trở về Danh Sách bài tập
+                            Trở về Danh Sách bài thi
                         </Link>
 
                         <Button
@@ -108,7 +107,7 @@ const AdminExamEdit: React.FC<IAdminExamEditProps> = props => {
                             <EditOutlined className="anticon-custom" /> Chỉnh sửa
                         </Button>
                     </div>
-                    <h3 className="my-5 text-lg font-semibold">Chỉnh sửa Challenge</h3>
+                    <h3 className="my-5 text-lg font-semibold">Chỉnh sửa bài thi</h3>
                     <Form
                         name="basic"
                         labelCol={{ span: 4 }}
@@ -155,33 +154,23 @@ const AdminExamEdit: React.FC<IAdminExamEditProps> = props => {
                                 ]}
                             />
                         </Form.Item>
+
                         <Form.Item
-                            label={<span>Realtime</span>}
-                            name="isRealtime"
+                            label={<span>Thời gian (phút)</span>}
                             className="form-item-editor pr-5"
                             wrapperCol={{ span: 24 }}
-                            valuePropName="checked"
+                            help={!time ? 'Không được bỏ trống' : false}
+                            required
+                            validateStatus={!time ? 'error' : undefined}
                         >
-                            <Switch />
+                            <InputNumber
+                                min={15}
+                                className="w-full"
+                                defaultValue={15}
+                                value={time}
+                                onChange={onChangeTime}
+                            />
                         </Form.Item>
-                        {isRealtime && (
-                            <Form.Item
-                                label={<span>Thời gian (phút)</span>}
-                                className="form-item-editor pr-5"
-                                wrapperCol={{ span: 24 }}
-                                help={!time ? 'Không được bỏ trống' : false}
-                                required
-                                validateStatus={!time ? 'error' : undefined}
-                            >
-                                <InputNumber
-                                    min={15}
-                                    className="w-full"
-                                    defaultValue={15}
-                                    value={time}
-                                    onChange={onChangeTime}
-                                />
-                            </Form.Item>
-                        )}
                         <Form.Item
                             label={<span>Mô tả</span>}
                             name="describe"
@@ -206,7 +195,7 @@ const AdminExamEdit: React.FC<IAdminExamEditProps> = props => {
                             <Editor
                                 theme={'light'}
                                 language={'javascript'}
-                                className="code-editor h-[500px] w-full border"
+                                className="code-editor h-[500px] w-full border py-4"
                                 saveViewState={false}
                                 // onChange={(value: any) => handleChangeEditor(value ?? '')}
                             />

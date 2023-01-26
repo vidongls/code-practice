@@ -48,14 +48,14 @@ const AdminExam: React.FC<IAdminExamProps> = props => {
     return (
         <div className="h-full w-full py-8 px-7">
             <div className="my-6 mt-0 flex items-center justify-between">
-                <h3 className="text-lg font-semibold">Bài tập</h3>
-                <Link to="/admin/challenge/create">
+                <h3 className="text-lg font-semibold">Bài thi</h3>
+                <Link to="/admin/exam/create">
                     <Button
                         type="primary"
                         className="rounded bg-primary font-medium"
                     >
                         <PlusOutlined className="anticon-custom" />
-                        Tạo mới bài tập
+                        Tạo mới bài thi
                     </Button>
                 </Link>
             </div>

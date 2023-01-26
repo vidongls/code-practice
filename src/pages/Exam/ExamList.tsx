@@ -19,7 +19,6 @@ const ExamList = () => {
 
     const [data, setData] = useState([])
     const [classes, setClasses] = useState({} as any)
-    console.log('🧙 ~ classes', classes)
 
     useEffect(() => {
         const getChallenge = async () => {
@@ -97,21 +96,42 @@ const ExamList = () => {
             },
         },
         {
-            title: <p className="font-semibold">Loại</p>,
-            dataIndex: 'isRealtime',
-            key: 'isRealtime',
-            render: (text: any) => {
-                return (
-                    <>
-                        <Badge
-                            status={'processing'}
-                            text={'Kiểm tra'}
-                        />
-                    </>
-                )
+            title: <p className="font-semibold">Trạng thái</p>,
+            dataIndex: 'status',
+            key: 'status',
+            render: (text: string) => {
+                return text && renderStatus(text)
             },
         },
     ]
+
+    const renderStatus = (status: string) => {
+        switch (status) {
+            case 'NEW':
+                return (
+                    <Badge
+                        status={'default'}
+                        text={'Chưa bắt đầu'}
+                    />
+                )
+            case 'PROCESSING':
+                return (
+                    <Badge
+                        status={'processing'}
+                        text={'Đang diễn ra'}
+                    />
+                )
+            case 'ENDED':
+                return (
+                    <Badge
+                        status={'success'}
+                        text={'Đã kết thúc'}
+                    />
+                )
+            default:
+                break
+        }
+    }
 
     const resetFilter = () => {
         addParams({})

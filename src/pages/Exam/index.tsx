@@ -13,34 +13,10 @@ const Exam: React.FC<IExamProps> = props => {
     const [loading, setLoading] = useState(false)
     const [data, setData] = useState([])
 
-    const menu = (
-        <Menu
-            items={[
-                {
-                    label: <p>Tất cả</p>,
-                    key: '0',
-                },
-                {
-                    label: <p>Đang diễn ra</p>,
-                    key: '1',
-                },
-                {
-                    label: <p>Chưa bắt đầu</p>,
-                    key: '2',
-                },
-                {
-                    label: <p>Đã kết thúc</p>,
-                    key: '3',
-                },
-            ]}
-        />
-    )
-
     useEffect(() => {
         setLoading(true)
         UserApi.getInfo()
             .then(res => {
-                console.log(get(res, 'data.classes'))
                 setData(get(res, 'data.classes'))
             })
             .catch(() => {})
@@ -56,7 +32,7 @@ const Exam: React.FC<IExamProps> = props => {
                 <Spin spinning={loading}>
                     <div className="rounded-md bg-white p-6 ">
                         <div className="flex flex-wrap gap-4">
-                            {!isEmpty(data) &&
+                            {!isEmpty(data) ? (
                                 data.map((item: any, index: number) => {
                                     return (
                                         <div
@@ -90,7 +66,12 @@ const Exam: React.FC<IExamProps> = props => {
                                             </div>
                                         </div>
                                     )
-                                })}
+                                })
+                            ) : (
+                                <div className="w-full text-center">
+                                    <span className="text-gray-300">Không có dữ liệu</span>
+                                </div>
+                            )}
                         </div>
                     </div>
                 </Spin>
