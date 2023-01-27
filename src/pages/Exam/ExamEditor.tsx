@@ -12,6 +12,7 @@ import { fireSet } from '../../utils/firebaseUtil'
 import { useAuthStore } from '../../store/useAuthStore'
 import { useDebounce } from '../../hooks/useDebounce'
 import ExamModalShowResult from './ExamModalShowResult'
+import { get } from 'lodash'
 
 interface IResult {
     data: string
@@ -45,6 +46,8 @@ const ExamCodeEditor: React.FC<IExamCodeEditorProps> = ({ detail, isEnded }) => 
     const [language, setLanguage] = useState('javascript')
     const [compileResult, setCompileResult] = useState<IResult>({} as IResult)
     const [dataSubmit, setDataSubmit] = useState({} as any)
+
+    const [dataResolve, setDataResolve] = useState(false)
 
     const [loading, setLoading] = useState(false)
     const [isVisible, setIsVisible] = useState(false)
@@ -134,8 +137,13 @@ const ExamCodeEditor: React.FC<IExamCodeEditorProps> = ({ detail, isEnded }) => 
                         })
                     })
                     .catch(error => {
-                        console.log('🧙 ~ error', error)
-                        notification.error({ message: 'Nộp bài thất bại' })
+                        const { response } = error
+
+                        if (get(response, 'data.code') === 'RESOLVED') {
+                            notification.error({ message: 'Bạn đã làm bài này' })
+                        } else {
+                            notification.error({ message: 'Nộp bài thất bại' })
+                        }
                     })
             },
 

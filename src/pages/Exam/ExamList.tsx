@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 
 import Box from '../../components/Box'
 import useParams from '../../utils/useParams'
-import { get, map } from 'lodash'
+import { filter, get, map } from 'lodash'
 import { useAuthStore } from '../../store/useAuthStore'
 import { Link } from 'react-router-dom'
 import ChallengeApi from '../../Api/Challenge/ChallengeApi'
@@ -48,8 +48,10 @@ const ExamList = () => {
             dataIndex: 'countDoChallenge',
             key: 'countDoChallenge',
             render: (text: string, record: any) => {
-                const doChallengeIds = map(get(record, 'countDoChallenge'), 'user')
-                return <>{doChallengeIds.includes(user.id) && <CheckOutlined className="text-green-500" />}</>
+                const doChallengeIds = filter(get(record, 'countDoChallenge'), 'user')
+                console.log('🧙 ~ doChallengeIds', doChallengeIds)
+                return <></>
+                // return <>{doChallengeIds.includes(user.id) && <CheckOutlined className="text-green-500" />}</>
             },
         },
         {
@@ -121,10 +123,10 @@ const ExamList = () => {
                         text={'Đang diễn ra'}
                     />
                 )
-            case 'ENDED':
+            case 'SUCCESS':
                 return (
                     <Badge
-                        status={'success'}
+                        status={'warning'}
                         text={'Đã kết thúc'}
                     />
                 )

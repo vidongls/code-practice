@@ -1,10 +1,9 @@
 import { CloseCircleOutlined, CheckOutlined } from '@ant-design/icons'
-import { Button, Modal, Tabs } from 'antd'
+import { Modal, Tabs } from 'antd'
 import React, { useEffect, useState } from 'react'
 
+import { classNames } from '../../../../helper/helper'
 import { get, isEmpty } from 'lodash'
-import { classNames } from '../../helper/helper'
-import { Link } from 'react-router-dom'
 
 interface IModalShowResultProps {
     compileResult: any
@@ -12,7 +11,8 @@ interface IModalShowResultProps {
     dataSubmit: any
 }
 
-const ExamModalShowResult: React.FC<IModalShowResultProps> = ({ compileResult, handleHideSubmitModal, dataSubmit }) => {
+const ModalShowResult: React.FC<IModalShowResultProps> = ({ compileResult, handleHideSubmitModal, dataSubmit }) => {
+    console.log('🧙 ~ compileResult', compileResult.err)
     const [countResolve, setCountResolve] = useState(0)
 
     useEffect(() => {
@@ -28,11 +28,10 @@ const ExamModalShowResult: React.FC<IModalShowResultProps> = ({ compileResult, h
         <Modal
             title="Kết quả làm bài"
             open={true}
+            onCancel={handleHideSubmitModal}
             footer={<></>}
             maskClosable={false}
             width={800}
-            closable={false}
-            cancelButtonProps={{ className: 'hidden' }}
         >
             <span className="block text-lg">
                 Bạn đã vượt qua
@@ -48,7 +47,7 @@ const ExamModalShowResult: React.FC<IModalShowResultProps> = ({ compileResult, h
                     tabPosition={'left'}
                     type="card"
                     className="mt-7 border"
-                    items={compileResult?.result?.map((item: any, index: any) => {
+                    items={compileResult?.result.map((item: any, index: any) => {
                         return {
                             label: (
                                 <>
@@ -99,14 +98,9 @@ const ExamModalShowResult: React.FC<IModalShowResultProps> = ({ compileResult, h
                         }
                     })}
                 />
-                <div className="mt-8 flex justify-end">
-                    <Link to={'/'}>
-                        <Button>Về trang chủ</Button>
-                    </Link>
-                </div>
             </>
         </Modal>
     )
 }
 
-export default ExamModalShowResult
+export default ModalShowResult

@@ -8,10 +8,10 @@ import Tabs from '../../components/Tabs'
 import { fireGet, fireGetOne, fireGetUnsubscribe } from '../../utils/firebaseUtil'
 
 import ChallengeLobby from '../Challenge/components/Lobby'
-import Description from '../Challenge/components/Description'
 import { IComment } from '../Challenge/components/Comment'
 import ExamCodeEditor from './ExamEditor'
 import { off } from 'firebase/database'
+import Description from './components/Description'
 
 export interface IDetail {
     _id: string
@@ -39,6 +39,7 @@ const ExamDoing: React.FC<IExamDoingProps> = props => {
     const [isEnded, setIsEnded] = useState(false)
     const [errors, setErrors] = useState({} as any)
     const [dataRealtime, setDataRealtime] = useState({} as IRealtimeData)
+    const [dataDoingResolved, setDataDoingResolved] = useState({} as any)
 
     const getDetailExamDoing = useCallback(async () => {
         setLoading(true)
@@ -59,57 +60,56 @@ const ExamDoing: React.FC<IExamDoingProps> = props => {
     }, [getDetailExamDoing])
 
     useEffect(() => {
-        if (detail.isRealtime) {
-            const checkSubmittedChallenge = () => {
-                if (id) {
-                    try {
-                        setLoading(true)
-                        ChallengeApi.getOneDoingChallenge(id)
-                            .then(res => {
-                                const { data } = res
-                                if (data?.isResolved) {
-                                    return true
-                                }
-                            })
-                            .catch(error => {
-                                console.log(error)
-                            })
-                            .finally(() => {
-                                setLoading(false)
-                            })
-
-                        return false
-                    } catch (error) {}
-                }
-            }
-
-            if (checkSubmittedChallenge()) {
-                return
-            }
-
-            fireGetOne(`/classes/${classId}/challenge-${id}`).then((data: any) => {
-                if (data) {
-                    const duration = detail.time
-                    const isEnded = data.startTime + duration < Date.now()
-
-                    if (!isEnded) {
-                        startDoingChallenge()
-                    } else {
-                        setIsEnded(isEnded)
-                    }
-
-                    setDataRealtime(data)
-                }
-            })
-        }
-
-        const startDoingChallenge = async () => {
+        const checkSubmittedChallenge = () => {
             if (id) {
                 try {
-                    await ChallengeApi.startDoingChallenge(id)
+                    setLoading(true)
+                    ChallengeApi.getOneDoingChallenge(id)
+                        .then(res => {
+                            const { data } = res
+                            if (data.isSubmit) {
+                                setDataDoingResolved(data)
+                                return true
+                            }
+                        })
+                        .catch(error => {
+                            console.log(error)
+                        })
+                        .finally(() => {
+                            setLoading(false)
+                        })
+
+                    return false
                 } catch (error) {}
             }
         }
+
+        if (checkSubmittedChallenge()) {
+            return
+        }
+
+        fireGetOne(`/classes/${classId}/challenge-${id}`).then((data: any) => {
+            if (data) {
+                const duration = detail.time
+                const isEnded = data.startTime + duration < Date.now()
+
+                if (!isEnded) {
+                    // startDoingChallenge()
+                } else {
+                    setIsEnded(isEnded)
+                }
+
+                setDataRealtime(data)
+            }
+        })
+
+        // const startDoingChallenge = async () => {
+        //     if (id) {
+        //         try {
+        //             await ChallengeApi.startDoingChallenge(id)
+        //         } catch (error) {}
+        //     }
+        // }
     }, [detail, id, classId])
 
     useEffect(() => {
@@ -134,6 +134,7 @@ const ExamDoing: React.FC<IExamDoingProps> = props => {
                     detail={detail}
                     isEnded={isEnded}
                     dataRealtime={dataRealtime}
+                    dataDoingResolved={dataDoingResolved}
                 />
             ),
         },

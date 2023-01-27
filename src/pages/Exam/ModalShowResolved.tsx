@@ -7,22 +7,22 @@ import { classNames } from '../../helper/helper'
 import { Link } from 'react-router-dom'
 
 interface IModalShowResultProps {
-    compileResult: any
-    handleHideSubmitModal: () => void
-    dataSubmit: any
+    data: any
+    challengeTestCase: any
 }
 
-const ExamModalShowResult: React.FC<IModalShowResultProps> = ({ compileResult, handleHideSubmitModal, dataSubmit }) => {
+const ModalShowResolved: React.FC<IModalShowResultProps> = ({ data, challengeTestCase }) => {
+    console.log('🧙 ~ data', data)
     const [countResolve, setCountResolve] = useState(0)
 
     useEffect(() => {
         const getCount = () => {
-            const listResolve = compileResult?.result?.filter((item: any) => item?.status)
+            const listResolve = data?.compileResult?.filter((item: any) => item?.status)
             setCountResolve(listResolve?.length || 0)
         }
 
         getCount()
-    }, [compileResult])
+    }, [data])
 
     return (
         <Modal
@@ -34,12 +34,10 @@ const ExamModalShowResult: React.FC<IModalShowResultProps> = ({ compileResult, h
             closable={false}
             cancelButtonProps={{ className: 'hidden' }}
         >
+            <div className="mb-5 block text-center text-2xl">Bạn đã thực hiện bài tập này</div>
             <span className="block text-lg">
                 Bạn đã vượt qua
-                <span className="text-xl font-semibold">{` ${countResolve}/${
-                    get(dataSubmit, 'challengeTestCase', []).length
-                }`}</span>{' '}
-                TestCase
+                <span className="text-xl font-semibold">{` ${countResolve}/${challengeTestCase.length}`}</span> TestCase
             </span>
 
             <>
@@ -48,7 +46,7 @@ const ExamModalShowResult: React.FC<IModalShowResultProps> = ({ compileResult, h
                     tabPosition={'left'}
                     type="card"
                     className="mt-7 border"
-                    items={compileResult?.result?.map((item: any, index: any) => {
+                    items={data?.compileResult?.map((item: any, index: any) => {
                         return {
                             label: (
                                 <>
@@ -79,7 +77,7 @@ const ExamModalShowResult: React.FC<IModalShowResultProps> = ({ compileResult, h
                                 <div className="mb-4 py-8 pr-4">
                                     <span>Compiler Message</span>
                                     <pre className="mt-2 mb-5 w-full bg-gray-100 p-3 ">
-                                        {compileResult?.err ? compileResult.err : item?.data}
+                                        {item?.data ? item.data : '~ Compiler Error'}
                                     </pre>
 
                                     <span>Input </span>
@@ -109,4 +107,4 @@ const ExamModalShowResult: React.FC<IModalShowResultProps> = ({ compileResult, h
     )
 }
 
-export default ExamModalShowResult
+export default ModalShowResolved
