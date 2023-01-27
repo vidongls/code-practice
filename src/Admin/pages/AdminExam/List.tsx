@@ -13,8 +13,9 @@ import { Link } from 'react-router-dom'
 import ChallengeApi from '../../../Api/Challenge/ChallengeApi'
 import { classNames, formatDate, truncateString } from '../../../helper/helper'
 import { CHALLENGE_LEVEL, CHALLENGE_LEVEL_COLOR, TChallengeLevel } from '../../../pages/Challenge/constants/constants'
-import { fireGetOne } from '../../../utils/firebaseUtil'
+import { fireGet, fireGetOne } from '../../../utils/firebaseUtil'
 import ModalUpdateClasses from './components/ModalUpdateClasses'
+import { get, isEmpty, map, mapValues } from 'lodash'
 
 export interface IRealtimeData {
     id: string
@@ -32,24 +33,22 @@ interface IListProps {
 const List: React.FC<IListProps> = ({ data, loading, getChallenge }) => {
     const [isVisibleClasses, setIsVisibleClasses] = useState(false)
     const [loadingDelete, setLoadingDelete] = useState(false)
-    const [dataRealtime, setDataRealtime] = useState<IRealtimeData[]>([])
+    const [loadingStart, setLoadingStart] = useState(false)
+    const [dataRealtime, setDataRealtime] = useState<any>()
     const [dataUpdateClasses, setDataUpdateClasses] = useState({})
+    // console.log('🧙 ~ dataRealtime', dataRealtime)
 
     useEffect(() => {
         const getDataFire = async () => {
-            const listIsRealtime = data.filter((item: any) => item.isRealtime)
-
-            const ids = listIsRealtime.map((item: any) => item._id)
-
-            const listChallengeFire: any = []
-            ids.forEach((id: string) => {
-                fireGetOne(`challenge-${id}`).then(data => {
+            setLoadingStart(true)
+            fireGetOne(`/classes`)
+                .then(data => {
                     if (data) {
-                        listChallengeFire.push({ id, ...data })
-                        setDataRealtime(listChallengeFire)
+                        setDataRealtime(data)
                     }
                 })
-            })
+                .catch(res => {})
+                .finally(() => setLoadingStart(false))
         }
 
         getDataFire()
@@ -153,39 +152,47 @@ const List: React.FC<IListProps> = ({ data, loading, getChallenge }) => {
             key: '_id',
             dataIndex: '_id',
             render: (id: string, record: any) => {
-                const isRealtime = record?.isRealtime
                 const title = record?.title
                 const isExamStarted = record?.isExamStarted
+                let isEnded = false
+                if (!isEmpty(record?.classes)) {
+                    map(record?.classes, item => {
+                        isEnded = Object.values(mapValues(get(dataRealtime, item._id), 'started')).every(item => !item)
+                    })
+                } else {
+                    isEnded = true
+                }
 
                 return (
                     <div className="flex items-center">
-                        {!isExamStarted && (
-                            <>
-                                <Tooltip title="Chỉnh sửa">
-                                    <Link
-                                        to={`/admin/exam/edit/${id}`}
-                                        className="leading-3"
-                                    >
-                                        <EditOutlined className="cursor-pointer p-3 text-blue-600 hover:text-blue-400" />
-                                    </Link>
-                                </Tooltip>
-                                <Tooltip title="Xóa">
-                                    <Spin spinning={loadingDelete}>
-                                        <DeleteOutlined
-                                            className="cursor-pointer p-3 text-red-600 hover:text-red-400"
-                                            onClick={() => onDeleteChallenge(id)}
-                                        />
-                                    </Spin>
-                                </Tooltip>
-                            </>
-                        )}
-
                         {/* {!isExamStarted && ( */}
+                        <>
+                            <Tooltip title="Chỉnh sửa">
+                                <Link
+                                    to={`/admin/exam/edit/${id}`}
+                                    className="leading-3"
+                                >
+                                    <EditOutlined className="cursor-pointer p-3 text-blue-600 hover:text-blue-400" />
+                                </Link>
+                            </Tooltip>
+                            <Tooltip title="Xóa">
+                                <Spin spinning={loadingDelete}>
+                                    <DeleteOutlined
+                                        className="cursor-pointer p-3 text-red-600 hover:text-red-400"
+                                        onClick={() => onDeleteChallenge(id)}
+                                    />
+                                </Spin>
+                            </Tooltip>
+                        </>
+                        {/* {!isExamStarted && isEnded && ( */}
                         <Tooltip title={`Bắt đầu`}>
-                            <PlayCircleOutlined
-                                className="cursor-pointer p-3 text-yellow-600 hover:text-yellow-400"
-                                onClick={() => onStartChallenge(id)}
-                            />
+                            <Spin spinning={loadingStart}>
+                                {' '}
+                                <PlayCircleOutlined
+                                    className="cursor-pointer p-3 text-yellow-600 hover:text-yellow-400"
+                                    onClick={() => onStartChallenge(id)}
+                                />
+                            </Spin>
                         </Tooltip>
                         {/* )} */}
                         <Tooltip title="Thống kê">
@@ -260,6 +267,7 @@ const List: React.FC<IListProps> = ({ data, loading, getChallenge }) => {
 
                 return ChallengeApi.remove(id)
                     .then(result => {
+                        getChallenge()
                         notification.success({ message: 'Xoá bài thi thành công' })
                     })
                     .catch(err => {

@@ -34,7 +34,9 @@ class ChallengeApi {
     submitExerciseChallenge = (data: any) => {
         return Api.post(`/submit/submit-exercise`, data)
     }
-
+    submitExamChallenge = (data: any) => {
+        return Api.post(`/submit/submit-exam`, data)
+    }
     userDoChallenge = (params?: any) => {
         return Api.get('/challenge', { params })
     }

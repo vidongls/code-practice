@@ -120,7 +120,7 @@ const ExamCodeEditor: React.FC<IExamCodeEditorProps> = ({ detail, isEnded }) => 
             icon: <ExclamationCircleOutlined />,
             content: '',
             onOk() {
-                return ChallengeApi.submitExerciseChallenge({ challengeId, answerContent: content })
+                return ChallengeApi.submitExamChallenge({ challengeId, answerContent: content })
                     .then(res => {
                         setDataSubmit(res.data)
                         setCompileResult(res.data?.dataCompile)

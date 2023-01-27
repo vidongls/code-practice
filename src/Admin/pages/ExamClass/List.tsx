@@ -27,7 +27,7 @@ const List: React.FC<IListProps> = () => {
         <Spin spinning={loading}>
             <div className="rounded-md bg-white p-6 ">
                 <div className="flex flex-wrap gap-4">
-                    {!isEmpty(data) &&
+                    {!isEmpty(data) ? (
                         data.map((item: any, index: number) => {
                             return (
                                 <div
@@ -80,7 +80,12 @@ const List: React.FC<IListProps> = () => {
                                     </div>
                                 </div>
                             )
-                        })}
+                        })
+                    ) : (
+                        <div className="w-full py-5 text-center">
+                            <span className="text-gray-400">Hiện tại không có lớp nào đang diễn ra thi</span>
+                        </div>
+                    )}
                 </div>
             </div>
         </Spin>
