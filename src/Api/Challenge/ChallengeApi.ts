@@ -42,7 +42,7 @@ class ChallengeApi {
     }
 
     getNewestChallenge = () => {
-        return Api.get('/challenge/all/newest', {})
+        return Api.get('/user-api/challenge/all/newest', {})
     }
     getRankingChallenge = () => {
         return Api.get('/user-api/challenge/all/ranking', {})

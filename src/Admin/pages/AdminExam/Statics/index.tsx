@@ -2,11 +2,12 @@ import { CheckOutlined, CloseCircleOutlined, InfoCircleOutlined, ArrowLeftOutlin
 import { Modal, Table, Tabs, Tooltip } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { CopyBlock, dracula } from 'react-code-blocks'
-import { Link, useParams as useParamsReactRouter, useSearchParams } from 'react-router-dom'
+import { Link, useParams as useParamsReactRouter } from 'react-router-dom'
 
 import ChallengeApi from '../../../../Api/Challenge/ChallengeApi'
 import { classNames, differentDate, formatDate } from '../../../../helper/helper'
 import useParams from '../../../../utils/useParams'
+import { get } from 'lodash'
 
 const AdminExamStatistic = () => {
     const { params, addParams } = useParams()
@@ -32,9 +33,17 @@ const AdminExamStatistic = () => {
 
     const columns = [
         {
-            title: 'Sinh viên',
-            dataIndex: ['user', 'userName'],
-            key: 'userName',
+            title: 'Họ và tên',
+            dataIndex: ['user'],
+            key: 'user',
+            render: (text: any) => {
+                return <span> {`${get(text, 'firstName', '-')} ${get(text, 'lastName', '-')}`}</span>
+            },
+        },
+        {
+            title: 'Mã sinh viên',
+            dataIndex: ['user', 'code'],
+            key: 'code',
         },
         // {
         //     title: 'Nội dung bài làm',
@@ -51,14 +60,13 @@ const AdminExamStatistic = () => {
             render: (text: string) => <span>{formatDate(text)}</span>,
         },
         {
-            title: 'Thời gian hoàn thành',
+            title: 'Thời gian làm bài',
             key: 'startedAt',
-            dataIndex: ['challenge'],
+            dataIndex: ['challenge', 'startedAt'],
             render: (startedAt: string, record: any) => {
-                const startTime = record?.startTime
                 const endTime = record?.endTime
 
-                return <span>{differentDate(endTime, startTime, 'minutes')} phút</span>
+                return <span>{differentDate(endTime, startedAt, 'minutes')} phút</span>
             },
         },
         {
@@ -66,6 +74,22 @@ const AdminExamStatistic = () => {
             key: 'endTime',
             dataIndex: 'endTime',
             render: (text: string) => <span>{formatDate(text)}</span>,
+        },
+        {
+            title: 'Số test case hoàn thành',
+            key: 'endTime',
+            dataIndex: 'endTime',
+            render: (text: string, record: any) => {
+                const listResolve = record?.compileResult?.filter((item: any) => item?.status)
+                return (
+                    <span
+                        className={classNames('font-medium', {
+                            'text-red-500': listResolve?.length !== record?.challenge?.testCase?.length,
+                            'text-green-500': listResolve?.length === record?.challenge?.testCase?.length,
+                        })}
+                    >{`${listResolve?.length || 0}/${record?.challenge?.testCase?.length || 0}`}</span>
+                )
+            },
         },
         {
             title: '',

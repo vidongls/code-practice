@@ -22,9 +22,18 @@ const Header: React.FC = props => {
         navigate('/register')
     }
 
+    const handleRedirectProfile = () => {
+        navigate('/profile')
+    }
+
     const menu = (
         <Menu
             items={[
+                {
+                    label: <p>Thông tin tài khoản</p>,
+                    key: 'profile',
+                    onClick: handleRedirectProfile,
+                },
                 {
                     label: <p>Đăng xuất</p>,
                     key: 'logout',

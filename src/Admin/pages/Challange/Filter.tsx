@@ -36,6 +36,17 @@ const Filter: React.FC<IFilterProps> = ({ params, addParams }) => {
                         lg={{ span: 6 }}
                     >
                         <Form.Item
+                            label={<span className="text-slate-800">Mã</span>}
+                            name="code"
+                        >
+                            <Input placeholder="Nhập mã" />
+                        </Form.Item>
+                    </Col>
+                    <Col
+                        xs={{ span: 12 }}
+                        lg={{ span: 6 }}
+                    >
+                        <Form.Item
                             label={<span className="text-slate-800">Tiêu đề</span>}
                             name="title"
                         >

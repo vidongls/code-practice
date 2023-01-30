@@ -30,6 +30,7 @@ import AdminExamCreate from '../Admin/pages/AdminExam/Create'
 import AdminExamDetail from '../Admin/pages/AdminExam/Detail'
 import AdminExamEdit from '../Admin/pages/AdminExam/Edit'
 import AdminExamStatistic from '../Admin/pages/AdminExam/Statics'
+import Profile from '../pages/Profile'
 
 const Router = () => {
     return (
@@ -84,6 +85,10 @@ const Router = () => {
                 <Route
                     path="live-code"
                     element={<LiveCode />}
+                />
+                <Route
+                    path="profile"
+                    element={<Profile />}
                 />
             </Route>
             {/* 

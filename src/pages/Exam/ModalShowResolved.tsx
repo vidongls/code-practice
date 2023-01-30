@@ -12,7 +12,6 @@ interface IModalShowResultProps {
 }
 
 const ModalShowResolved: React.FC<IModalShowResultProps> = ({ data, challengeTestCase }) => {
-    console.log('🧙 ~ data', data)
     const [countResolve, setCountResolve] = useState(0)
 
     useEffect(() => {

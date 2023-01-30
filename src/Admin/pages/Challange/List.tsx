@@ -35,7 +35,7 @@ const List: React.FC<IListProps> = ({ data, loading, getChallenge }) => {
 
     const columns = [
         {
-            title: 'Mã challenge',
+            title: 'Mã bài tập',
             dataIndex: 'code',
             key: 'code',
             render: (text: string, record: any) => {
@@ -56,7 +56,7 @@ const List: React.FC<IListProps> = ({ data, loading, getChallenge }) => {
             key: 'title',
         },
         {
-            title: 'Mức độ',
+            title: 'Độ khó',
             dataIndex: 'level',
             key: 'level',
             render: (text: TChallengeLevel) => {
