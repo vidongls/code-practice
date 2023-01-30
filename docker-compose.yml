@@ -16,9 +16,9 @@ services:
             - codepractice-fe-network
 
     #Nginx Service
-    webserver-codepractice:
+    webserver-codepractice-fe:
         image: nginx:alpine
-        container_name: webserver-codepractice
+        container_name: webserver-codepractice-fe
         restart: unless-stopped
         tty: true
         ports:
