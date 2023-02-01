@@ -68,8 +68,8 @@ const AdminLiveCode = (props: Props) => {
                             </Link>
                         </div>
                     </div>
-                    <div className="grid max-h-[800px] min-h-[750px] grid-cols-2 overflow-y-auto bg-white p-3">
-                        <div className="col-span-1 overflow-y-auto">
+                    <div className="grid max-h-[900px] min-h-[750px] grid-cols-2  bg-white p-3">
+                        <div className="col-span-1 ">
                             <div className="mt-4 mr-2 border-gray-200 bg-white p-4">
                                 <div className="mb-4">
                                     Sinh viên:{' '}

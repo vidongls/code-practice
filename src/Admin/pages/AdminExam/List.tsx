@@ -165,36 +165,36 @@ const List: React.FC<IListProps> = ({ data, loading, getChallenge }) => {
 
                 return (
                     <div className="flex items-center">
-                        {/* {!isExamStarted && ( */}
-                        <>
-                            <Tooltip title="Chỉnh sửa">
-                                <Link
-                                    to={`/admin/exam/edit/${id}`}
-                                    className="leading-3"
-                                >
-                                    <EditOutlined className="cursor-pointer p-3 text-blue-600 hover:text-blue-400" />
-                                </Link>
-                            </Tooltip>
-                            <Tooltip title="Xóa">
-                                <Spin spinning={loadingDelete}>
-                                    <DeleteOutlined
-                                        className="cursor-pointer p-3 text-red-600 hover:text-red-400"
-                                        onClick={() => onDeleteChallenge(id)}
+                        {!isExamStarted && (
+                            <>
+                                <Tooltip title="Chỉnh sửa">
+                                    <Link
+                                        to={`/admin/exam/edit/${id}`}
+                                        className="leading-3"
+                                    >
+                                        <EditOutlined className="cursor-pointer p-3 text-blue-600 hover:text-blue-400" />
+                                    </Link>
+                                </Tooltip>
+                                <Tooltip title="Xóa">
+                                    <Spin spinning={loadingDelete}>
+                                        <DeleteOutlined
+                                            className="cursor-pointer p-3 text-red-600 hover:text-red-400"
+                                            onClick={() => onDeleteChallenge(id)}
+                                        />
+                                    </Spin>
+                                </Tooltip>
+                            </>
+                        )}
+                        {!isExamStarted && isEnded && (
+                            <Tooltip title={`Bắt đầu`}>
+                                <Spin spinning={loadingStart}>
+                                    <PlayCircleOutlined
+                                        className="cursor-pointer p-3 text-yellow-600 hover:text-yellow-400"
+                                        onClick={() => onStartChallenge(id)}
                                     />
                                 </Spin>
                             </Tooltip>
-                        </>
-                        {/* {!isExamStarted && isEnded && ( */}
-                        <Tooltip title={`Bắt đầu`}>
-                            <Spin spinning={loadingStart}>
-                                {' '}
-                                <PlayCircleOutlined
-                                    className="cursor-pointer p-3 text-yellow-600 hover:text-yellow-400"
-                                    onClick={() => onStartChallenge(id)}
-                                />
-                            </Spin>
-                        </Tooltip>
-                        {/* )} */}
+                        )}
                         <Tooltip title="Thống kê">
                             <Link
                                 to={`/admin/exam/statics/${id}?title=${title ? title.replaceAll(' ', '+') : ''}`}

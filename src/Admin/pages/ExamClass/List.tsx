@@ -50,7 +50,7 @@ const List: React.FC<IListProps> = () => {
                                             'data.authorId.lastName'
                                         )}`}</span>
                                     </div>
-                                    <div className="relative h-24">
+                                    <div className="relative h-16">
                                         <div className="absolute right-4 h-16 w-16 -translate-y-1/2  overflow-hidden rounded-full">
                                             <img
                                                 src="https://cdn-icons-png.flaticon.com/512/488/488925.png?w=826&t=st=1674057786~exp=1674058386~hmac=d534517b9024693a8f722416344c93d253b18bedc3de67d0c47113faa4b94e32"

@@ -1,6 +1,6 @@
 import { Button, Form, Input, InputNumber, notification, Select, Spin, Switch } from 'antd'
 import React, { useEffect, useState } from 'react'
-import ReactQuill from 'react-quill'
+import ReactQuill, { Quill } from 'react-quill'
 import 'react-quill/dist/quill.snow.css'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { ArrowLeftOutlined, PlusOutlined, MinusCircleOutlined, EditOutlined } from '@ant-design/icons'
@@ -8,6 +8,40 @@ import ChallengeApi from '../../../../Api/Challenge/ChallengeApi'
 import Editor from '@monaco-editor/react'
 import { setDocumentTitle } from '../../../../helper/helper'
 import { useNavigatorStore } from '../../../../store/useNavigatorStore'
+
+const fontSizeArr = [
+    '8px',
+    '9px',
+    '10px',
+    '12px',
+    '14px',
+    '16px',
+    '18px',
+    '20px',
+    '24px',
+    '32px',
+    '42px',
+    '54px',
+    '68px',
+    '84px',
+    '98px',
+]
+const Size = Quill.import('attributors/style/size')
+Size.whitelist = fontSizeArr
+Quill.register(Size, true)
+const modules = {
+    toolbar: [
+        [{ header: [1, 2, 3, 4, 5, 6, false] }],
+        [{ size: Size.whitelist }], // custom dropdown
+
+        ['bold', 'italic', 'underline', 'strike'], // toggled buttons
+        [{ list: 'ordered' }, { list: 'bullet' }],
+
+        [{ color: [] }, { background: [] }], // dropdown with defaults from theme
+        [{ font: [] }],
+        [{ align: [] }],
+    ],
+}
 
 interface IData {
     isRealtime: boolean
@@ -183,6 +217,7 @@ const AdminExamEdit: React.FC<IAdminExamEditProps> = props => {
                                 className="h-full"
                                 value={value}
                                 onChange={setValue}
+                                modules={modules}
                             />
                         </Form.Item>
                         <Form.Item

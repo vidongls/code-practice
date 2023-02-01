@@ -20,7 +20,7 @@ const Classify: React.FC<IClassifyProps> = ({ children }) => {
         >
             <div>
                 {children}
-                <div>
+                {/* <div>
                     {Array.from('A234BCDEFG').map(x => (
                         <Button
                             shape="round"
@@ -30,7 +30,7 @@ const Classify: React.FC<IClassifyProps> = ({ children }) => {
                             {x}
                         </Button>
                     ))}
-                </div>
+                </div> */}
             </div>
         </Box>
     )

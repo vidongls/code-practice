@@ -1,4 +1,3 @@
-import { useAuthStore } from './../store/useAuthStore'
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios'
 
 import localStore from './localStore'

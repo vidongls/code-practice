@@ -82,8 +82,11 @@ const SearchInput: React.FC<ISelectInput> = props => {
                 <Divider className="my-2 mb-4" />
                 {!isEmpty(data) ? (
                     <ul>
-                        {data.map((item: any) => (
-                            <li className="mb-3 cursor-pointer  rounded-md  border-b border-l-2 leading-5 transition duration-75 hover:bg-blue-50">
+                        {data.map((item: any, index: number) => (
+                            <li
+                                className="mb-3 cursor-pointer  rounded-md  border-b border-l-2 leading-5 transition duration-75 hover:bg-blue-50"
+                                key={index}
+                            >
                                 <Link
                                     to={`/challenge/${item?.id}`}
                                     className="inline-block w-full py-2 pl-2"

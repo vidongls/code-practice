@@ -44,8 +44,12 @@ const Comment: React.FC<ICommentProps> = ({ challengeId, comments, refetch }) =>
     }
     return (
         <div>
-            <h2 className="text-2xl font-semibold">Bình luận</h2>
-
+            <h2 className="text-2xl font-semibold">Thảo luận</h2>
+            <ul className="my-4 list-disc pl-5">
+                <li> Quy tắc thảo luận & hướng dẫn đăng bình luận ✍️ </li>
+                <li>NÊN thảo luận giải pháp 😘, KHÔNG NÊN chia sẻ code 😐</li>
+                <li>KHÔNG NÊN để lộ thông tin cá nhân (SĐT, email, Facebook, ...)</li>
+            </ul>
             <div className="mt-8">
                 <Form
                     className="mb-6"

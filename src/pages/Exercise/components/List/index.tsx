@@ -102,21 +102,21 @@ const ExerciseList: React.FC<IExerciseListProps> = props => {
                 return <span>{countResolve?.length ? countResolve.length : 0}</span>
             },
         },
-        {
-            title: <p className="font-semibold">Loại</p>,
-            dataIndex: 'isRealtime',
-            key: 'isRealtime',
-            render: (text: any) => {
-                return (
-                    <>
-                        <Badge
-                            status={!text ? 'default' : 'processing'}
-                            text={!text ? 'Thường' : 'Kiểm tra'}
-                        />
-                    </>
-                )
-            },
-        },
+        // {
+        //     title: <p className="font-semibold">Loại</p>,
+        //     dataIndex: 'isRealtime',
+        //     key: 'isRealtime',
+        //     render: (text: any) => {
+        //         return (
+        //             <>
+        //                 <Badge
+        //                     status={!text ? 'default' : 'processing'}
+        //                     text={!text ? 'Thường' : 'Kiểm tra'}
+        //                 />
+        //             </>
+        //         )
+        //     },
+        // },
     ]
 
     const resetFilter = () => {

@@ -32,6 +32,7 @@ const { Option } = Select
 const options = {
     minimap: { enabled: false },
     selectOnLineNumbers: true,
+    classNames: 'py-4',
 }
 const CodeEditor: React.FC<ICodeEditorProps> = ({ detail, isEnded }) => {
     const { id: challengeId } = useParams()
@@ -152,7 +153,7 @@ const CodeEditor: React.FC<ICodeEditorProps> = ({ detail, isEnded }) => {
                 </div>
                 <div className="bg-gray-50 shadow-lg">
                     <Editor
-                        className="code-editor h-[700px] w-full"
+                        className="code-editor h-[700px] w-full py-4"
                         theme={theme}
                         language={language}
                         value={content}

@@ -49,8 +49,8 @@ const List: React.FC<IListProps> = ({ data, loading, params, getStudent }) => {
         },
         {
             title: 'Họ và tên',
-            dataIndex: 'fistName',
-            key: 'fistName',
+            dataIndex: 'firstName',
+            key: 'firstName',
             render: (fistName: string, record: any) => {
                 const lastName = record?.lastName
 

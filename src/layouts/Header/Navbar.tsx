@@ -17,7 +17,7 @@ const Navbar: React.FC<INavbarProps> = props => {
             to: 'exercise',
         },
         {
-            label: 'Kỳ thi',
+            label: 'Bài thi',
             to: 'exam',
         },
         // {
