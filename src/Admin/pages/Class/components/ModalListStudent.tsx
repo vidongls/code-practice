@@ -7,8 +7,6 @@ interface IModalListStudentProps {
 }
 
 const ModalListStudent: React.FC<IModalListStudentProps> = ({ handleHideModal, data }) => {
-    console.log('🧙 ~ data', data)
-
     const columns = [
         // {
         //     title: 'Avatar',
@@ -29,12 +27,12 @@ const ModalListStudent: React.FC<IModalListStudentProps> = ({ handleHideModal, d
         },
         {
             title: 'Họ và tên',
-            dataIndex: 'fistName',
-            key: 'fistName',
-            render: (fistName: string, record: any) => {
+            dataIndex: 'firstName',
+            key: 'firstName',
+            render: (firstName: string, record: any) => {
                 const lastName = record?.lastName
 
-                return <span>{fistName && lastName ? `${fistName} ${lastName}` : '---'} </span>
+                return <span>{firstName && lastName ? `${firstName} ${lastName}` : '---'} </span>
             },
         },
         {

@@ -215,7 +215,7 @@ const ModalUpdateClasses: React.FC<IModalUpdateClassesProps> = ({ dataClass, onC
                             className="bg-primary"
                             type="primary"
                             onClick={onUpdateClassesToChallenge}
-                            loading={loading}
+                            loading={loadingBtn}
                             disabled={get(dataClass, 'isExamStarted', false)}
                         >
                             Cập nhật
@@ -227,6 +227,7 @@ const ModalUpdateClasses: React.FC<IModalUpdateClassesProps> = ({ dataClass, onC
                     rowSelection={rowSelection}
                     columns={columns}
                     dataSource={data}
+                    loading={loading}
                     rowKey={record => get(record, '_id')}
                 />
             </Modal>

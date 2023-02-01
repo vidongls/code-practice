@@ -14,7 +14,8 @@ const Classify: React.FC<IClassifyProps> = ({ children }) => {
             className="col-span-1 p-3"
             headerContent={
                 <div className="flex items-center text-lg font-medium">
-                    <TagsFilled className="mr-2" /> Phân loại bài tập
+                    <TagsFilled className="mr-2" />
+                    Thử thách
                 </div>
             }
         >

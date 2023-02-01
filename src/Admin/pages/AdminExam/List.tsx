@@ -36,7 +36,6 @@ const List: React.FC<IListProps> = ({ data, loading, getChallenge }) => {
     const [loadingStart, setLoadingStart] = useState(false)
     const [dataRealtime, setDataRealtime] = useState<any>()
     const [dataUpdateClasses, setDataUpdateClasses] = useState({})
-    // console.log('🧙 ~ dataRealtime', dataRealtime)
 
     useEffect(() => {
         const getDataFire = async () => {

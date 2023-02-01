@@ -1,10 +1,10 @@
-import React, { useRef, useState } from 'react'
-import { Divider, Input, Select, Spin } from 'antd'
-import { UserOutlined, SearchOutlined } from '@ant-design/icons'
-import { Link } from 'react-router-dom'
-import ChallengeApi from '../../Api/Challenge/ChallengeApi'
+import { SearchOutlined } from '@ant-design/icons'
+import { Divider, Input, Spin } from 'antd'
 import { get, isEmpty, trim } from 'lodash'
-import useOutsideAlerter from '../../hooks/useOutsideAlerter'
+import React, { useRef, useState } from 'react'
+import { Link } from 'react-router-dom'
+
+import ChallengeApi from '../../Api/Challenge/ChallengeApi'
 import { classNames } from '../../helper/helper'
 
 interface ISelectInput {}
@@ -62,7 +62,7 @@ const SearchInput: React.FC<ISelectInput> = props => {
                     onBlur={() => {
                         setTimeout(() => {
                             setIsFocus(false)
-                        }, 100)
+                        }, 200)
                     }}
                     ref={refInput}
                 />
@@ -78,27 +78,29 @@ const SearchInput: React.FC<ISelectInput> = props => {
                 //     setIsFocus(true)
                 // }}
             >
-                <div className="text-red text-base font-medium leading-5"> Tìm kiếm</div>
-                <Divider className="my-2 mb-4" />
-                {!isEmpty(data) ? (
-                    <ul>
-                        {data.map((item: any, index: number) => (
-                            <li
-                                className="mb-3 cursor-pointer  rounded-md  border-b border-l-2 leading-5 transition duration-75 hover:bg-blue-50"
-                                key={index}
-                            >
-                                <Link
-                                    to={`/challenge/${item?.id}`}
-                                    className="inline-block w-full py-2 pl-2"
+                <Spin spinning={loading}>
+                    <div className="text-red text-base font-medium leading-5"> Tìm kiếm</div>
+                    <Divider className="my-2 mb-4" />
+                    {!isEmpty(data) ? (
+                        <ul>
+                            {data.map((item: any, index: number) => (
+                                <li
+                                    className="mb-3 cursor-pointer  rounded-md  border-b border-l-2 leading-5 transition duration-75 hover:bg-blue-50"
+                                    key={index}
                                 >
-                                    {get(item, 'title')}
-                                </Link>
-                            </li>
-                        ))}
-                    </ul>
-                ) : (
-                    <div className="p-2 text-center leading-4 text-gray-400">Không có dữ liệu</div>
-                )}
+                                    <Link
+                                        to={`/challenge/${item?.id}`}
+                                        className="inline-block w-full py-2 pl-2"
+                                    >
+                                        {get(item, 'title')}
+                                    </Link>
+                                </li>
+                            ))}
+                        </ul>
+                    ) : (
+                        <div className="p-2 text-center leading-4 text-gray-400">Không có dữ liệu</div>
+                    )}
+                </Spin>
             </div>
         </div>
     )

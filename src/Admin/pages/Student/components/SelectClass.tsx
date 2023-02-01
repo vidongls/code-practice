@@ -68,20 +68,20 @@ const SelectClass: React.FC<ISelectClassProps> = ({ onChange, value }) => {
                 options={data.map((item: any) => ({ label: item.name, value: item._id }))}
                 onChange={onChange}
                 value={value ? value : undefined}
-                dropdownRender={menu => (
-                    <>
-                        {menu}
-                        <Divider className="mt-3 mb-0" />
-                        <Button
-                            type="text"
-                            className="w-full"
-                            icon={<PlusOutlined />}
-                            onClick={showModal}
-                        >
-                            Tạo lớp
-                        </Button>
-                    </>
-                )}
+                // dropdownRender={menu => (
+                //     <>
+                //         {menu}
+                //         <Divider className="mt-3 mb-0" />
+                //         <Button
+                //             type="text"
+                //             className="w-full"
+                //             icon={<PlusOutlined />}
+                //             onClick={showModal}
+                //         >
+                //             Tạo lớp
+                //         </Button>
+                //     </>
+                // )}
             />
 
             <Form form={form}>

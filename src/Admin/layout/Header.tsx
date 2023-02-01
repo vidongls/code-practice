@@ -22,14 +22,20 @@ const Header: React.FC<Props> = ({ handleOpenSidebar, handleCloseSidebar, collap
     }
 
     const menu = (
-        <Menu>
-            <Menu.Item
-                key={'1'}
-                onClick={handleLogout}
-            >
-                Logout
-            </Menu.Item>
-        </Menu>
+        <Menu
+            items={[
+                {
+                    label: <p>Thông tin tài khoản</p>,
+                    key: 'profile',
+                    onClick: () => navigate('/profile'),
+                },
+                {
+                    label: <p>Đăng xuất</p>,
+                    key: 'logout',
+                    onClick: handleLogout,
+                },
+            ]}
+        />
     )
 
     return (

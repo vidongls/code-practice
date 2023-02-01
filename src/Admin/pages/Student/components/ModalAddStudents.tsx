@@ -46,7 +46,7 @@ const ModalAddStudents: React.FC<IModalAddStudentsProps> = ({ classId, getStuden
                 const id = record?._id
                 return (
                     <Link
-                        to={id}
+                        to={''}
                         className="font-semibold text-blue-600"
                     >
                         {text}
@@ -56,12 +56,12 @@ const ModalAddStudents: React.FC<IModalAddStudentsProps> = ({ classId, getStuden
         },
         {
             title: 'Họ và tên',
-            dataIndex: 'fistName',
-            key: 'fistName',
-            render: (fistName: string, record: any) => {
+            dataIndex: 'firstName',
+            key: 'firstName',
+            render: (firstName: string, record: any) => {
                 const lastName = record?.lastName
 
-                return <span>{fistName && lastName ? `${fistName} ${lastName}` : '---'} </span>
+                return <span>{firstName && lastName ? `${firstName} ${lastName}` : '---'} </span>
             },
         },
         {

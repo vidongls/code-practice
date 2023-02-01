@@ -1,5 +1,5 @@
 import { CheckOutlined, RedoOutlined, SearchOutlined } from '@ant-design/icons'
-import { Badge, Button, Form, Input, Menu, notification, Select, Table } from 'antd'
+import { Badge, Button, Form, Input, Menu, notification, Select, Spin, Table } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
@@ -17,16 +17,19 @@ const ExerciseList: React.FC<IExerciseListProps> = props => {
     const [form] = Form.useForm()
     const { user } = useAuthStore()
     const { params, addParams } = useParams()
-
+    const [loading, setLoading] = useState(false)
     const [data, setData] = useState([])
 
     useEffect(() => {
         const getChallenge = async () => {
+            setLoading(true)
             try {
                 const res = await ChallengeApi.userGetAllChallenge(params)
                 setData(res.data?.challenge)
             } catch (error) {
                 notification.error({ message: 'Có lỗi xảy ra!' })
+            } finally {
+                setLoading(false)
             }
         }
 
@@ -125,70 +128,72 @@ const ExerciseList: React.FC<IExerciseListProps> = props => {
     }
 
     return (
-        <Box className="rounded-md p-6">
-            <div className="mb-4 flex items-center justify-between border-b border-b-gray-200 pb-3">
-                <h3 className="text-medium text-lg">Danh sách bài tập</h3>
-                <div className="flex items-center gap-4">
-                    <Form
-                        form={form}
-                        layout="inline"
-                    >
-                        <Form.Item
-                            name="level"
-                            className="mr-2"
+        <Spin spinning={loading}>
+            <Box className="rounded-md p-6">
+                <div className="mb-4 flex items-center justify-between border-b border-b-gray-200 pb-3">
+                    <h3 className="text-medium text-lg">Danh sách bài tập</h3>
+                    <div className="flex items-center gap-4">
+                        <Form
+                            form={form}
+                            layout="inline"
                         >
-                            <Select
-                                placeholder="Chọn độ khó"
-                                allowClear
-                                options={[
-                                    {
-                                        value: 'EASY',
-                                        label: 'Dễ',
-                                    },
-                                    {
-                                        value: 'MEDIUM',
-                                        label: 'Thường',
-                                    },
-                                    {
-                                        value: 'HARD',
-                                        label: 'Khó',
-                                    },
-                                    {
-                                        value: 'EXPERT',
-                                        label: 'Chuyên gia',
-                                    },
-                                ]}
-                                onChange={value => addParams({ level: value })}
-                                value={params?.level ? params?.level : undefined}
-                            />
-                        </Form.Item>
-                        <Form.Item name="title">
-                            <Input
-                                placeholder="Từ khóa"
-                                suffix={<SearchOutlined />}
-                                className="rounded-sm"
-                                onBlur={e => addParams({ title: e.target.value })}
-                            />
-                        </Form.Item>
-                    </Form>
+                            <Form.Item
+                                name="level"
+                                className="mr-2"
+                            >
+                                <Select
+                                    placeholder="Chọn độ khó"
+                                    allowClear
+                                    options={[
+                                        {
+                                            value: 'EASY',
+                                            label: 'Dễ',
+                                        },
+                                        {
+                                            value: 'MEDIUM',
+                                            label: 'Thường',
+                                        },
+                                        {
+                                            value: 'HARD',
+                                            label: 'Khó',
+                                        },
+                                        {
+                                            value: 'EXPERT',
+                                            label: 'Chuyên gia',
+                                        },
+                                    ]}
+                                    onChange={value => addParams({ level: value })}
+                                    value={params?.level ? params?.level : undefined}
+                                />
+                            </Form.Item>
+                            <Form.Item name="title">
+                                <Input
+                                    placeholder="Từ khóa"
+                                    suffix={<SearchOutlined />}
+                                    className="rounded-sm"
+                                    onBlur={e => addParams({ title: e.target.value })}
+                                />
+                            </Form.Item>
+                        </Form>
 
-                    <Button
-                        icon={<RedoOutlined className="mt-1" />}
-                        type="primary"
-                        onClick={resetFilter}
-                        className="flex items-center bg-primary "
-                    >
-                        Reset
-                    </Button>
+                        <Button
+                            icon={<RedoOutlined className="mt-1" />}
+                            type="primary"
+                            onClick={resetFilter}
+                            className="flex items-center bg-primary "
+                        >
+                            Reset
+                        </Button>
+                    </div>
                 </div>
-            </div>
 
-            <Table
-                rowKey={record => record._id}
-                columns={columns}
-                dataSource={data}
-            />
-        </Box>
+                <Table
+                    rowKey={record => record._id}
+                    columns={columns}
+                    dataSource={data}
+                />
+            </Box>
+        </Spin>
     )
 }
 

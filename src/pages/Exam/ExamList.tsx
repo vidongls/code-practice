@@ -19,14 +19,17 @@ const ExamList = () => {
 
     const [data, setData] = useState([])
     const [classes, setClasses] = useState({} as any)
-
+    const [loading, setLoading] = useState(false)
     useEffect(() => {
         const getChallenge = async () => {
+            setLoading(true)
             try {
                 const res = await ChallengeApi.getAllChallengeByClass(classId, params)
                 setData(res.data?.challenge)
             } catch (error) {
                 notification.error({ message: 'Có lỗi xảy ra!' })
+            } finally {
+                setLoading(false)
             }
         }
 
@@ -162,6 +165,7 @@ const ExamList = () => {
                     rowKey={record => record._id}
                     columns={columns}
                     dataSource={data}
+                    loading={loading}
                 />
             </Box>
         </div>

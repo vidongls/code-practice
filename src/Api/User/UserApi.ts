@@ -20,6 +20,13 @@ class UserApi {
     getInfo = () => {
         return Api.get('/user/me', {})
     }
+
+    userChangeInfo = (data: any) => {
+        return Api.put('/user/change-info', data)
+    }
+    userChangeAvatar = (data: any) => {
+        return Api.put('/user/change-avatar', data)
+    }
 }
 
 export default new UserApi()

@@ -39,7 +39,7 @@ const List: React.FC<IListProps> = ({ data, loading, params, getStudent }) => {
 
                 return (
                     <Link
-                        to={id}
+                        to={''}
                         className="flex w-fit flex-col items-center font-semibold text-blue-600"
                     >
                         {text}

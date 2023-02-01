@@ -131,7 +131,7 @@ const ExamCodeEditor: React.FC<IExamCodeEditorProps> = ({ detail, isEnded }) => 
                         const path = `classes/${classId}/challenge-${challengeId}/students/${user.id}`
                         fireSet(path, {
                             status: 'SUCCESS',
-                            content: debouncedSearchTerm,
+                            content: content,
                             id: user.id,
                             compileResult: res.data?.dataCompile,
                         })

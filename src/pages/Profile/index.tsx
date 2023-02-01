@@ -12,11 +12,11 @@ const Profile = (props: Props) => {
             key: 'info',
             children: <Info />,
         },
-        {
-            label: 'Bảo mật',
-            key: 'security',
-            children: <div>asdsadas</div>,
-        },
+        // {
+        //     label: 'Bảo mật',
+        //     key: 'security',
+        //     children: <div>asdsadas</div>,
+        // },
 
         // { label: 'Bảng xếp hạng', key: 'ranking', content: 'bxh' },
     ]
