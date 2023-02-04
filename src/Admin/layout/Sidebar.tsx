@@ -5,6 +5,7 @@ import {
     ApartmentOutlined,
     FileSyncOutlined,
     ProfileOutlined,
+    PieChartOutlined,
 } from '@ant-design/icons'
 import { Layout, Menu, MenuProps } from 'antd'
 import useBreakpoint from 'antd/lib/grid/hooks/useBreakpoint'
@@ -73,6 +74,11 @@ const Sidebar = ({ collapsed, setCollapsed, handleCloseSidebar }: Props) => {
             label: <Link to={'exam-class'}>Lớp thi</Link>,
             key: 'exam-class',
             icon: <FileSyncOutlined />,
+        },
+        {
+            label: <Link to={'statistics'}>Thống kê</Link>,
+            key: 'statistics',
+            icon: <PieChartOutlined />,
         },
     ]
 

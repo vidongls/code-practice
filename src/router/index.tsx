@@ -30,6 +30,7 @@ import AdminExamDetail from '../Admin/pages/AdminExam/Detail'
 import AdminExamEdit from '../Admin/pages/AdminExam/Edit'
 import AdminExamStatistic from '../Admin/pages/AdminExam/Statics'
 import Profile from '../pages/Profile'
+import AdminStatistics from '../Admin/pages/Statistic'
 
 const Router = () => {
     return (
@@ -172,6 +173,10 @@ const Router = () => {
                         element={<AdminLiveCode />}
                     />
                 </Route>
+                <Route
+                    path="statistics"
+                    element={<AdminStatistics />}
+                />
             </Route>
         </Routes>
     )

@@ -62,7 +62,7 @@ const Info = (props: Props) => {
                                 })
                             })
                             .catch(() => {
-                                notification.success({
+                                notification.error({
                                     message: 'Cập nhật hình ảnh thất bại',
                                 })
                             })
