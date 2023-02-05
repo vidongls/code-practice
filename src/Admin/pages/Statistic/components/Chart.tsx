@@ -10,7 +10,7 @@ const Chart: React.FC<IChartProps> = ({ data }) => {
     const option = {
         title: {
             text: 'Thống kê',
-            subtext: 'Fake Data',
+            subtext: '',
             left: 'center',
             textStyle: {
                 fontFamily: '"Lexend", sans-serif',
@@ -25,7 +25,7 @@ const Chart: React.FC<IChartProps> = ({ data }) => {
         },
         series: [
             {
-                name: 'Access From',
+                name: 'Tổng',
                 type: 'pie',
                 radius: '50%',
                 data: data,
@@ -41,10 +41,12 @@ const Chart: React.FC<IChartProps> = ({ data }) => {
     }
 
     return (
-        <ReactECharts
-            option={option}
-            style={{ height: '600px' }}
-        />
+        <>
+            <ReactECharts
+                option={option}
+                style={{ height: '600px' }}
+            />
+        </>
     )
 }
 

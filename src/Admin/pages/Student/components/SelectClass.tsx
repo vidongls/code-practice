@@ -1,5 +1,4 @@
-import { PlusOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons'
-import { Button, Divider, Form, Input, Modal, Select, Space } from 'antd'
+import { Form, Select } from 'antd'
 import React, { useEffect, useState } from 'react'
 
 import ClassApi from '../../../../Api/Class/ClassApi'
@@ -68,6 +67,11 @@ const SelectClass: React.FC<ISelectClassProps> = ({ onChange, value }) => {
                 onChange={onChange}
                 value={value ? value : undefined}
                 className="min-w-[200px]"
+                filterOption={(input, option) => (option?.label ?? '').toLowerCase().includes(input)}
+                filterSort={(optionA, optionB) =>
+                    (optionA?.label ?? '').toLowerCase().localeCompare((optionB?.label ?? '').toLowerCase())
+                }
+                showSearch
                 // dropdownRender={menu => (
                 //     <>
                 //         {menu}
@@ -84,7 +88,7 @@ const SelectClass: React.FC<ISelectClassProps> = ({ onChange, value }) => {
                 // )}
             />
 
-            <Form form={form}>
+            {/* <Form form={form}>
                 {isModalOpen && (
                     <Modal
                         title="Tạo lớp"
@@ -114,7 +118,7 @@ const SelectClass: React.FC<ISelectClassProps> = ({ onChange, value }) => {
                         </Form.Item>
                     </Modal>
                 )}
-            </Form>
+            </Form> */}
         </>
     )
 }

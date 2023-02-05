@@ -9,6 +9,10 @@ class ClassApi {
         return Api.get('/class/get-by/author', { params })
     }
 
+    getChallengeByClass = (id: any) => {
+        return Api.get(`/class/${id}/get-challenge`, {})
+    }
+
     getOne = (id: string) => {
         return Api.get(`/class/${id}`, {})
     }

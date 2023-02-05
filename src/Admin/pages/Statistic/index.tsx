@@ -5,6 +5,7 @@ import SelectClass from '../Student/components/SelectClass'
 import useParams from '../../../utils/useParams'
 import StatisticApi from '../../../Api/Statistic/StatisticApi'
 import { setDocumentTitle } from '../../../helper/helper'
+import SelectChallenge from './components/SelectChallenge'
 
 const AdminStatistics = () => {
     const { params, addParams } = useParams()
@@ -29,17 +30,17 @@ const AdminStatistics = () => {
     }, [params])
 
     useEffect(() => {
-        if (params.id) {
+        if (params.classId) {
             getStatistic()
         }
-    }, [getStatistic, params.id])
+    }, [getStatistic, params.classId])
 
-    const onChangeSelect = (value: any) => {
+    const onChangeSelect = (key: string, value: any) => {
         if (!value) {
             resetData()
         }
 
-        addParams({ id: value })
+        addParams({ [key]: value })
     }
 
     const resetData = () => {
@@ -51,13 +52,24 @@ const AdminStatistics = () => {
             <div className="my-6 mt-0 flex items-center justify-between">
                 <h3 className="text-lg font-semibold">Thống kê</h3>
             </div>
-            <div className="mb-5">
-                <span className="mr-3">Lớp:</span>
-                <SelectClass
-                    onChange={value => onChangeSelect(value)}
-                    value={params?.id}
-                />
+            <div className="mb-5 flex items-center gap-5">
+                <div>
+                    <span className="mr-3">Lớp:</span>
+                    <SelectClass
+                        onChange={value => onChangeSelect('classId', value)}
+                        value={params?.classId}
+                    />
+                </div>
+                <div>
+                    <span className="mr-3">Lớp:</span>
+                    <SelectChallenge
+                        onChange={value => onChangeSelect('challengeId', value)}
+                        value={params?.challengeId}
+                        classId={params?.classId}
+                    />
+                </div>
             </div>
+
             <Chart data={data} />
         </div>
     )
