@@ -2,14 +2,19 @@ import React from 'react'
 
 import ReactECharts from 'echarts-for-react'
 
-type Props = {}
+interface IChartProps {
+    data: any
+}
 
-const Chart = (props: Props) => {
+const Chart: React.FC<IChartProps> = ({ data }) => {
     const option = {
         title: {
-            text: 'Referer of a Website',
+            text: 'Thống kê',
             subtext: 'Fake Data',
             left: 'center',
+            textStyle: {
+                fontFamily: '"Lexend", sans-serif',
+            },
         },
         tooltip: {
             trigger: 'item',
@@ -23,13 +28,7 @@ const Chart = (props: Props) => {
                 name: 'Access From',
                 type: 'pie',
                 radius: '50%',
-                data: [
-                    { value: 1048, name: 'Search Engine' },
-                    { value: 735, name: 'Direct' },
-                    { value: 580, name: 'Email' },
-                    { value: 484, name: 'Union Ads' },
-                    { value: 300, name: 'Video Ads' },
-                ],
+                data: data,
                 emphasis: {
                     itemStyle: {
                         shadowBlur: 10,
@@ -41,7 +40,12 @@ const Chart = (props: Props) => {
         ],
     }
 
-    return <ReactECharts option={option} />
+    return (
+        <ReactECharts
+            option={option}
+            style={{ height: '600px' }}
+        />
+    )
 }
 
 export default Chart

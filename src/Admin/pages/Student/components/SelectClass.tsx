@@ -50,7 +50,6 @@ const SelectClass: React.FC<ISelectClassProps> = ({ onChange, value }) => {
         if (params) {
             form.validateFields()
                 .then(values => {
-                    console.log('🧙 ~ values', values)
                     ClassApi.createClass(values)
                         .then(res => {})
                         .catch(() => {})
@@ -68,6 +67,7 @@ const SelectClass: React.FC<ISelectClassProps> = ({ onChange, value }) => {
                 options={data.map((item: any) => ({ label: item.name, value: item._id }))}
                 onChange={onChange}
                 value={value ? value : undefined}
+                className="min-w-[200px]"
                 // dropdownRender={menu => (
                 //     <>
                 //         {menu}
