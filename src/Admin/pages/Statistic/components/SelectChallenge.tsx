@@ -33,7 +33,7 @@ const SelectChallenge: React.FC<ISelectChallengeProps> = ({ onChange, value, cla
     return (
         <>
             <Select
-                placeholder="Chọn challenge"
+                placeholder="Chọn bài tập"
                 allowClear
                 loading={loading}
                 options={data.map((item: any) => ({ label: `${item.title} - ${item.code}`, value: item._id }))}

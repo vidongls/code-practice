@@ -18,7 +18,6 @@ const AdminStatistics = () => {
     }, [])
 
     const getStatistic = useCallback(() => {
-        setLoading(true)
         StatisticApi.statisticByClass(params)
             .then(res => {
                 setData(res.data)
@@ -61,7 +60,7 @@ const AdminStatistics = () => {
                     />
                 </div>
                 <div>
-                    <span className="mr-3">Lớp:</span>
+                    <span className="mr-3">Bài tập:</span>
                     <SelectChallenge
                         onChange={value => onChangeSelect('challengeId', value)}
                         value={params?.challengeId}
@@ -76,3 +75,4 @@ const AdminStatistics = () => {
 }
 
 export default AdminStatistics
+//chart sv test case
