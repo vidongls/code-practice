@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import ReactECharts from 'echarts-for-react'
 import { get, map } from 'lodash'
@@ -8,7 +8,7 @@ interface IChartProps {
 }
 
 const Chart: React.FC<IChartProps> = ({ data }) => {
-    console.log('🧙 ~ data', data)
+
     const option = {
         title: {
             text: 'Thống kê bài đã làm',
@@ -75,6 +75,7 @@ const Chart: React.FC<IChartProps> = ({ data }) => {
             <ReactECharts
                 option={option}
                 style={{ height: '600px' }}
+                notMerge={true}
             />
         </>
     )
