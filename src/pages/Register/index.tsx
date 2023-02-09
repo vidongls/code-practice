@@ -30,7 +30,6 @@ const Register: React.FC = () => {
             navigate('/login')
         } catch (error: any) {
             const { data } = error.response
-            console.log('🧙 ~ data', data)
             if (data?.code === 'USER_EXISTED') {
                 notification.error({ message: 'Tài khoản đã tồn tại' })
             } else {

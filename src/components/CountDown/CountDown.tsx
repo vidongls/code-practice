@@ -51,7 +51,6 @@ const CountDown: React.FC<ICountDownProps> = ({
     // Hiển thị countdown và xử lý khi hết tgian
     // Thống kê challenge cho realtime challenge thời gian làm, time resolve, test case resolve
     //  + Xem chi tiết -> modal
-    console.log(startTime + duration)
     return isHidden ? null : (
         <Countdown
             date={startTime + duration}

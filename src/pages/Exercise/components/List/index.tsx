@@ -9,7 +9,7 @@ import { classNames } from '../../../../helper/helper'
 import { useAuthStore } from '../../../../store/useAuthStore'
 import useParams from '../../../../utils/useParams'
 import { CHALLENGE_LEVEL, CHALLENGE_LEVEL_COLOR, TChallengeLevel } from '../../../Challenge/constants/constants'
-import { get, map } from 'lodash'
+import { filter, get, map } from 'lodash'
 
 interface IExerciseListProps {}
 
@@ -43,7 +43,17 @@ const ExerciseList: React.FC<IExerciseListProps> = props => {
             key: 'countDoChallenge',
             render: (text: string, record: any) => {
                 const doChallengeIds = map(get(record, 'countDoChallenge'), 'user')
-                return <>{doChallengeIds.includes(user.id) && <CheckOutlined className="text-green-500" />}</>
+                const isResolved = get(filter(get(record, 'countDoChallenge'), ['user', user?.id]), '0.isResolved')
+                return (
+                    <>
+                        {doChallengeIds.includes(user?.id) && (
+                            <span>
+                                {isResolved && <CheckOutlined className="text-green-500" />}
+                                <CheckOutlined className="text-green-500" />
+                            </span>
+                        )}
+                    </>
+                )
             },
         },
         {

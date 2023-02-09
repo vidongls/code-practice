@@ -15,7 +15,7 @@ interface IDescriptionProps {
 }
 
 const Description: React.FC<IDescriptionProps> = ({ loading, detail, isEnded, dataRealtime, dataDoingResolved }) => {
-    console.log('🧙 ~ dataDoingResolved', dataDoingResolved)
+  
     const [isModalOpen, setIsModalOpen] = useState(false)
 
     const showModal = () => {
@@ -52,29 +52,7 @@ const Description: React.FC<IDescriptionProps> = ({ loading, detail, isEnded, da
             </div>
 
             <div dangerouslySetInnerHTML={{ __html: detail.describe }}></div>
-            {(isEnded || isModalOpen) && isEmpty(dataDoingResolved) && (
-                <Modal
-                    title={false}
-                    open={true}
-                    onOk={handleOk}
-                    footer={false}
-                    closable={false}
-                >
-                    <p className="text-center text-2xl font-medium">Bài thi đã kết thúc!</p>
-                    <div className="mt-8 flex justify-end">
-                        <Link to={'/'}>
-                            <Button>Về trang chủ</Button>
-                        </Link>
-                    </div>
-                </Modal>
-            )}
-
-            {!isEmpty(dataDoingResolved) && (
-                <ModalShowResolved
-                    data={dataDoingResolved}
-                    challengeTestCase={detail?.testCase}
-                />
-            )}
+            
         </Spin>
     ) : null
 }

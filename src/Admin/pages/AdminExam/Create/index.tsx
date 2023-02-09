@@ -78,7 +78,17 @@ const AdminExamCreate: React.FC<IAdminExamCreateProps> = props => {
             ChallengeApi.create({ ...values, isRealtime: true, time: (time || 15) * 1000 * 60 })
                 .then(res => {
                     notification.success({ message: 'Tạo mới thành công' })
-                    navigate('/admin/exam')
+                    // navigate('/admin/exam')
+                })
+                .catch(err => {
+                    notification.error({ message: 'Tạo mới thất bại' })
+                })
+                .finally(() => setLoading(false))
+
+                ChallengeApi.create({ ...values, isRealtime: false, time: (time || 15) * 1000 * 60 })
+                .then(res => {
+                    notification.success({ message: 'Tạo mới thành công' })
+                    // navigate('/admin/exam')
                 })
                 .catch(err => {
                     notification.error({ message: 'Tạo mới thất bại' })

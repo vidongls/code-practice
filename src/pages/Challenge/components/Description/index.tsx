@@ -29,11 +29,9 @@ const Description: React.FC<IDescriptionProps> = ({ loading, detail, isEnded, da
     }
 
     const onComplete = () => {
-        console.log('sadas')
         showModal()
     }
-    console.log(dataRealtime)
-    console.log('detail', detail)
+
 
     return Object.keys(detail).length ? (
         <Spin spinning={loading}>

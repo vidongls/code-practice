@@ -1,4 +1,4 @@
-import { Button, notification, Result, Spin } from 'antd'
+import { Button, notification, Result, Spin, Modal } from 'antd'
 import React, { useCallback, useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { IRealtimeData } from '../../Admin/pages/Challange/List'
@@ -12,6 +12,8 @@ import { IComment } from '../Challenge/components/Comment'
 import ExamCodeEditor from './ExamEditor'
 import { off } from 'firebase/database'
 import Description from './components/Description'
+import { get, isEmpty } from 'lodash'
+import ModalShowResolved from './ModalShowResolved'
 
 export interface IDetail {
     _id: string
@@ -40,11 +42,15 @@ const ExamDoing: React.FC<IExamDoingProps> = props => {
     const [errors, setErrors] = useState({} as any)
     const [dataRealtime, setDataRealtime] = useState({} as IRealtimeData)
     const [dataDoingResolved, setDataDoingResolved] = useState({} as any)
+    const [isModalOpen, setIsModalOpen] = useState(false)
 
     const getDetailExamDoing = useCallback(async () => {
         setLoading(true)
         try {
             const res = await ChallengeApi.userGetDetail(id!)
+            const end = get(res, 'data.status', '') === 'SUCCESS'
+
+            setIsEnded(end)
             setDetail(res.data)
         } catch (error: any) {
             const { response } = error
@@ -55,6 +61,23 @@ const ExamDoing: React.FC<IExamDoingProps> = props => {
         }
     }, [id])
 
+    const items = [
+        {
+            label: 'Thông tin',
+            key: 'info',
+            content: (
+                <Description
+                    loading={false}
+                    detail={detail}
+                    isEnded={isEnded}
+                    dataRealtime={dataRealtime}
+                    dataDoingResolved={dataDoingResolved}
+                />
+            ),
+        },
+
+        // { label: 'Bảng xếp hạng', key: 'ranking', content: 'bxh' },
+    ]
     useEffect(() => {
         getDetailExamDoing()
     }, [getDetailExamDoing])
@@ -67,7 +90,7 @@ const ExamDoing: React.FC<IExamDoingProps> = props => {
                     ChallengeApi.getOneDoingChallenge(id)
                         .then(res => {
                             const { data } = res
-                            if (data.isSubmit) {
+                            if (data?.isSubmit) {
                                 setDataDoingResolved(data)
                                 return true
                             }
@@ -90,14 +113,13 @@ const ExamDoing: React.FC<IExamDoingProps> = props => {
 
         fireGetOne(`/classes/${classId}/challenge-${id}`).then((data: any) => {
             if (data) {
-                const duration = detail.time
-                const isEnded = data.startTime + duration < Date.now()
-
-                if (!isEnded) {
-                    // startDoingChallenge()
-                } else {
-                    setIsEnded(isEnded)
-                }
+                // const duration = detail.time
+                // const isEnded = data.startTime + duration < Date.now()
+                // if (!isEnded) {
+                //     // startDoingChallenge()
+                // } else {
+                //     setIsEnded(isEnded)
+                // }
 
                 setDataRealtime(data)
             }
@@ -124,24 +146,23 @@ const ExamDoing: React.FC<IExamDoingProps> = props => {
         })
     }, [id, getDetailExamDoing, classId])
 
-    const items = [
-        {
-            label: 'Thông tin',
-            key: 'info',
-            content: (
-                <Description
-                    loading={false}
-                    detail={detail}
-                    isEnded={isEnded}
-                    dataRealtime={dataRealtime}
-                    dataDoingResolved={dataDoingResolved}
-                />
-            ),
-        },
 
-        // { label: 'Bảng xếp hạng', key: 'ranking', content: 'bxh' },
-    ]
 
+    const showModal = () => {
+        setIsModalOpen(true)
+    }
+
+    const handleOk = () => {
+        setIsModalOpen(false)
+    }
+
+    const handleCancel = () => {
+        setIsModalOpen(false)
+    }
+
+    const onComplete = () => {
+        showModal()
+    }
     if (errors?.status === 404) {
         return (
             <Result
@@ -158,27 +179,52 @@ const ExamDoing: React.FC<IExamDoingProps> = props => {
     }
 
     return (
-        <div className="bg-white">
-            {/* <Header /> */}
-            {/* h-[calc(100vh_-_50px)] */}
+        <>
+            <div className="bg-white">
+                {/* <Header /> */}
+                {/* h-[calc(100vh_-_50px)] */}
 
-            {!detail.isRealtime || isStarted ? (
-                <div className="grid grid-cols-5 bg-white ">
-                    <div className="col-span-2 overflow-y-auto shadow-xl shadow-gray-200">
-                        <Tabs items={items} />
-                    </div>
+                {!detail.isRealtime || isStarted ? (
+                    <div className="grid grid-cols-5 bg-white ">
+                        <div className="col-span-2 overflow-y-auto shadow-xl shadow-gray-200">
+                            <Tabs items={items} />
+                        </div>
 
-                    <div className="col-span-3">
-                        <ExamCodeEditor
-                            detail={detail}
-                            isEnded={isEnded}
-                        />
+                        <div className="col-span-3">
+                            <ExamCodeEditor
+                                detail={detail}
+                                isEnded={isEnded}
+                            />
+                        </div>
                     </div>
-                </div>
-            ) : (
-                <ChallengeLobby />
+                ) : (
+                    <ChallengeLobby />
+                )}
+            </div>
+            {(isEnded || isModalOpen) && isEmpty(dataDoingResolved) && (
+                <Modal
+                    title={false}
+                    open={true}
+                    onOk={handleOk}
+                    footer={false}
+                    closable={false}
+                >
+                    <p className="text-center text-2xl font-medium">Bài thi đã kết thúc!</p>
+                    <div className="mt-8 flex justify-end">
+                        <Link to={'/'}>
+                            <Button>Về trang chủ</Button>
+                        </Link>
+                    </div>
+                </Modal>
             )}
-        </div>
+
+            {!isEmpty(dataDoingResolved) && (
+                <ModalShowResolved
+                    data={dataDoingResolved}
+                    challengeTestCase={detail?.testCase}
+                />
+            )}
+        </>
     )
 }
 

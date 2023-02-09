@@ -12,7 +12,6 @@ const { Header: HeaderAntd } = Layout
 
 const Header: React.FC = props => {
     const { isLogin, user, logout } = useAuthStore()
-    console.log('🧙 ~ user', user)
     const navigate = useNavigate()
 
     const handleRedirectLogin = () => {

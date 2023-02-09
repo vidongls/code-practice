@@ -51,10 +51,19 @@ const ExamList = () => {
             dataIndex: 'countDoChallenge',
             key: 'countDoChallenge',
             render: (text: string, record: any) => {
-                const doChallengeIds = filter(get(record, 'countDoChallenge'), 'user')
-                console.log('🧙 ~ doChallengeIds', doChallengeIds)
-                return <></>
-                // return <>{doChallengeIds.includes(user.id) && <CheckOutlined className="text-green-500" />}</>
+                const doChallengeIds = map(get(record, 'countDoChallenge'), 'user')
+                const isResolved = get(filter(get(record, 'countDoChallenge'), ['user', user?.id]), '0.isResolved')
+
+                return (
+                    <>
+                        {doChallengeIds.includes(user?.id) && (
+                            <span className="flex items-center">
+                                {isResolved && <CheckOutlined className="text-green-500" />}
+                                <CheckOutlined className="text-green-500" />
+                            </span>
+                        )}
+                    </>
+                )
             },
         },
         {

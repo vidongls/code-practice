@@ -12,7 +12,6 @@ interface IModalShowResultProps {
 }
 
 const ModalShowResult: React.FC<IModalShowResultProps> = ({ compileResult, handleHideSubmitModal, dataSubmit }) => {
-    console.log('🧙 ~ compileResult', compileResult.err)
     const [countResolve, setCountResolve] = useState(0)
 
     useEffect(() => {
