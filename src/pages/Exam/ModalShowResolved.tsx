@@ -36,7 +36,7 @@ const ModalShowResolved: React.FC<IModalShowResultProps> = ({ data, challengeTes
             <div className="mb-5 block text-center text-2xl">Bạn đã thực hiện bài tập này</div>
             <span className="block text-lg">
                 Bạn đã vượt qua
-                <span className="text-xl font-semibold">{` ${countResolve}/${challengeTestCase.length}`}</span> TestCase
+                <span className="text-xl font-semibold">{` ${countResolve}/${challengeTestCase?.length || 0}`}</span> TestCase
             </span>
 
             <>
