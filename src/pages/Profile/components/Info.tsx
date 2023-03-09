@@ -46,7 +46,7 @@ const Info = (props: Props) => {
 
         const storage = getStorage()
 
-        const storageRef = ref(storage, `images/${file.name}-${file.uid}}`)
+        const storageRef = ref(storage, `images/${file.name}-${file.uid}`)
 
         uploadBytes(storageRef, file)
             .then(snapshot => {
